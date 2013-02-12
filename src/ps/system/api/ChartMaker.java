@@ -5,6 +5,7 @@ import ps.system.frames.Person;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -20,7 +21,6 @@ public class ChartMaker {
 
 	private BindingInterface sharedData;
 	private XYChart.Series<Number, Number> DataSeries;
-
 	
 	private NumberAxis xAxis;
 	private NumberAxis yAxis;
