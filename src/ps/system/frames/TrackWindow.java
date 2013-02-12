@@ -99,7 +99,7 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 				for (int i = 0; i < trackText.length; i++) {
 					String text = "Track " + (i + 1) + ": ";
 
-					if (Marathoners[i].runnerNode().getTranslateX() == 1000d && !marathonFinished[i]) {
+					if ((Marathoners[i].runnerNode().getTranslateX() == marathon_FINISH) && !marathonFinished[i]) {
 						int places = 0;
 						int currentTime = (int) runners.getCurrentTime().toMillis();
 
@@ -162,7 +162,7 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 				
 				for (int i = 0; i < Marathoners.length; i++) {
 					double lapTime = BASETIME + (double)((randomNumber.nextInt(10)/2) + randomNumber.nextInt(20)/3)/1.5;
-					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), 1000, interpolators[randomNumber.nextInt(interpolators.length - 1)]);
+					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), marathon_FINISH, interpolators[randomNumber.nextInt(interpolators.length - 1)]);
 					keyFrames[i] = new KeyFrame(Duration.seconds(lapTime), keyValues[i]);
 					runners.getKeyFrames().addAll(keyFrames[i]);
 				}

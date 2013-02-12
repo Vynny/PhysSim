@@ -15,14 +15,14 @@ public interface Constants {
 	String BGCOLOR = "-fx-background-color: #336699";
 	
 	//Window Attributes
-	int WIDTH = 1100;
+	int WIDTH = 500;
 	int HEIGHT = 800;
 	int BUTTONSPACING = 20;
 	double BUTTONSCALE = 1.5;
 	int PADDING = 10;
 
 	//Track Attributes
-	int TRACK_WIDTH = 990;
+	int TRACK_WIDTH = 650;
 	int TRACK_HEIGHT = 500;
 	int TRACK_LANE_SPACING = 100;
 	Color TRACK_COLOR = Color.GOLDENROD;
@@ -41,6 +41,7 @@ public interface Constants {
 
 	
 	int BASETIME = 5;
+    double marathon_FINISH = 640d;
 	
 	
 	

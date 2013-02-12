@@ -5,6 +5,7 @@ import ps.system.frames.Person;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -55,9 +56,10 @@ public class ChartMaker {
 		scene = new Scene(chart, 800, 600);
 	}
 
+	
 	protected LineChart<Number, Number> initChart(String xLabel, String xUnit, String yLabel, String yUnit) {
 		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
-		final LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
+	    chart = new LineChart<>(xAxis, yAxis);
 		
 		//Chart Var Setup
 		chart.setTitle(xLabel + " vs " + yLabel);
@@ -76,9 +78,10 @@ public class ChartMaker {
 		DataSeries.setName("Series: 1");
         DataSeries.getData().add(new XYChart.Data<Number, Number>(0, 5));
 
+
 		plotData();
 	
-		//Finalize		
+		//Finalize	
 		chart.getData().add(DataSeries);
 		return chart;
 	}
@@ -89,46 +92,16 @@ public class ChartMaker {
 
 			@Override
 			public void invalidated(Observable arg0) {
-				double CurTime = timeline.currentTimeProperty().getValue().toSeconds();
-				double CurTransX = person[0].runnerNode().getTranslateX();
+				Number CurTime = timeline.currentTimeProperty().getValue().toSeconds();
+				Number CurTransX = person[0].runnerNode().getTranslateX();
 
 				DataSeries.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX));
-				
 			}
 
 		});// LISTENER END
 
 	}
 	
-/*	private void writeData() {
-		final XYChart.Series<Number,Number> series = new XYChart.Series<Number, Number>();
-		series.setName("TEST RUNNERS");
-		
-		if (sharedData.getSharedDataAtIndex(1) instanceof Timeline) {
-			System.out.println("IN1");
-				System.out.println("IN2");
-				timeline = (Timeline) sharedData.getSharedDataAtIndex(1);
-				person = (Person[]) sharedData.getSharedDataAtIndex(0);
-				
-				timeline.currentTimeProperty().addListener(
-						new InvalidationListener() {
-
-							@Override
-						public void invalidated(Observable arg0) {
-							System.out.println("Time: " + (timeline.currentTimeProperty().getValue().toSeconds()));
-							series.getData().add(
-									new XYChart.Data(timeline
-											.currentTimeProperty().getValue()
-											.toSeconds(), person[0]
-											.runnerNode().getTranslateX()));
-							chart.getData().retainAll();
-							chart.getData().add(series);
-						}
-
-					});
-		}
-	}*/
-
 	private void testChart() {
 		XYChart.Series series = new XYChart.Series();
 		series.setName("TEST");
