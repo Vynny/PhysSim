@@ -3,6 +3,7 @@ package ps.system.frames;
 import java.util.Random;
 
 import ps.logic.beans.TimerBean;
+import ps.system.api.SimulatorInstance;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

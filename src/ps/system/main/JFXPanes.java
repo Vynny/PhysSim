@@ -15,8 +15,8 @@ import javafx.scene.text.Text;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import ps.logic.beans.BindingInterface;
-import ps.system.frames.ChartMaker;
+import ps.system.api.BindingInterface;
+import ps.system.api.ChartMaker;
 import ps.system.frames.MenuWindow;
 import ps.system.frames.Person;
 import ps.system.frames.TrackWindow;
@@ -59,6 +59,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 				JFXsimulation = new TrackWindow("Racing Simulator");
 				sharedData.addData(JFXsimulation.getSharedData());
 				JFXchart = new ChartMaker(sharedData);
+				//JFXchart = new ChartMaker();
 				
 				initJFX_Module(jfx_Simulation, JFXsimulation.getScene());
 				initJFX_Module(jfx_Graph, JFXchart.getScene());
