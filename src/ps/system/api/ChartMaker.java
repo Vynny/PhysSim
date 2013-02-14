@@ -107,7 +107,7 @@ public class ChartMaker {
 			public void invalidated(Observable arg0) {
 				Number CurTime = timeline.currentTimeProperty().getValue().toSeconds();
 				Number CurTransX = genericNode.getTranslateX();
-				Number CurTransX2 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m2").getRotate();
+				Number CurTransX2 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m2").getTranslateX();
 				Number CurTransX3 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m3").getTranslateX();
 				Number CurTransX4 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m4").getTranslateX();
 				Number CurTransX5 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m5").getTranslateX();
