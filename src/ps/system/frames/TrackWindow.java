@@ -1,14 +1,17 @@
 package ps.system.frames;
 
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ps.logic.beans.TimerBean;
 import ps.system.api.SimulatorInstance;
+import ps.system.main.PhysicsWindow;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -37,19 +40,45 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 	//Global panes
 	private static Pane marathonersPane;
 	
+	
+	public static int SIM_basetime = 5;
+	public static double SIM_distance = 500;
+	
 	//Shared Data (For graph && Input Interface)
-	public Object[] data_shared = {Marathoners, runners}; 
-
-	public TrackWindow(String TITLE) {
+	public Object[][] data_shared_read;
+	public Object[][] data_shared_write_independant;
+	public Object[][] data_shared_write_dependant;
+	
+	public TrackWindow(String title) {
 		//BEGIN JAVAFX
 		GenerateMarathonerProperties();
+
+		for (int i = 0; i < Marathoners.length; i++) {
+			System.out.println("TEST: " + Marathoners[i].toString());
+		}
+		
+		
+		data_shared_write_independant = new Object[][] { {"Time", runners} };
+		
+		data_shared_write_dependant = new Object[][] { {"m1", Marathoners[0].runnerNode()},
+													   {"m2", Marathoners[1].runnerNode()},
+													   {"m3", Marathoners[2].runnerNode()},
+													   {"m4", Marathoners[3].runnerNode()},
+													   {"m5", Marathoners[4].runnerNode()}};
+		
+		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
+											 {"SIM_distance", SIM_distance}}; 
+
+		//Data Read by sim
+		PhysicsWindow.sharedData.addReadData(data_shared_read);
+		
+		//Data Written by sim
+		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
+		
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
-		
-		//API CALL
-		addSharedData(data_shared);
 
-		Banner banner = new Banner(TITLE);
+		Banner banner = new Banner(title);
 
 		root.setTop(banner.showBanner());
 		root.setCenter(TrackPane());
@@ -96,10 +125,11 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 
 			@Override
 			public void invalidated(Observable arg0) {
+				
 				for (int i = 0; i < trackText.length; i++) {
 					String text = "Track " + (i + 1) + ": ";
 
-					if ((Marathoners[i].runnerNode().getTranslateX() == marathon_FINISH) && !marathonFinished[i]) {
+					if ((Marathoners[i].runnerNode().getTranslateX() == SIM_distance) && !marathonFinished[i]) {
 						int places = 0;
 						int currentTime = (int) runners.getCurrentTime().toMillis();
 
@@ -161,8 +191,8 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 				runners.setCycleCount(1);
 				
 				for (int i = 0; i < Marathoners.length; i++) {
-					double lapTime = BASETIME + (double)((randomNumber.nextInt(10)/2) + randomNumber.nextInt(20)/3)/1.5;
-					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), marathon_FINISH, interpolators[randomNumber.nextInt(interpolators.length - 1)]);
+					double lapTime = SIM_basetime + (double)((randomNumber.nextInt(10)/2) + randomNumber.nextInt(20)/3)/1.5;
+					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), SIM_distance, interpolators[randomNumber.nextInt(interpolators.length - 1)]);
 					keyFrames[i] = new KeyFrame(Duration.seconds(lapTime), keyValues[i]);
 					runners.getKeyFrames().addAll(keyFrames[i]);
 				}
@@ -193,8 +223,8 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-			/*	ResetTrack();
-				MenuWindow.MenuWindow(currentStage);*/
+				ResetTrack();
+				/*MenuWindow.MenuWindow(currentStage);*/
 				System.out.println("FUNCTIONALITY DISABLED");
 			}
 			

@@ -16,7 +16,7 @@ public class InfoPane extends JPanel {
 	private static boolean[] actionFlags = new boolean[3];
 	
 	private JLabel instructionLabel = new JLabel("<html><u>Select An Action</u></html>");
-    private JLabel transactionLabel = new JLabel("Bank Transaction:");
+    private JLabel transactionLabel = new JLabel("Test Value: " + PhysicsWindow.sharedData.getDataByKey("SIM_basetime"));
     private JLabel securityLabel = new JLabel("Security Question:");
     private JLabel changepassLabel = new JLabel("Change Password:");
     
@@ -28,8 +28,8 @@ public class InfoPane extends JPanel {
     private JButton backButton = new JButton("Back");
 	
 	public InfoPane() {
-		
-		//Instruction Panel 
+	
+				//Instruction Panel 
 				JPanel instructionsPanel = new JPanel();
 				instructionsPanel.add(instructionLabel);
 				

@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
+import ps.system.api.DataStore;
 import ps.system.frames.MenuWindow;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
-	public PhysicsWindow() {
+	public static DataStore sharedData;
+	
+	
+	private PhysicsWindow() {
 
+		//Initialize global data storage hash map
+		sharedData = new DataStore();
+		
 		//Create JFX pane container object
 		//Contains: JSplitPane of two javaFX scenes (R: Simulation, L: Graph)
 		JFXPanes JFXPanes = new JFXPanes();
@@ -21,11 +28,10 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 		// Create nested split container containing horiz layout jfxpanes setup
 		// vertically with bottom pane
-		JSplitPane windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				topPanes, bottomPane);
+		JSplitPane windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanes, bottomPane);
 		
 		windowPanes.setResizeWeight(MainSplitPanes_RESIZEWEIGHT);
-		windowPanes.setContinuousLayout(true);
+		windowPanes.setContinuousLayout(MainSplitPanes_CONTINUOUSLAYOUT);
 
 		// Set Minimum Size
 		topPanes.setMinimumSize(new Dimension(topPanes_MINW, topPanes_MINH));

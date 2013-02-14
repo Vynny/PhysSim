@@ -18,7 +18,7 @@ import javafx.util.Duration;
 
 public class Person implements GraphicsConstants {
 
-	private Group athlete;
+	private Group athlete = new Group();
 	private String shirtNumber;
 	private Color faceColor;
 	private Color shirtColor;
@@ -96,7 +96,7 @@ public class Person implements GraphicsConstants {
 
 
 	public void runner(Pane pane, int RXpos, int RYpos) {
-		athlete = new Group();
+		//athlete = new Group();
 		int center;
 		
 	/*	if (Double.parseDouble(this.shirtNumber) >= 10) {

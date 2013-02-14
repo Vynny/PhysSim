@@ -18,4 +18,7 @@ public interface SystemConstants {
 	//Pane resize weights
 	double JFXPanes_RESIZEWEIGHT = 0.5;
 	double MainSplitPanes_RESIZEWEIGHT = 0.99;
+	
+	boolean JFXPanes_CONTINUOUSLAYOUT = true;
+	boolean MainSplitPanes_CONTINUOUSLAYOUT = true;
 }

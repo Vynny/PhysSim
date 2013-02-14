@@ -1,16 +1,18 @@
 package ps.system.api;
 
-
 import ps.system.frames.Person;
+import ps.system.main.PhysicsWindow;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.util.Duration;
 
 public class ChartMaker {
 	
@@ -20,9 +22,14 @@ public class ChartMaker {
 		return scene;
 	}
 
-	private BindingInterface sharedData;
+	//private DataStore sharedData;
 	private XYChart.Series<Number, Number> DataSeries;
+	private XYChart.Series<Number, Number> DataSeries2;
+	private XYChart.Series<Number, Number> DataSeries3;
+	private XYChart.Series<Number, Number> DataSeries4;
+	private XYChart.Series<Number, Number> DataSeries5;
 	
+	private Object[] keys = PhysicsWindow.sharedData.getDataWrite_dependant().keySet().toArray();
 	private NumberAxis xAxis;
 	private NumberAxis yAxis;
 	private LineChart<Number, Number> chart;
@@ -30,26 +37,19 @@ public class ChartMaker {
 	
 	//TEST
 	Timeline timeline;
-	Person[] person;
-	
+	Node genericNode;
+
 	public ChartMaker() {
 		xAxis = new NumberAxis();
 		yAxis = new NumberAxis();
-		chart = new LineChart<Number, Number>(xAxis,yAxis);
-
-		testChart();
 		
-		scene = new Scene(chart, 800,600);
-	}
-
-	public ChartMaker(BindingInterface sharedData) {
-		xAxis = new NumberAxis();
-		yAxis = new NumberAxis();
-		this.sharedData = sharedData;
+		timeline = (Timeline) PhysicsWindow.sharedData.getDataWrite_independant().get("Time");
+		genericNode = (Node)  PhysicsWindow.sharedData.getDataWrite_dependant().get("m1");
 		
-		timeline = (Timeline) sharedData.getSharedDataAtIndex(1);
-		person = (Person[]) sharedData.getSharedDataAtIndex(0);
-		
+		//DEBUG: Print all dependant key values
+		for (int i = 0; i < keys.length; i++) {
+			System.out.println("Key #" + i + " is: " + keys[i]);
+		}
 		
 		chart = initChart("X", null, "Y", null);
 		
@@ -76,13 +76,26 @@ public class ChartMaker {
 		// Starting Data
 		DataSeries = new XYChart.Series<Number, Number>();
 		DataSeries.setName("Series: 1");
-        DataSeries.getData().add(new XYChart.Data<Number, Number>(0, 5));
+        //DataSeries.getData().add(new XYChart.Data<Number, Number>(0, 5));
+        
+        DataSeries2 = new XYChart.Series<Number, Number>();
+		DataSeries2.setName("Series: 2");
+        //DataSeries2.getData().add(new XYChart.Data<Number, Number>(0, 5));
+
+		DataSeries3 = new XYChart.Series<Number, Number>();
+		DataSeries3.setName("Series: 3");
+
+		DataSeries4 = new XYChart.Series<Number, Number>();
+		DataSeries4.setName("Series: 4");
+		
+		DataSeries5 = new XYChart.Series<Number, Number>();
+		DataSeries5.setName("Series: 5");
 
 
 		plotData();
 	
 		//Finalize	
-		chart.getData().add(DataSeries);
+		chart.getData().addAll(DataSeries, DataSeries2, DataSeries3, DataSeries4, DataSeries5);
 		return chart;
 	}
 	
@@ -93,34 +106,20 @@ public class ChartMaker {
 			@Override
 			public void invalidated(Observable arg0) {
 				Number CurTime = timeline.currentTimeProperty().getValue().toSeconds();
-				Number CurTransX = person[0].runnerNode().getTranslateX();
-
+				Number CurTransX = genericNode.getTranslateX();
+				Number CurTransX2 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m2").getRotate();
+				Number CurTransX3 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m3").getTranslateX();
+				Number CurTransX4 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m4").getTranslateX();
+				Number CurTransX5 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m5").getTranslateX();
+				
+				
 				DataSeries.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX));
+				DataSeries2.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX2));
+				DataSeries3.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX3));
+				DataSeries4.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX4));
+				DataSeries5.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX5));
 			}
 
 		});// LISTENER END
-
 	}
-	
-	private void testChart() {
-		XYChart.Series series = new XYChart.Series();
-		series.setName("TEST");
-		
-		//SAMPLE DATA
-        series.getData().add(new XYChart.Data(1, 23));
-        series.getData().add(new XYChart.Data(2, 14));
-        series.getData().add(new XYChart.Data(3, 15));
-        series.getData().add(new XYChart.Data(4, 24));
-        series.getData().add(new XYChart.Data(5, 34));
-        series.getData().add(new XYChart.Data(6, 36));
-        series.getData().add(new XYChart.Data(7, 22));
-        series.getData().add(new XYChart.Data(8, 45));
-        series.getData().add(new XYChart.Data(9, 43));
-        series.getData().add(new XYChart.Data(10, 17));
-        series.getData().add(new XYChart.Data(11, 29));
-        series.getData().add(new XYChart.Data(12, 25));
-        
-        chart.getData().add(series);
-	}
-	
 }
