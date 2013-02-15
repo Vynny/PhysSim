@@ -1,18 +1,24 @@
 package ps.system.api;
 
-import ps.system.frames.Person;
+
 import ps.system.main.PhysicsWindow;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.util.Duration;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 public class ChartMaker {
 	
@@ -22,16 +28,15 @@ public class ChartMaker {
 		return scene;
 	}
 
-	//private DataStore sharedData;
-	private XYChart.Series<Number, Number> DataSeries;
-	private XYChart.Series<Number, Number> DataSeries2;
-	private XYChart.Series<Number, Number> DataSeries3;
-	private XYChart.Series<Number, Number> DataSeries4;
-	private XYChart.Series<Number, Number> DataSeries5;
+	//Main Series List (Populated automatically: depends on values written into 
+	//the data_shared_write_dependant object array in the simulator plugin. 
+	ObservableList<XYChart.Series<Number, Number>> Data;
+
+	private static Object[] keys = PhysicsWindow.sharedData.getDataWrite_dependant().keySet().toArray();
+    static CheckBox[] cbs = new CheckBox[keys.length];
 	
-	private Object[] keys = PhysicsWindow.sharedData.getDataWrite_dependant().keySet().toArray();
 	private NumberAxis xAxis;
-	private NumberAxis yAxis;
+	//private NumberAxis yAxis;
 	private LineChart<Number, Number> chart;
 
 	
@@ -40,26 +45,32 @@ public class ChartMaker {
 	Node genericNode;
 
 	public ChartMaker() {
+		BorderPane root = new BorderPane();
 		xAxis = new NumberAxis();
-		yAxis = new NumberAxis();
+		//yAxis = new NumberAxis();
 		
 		timeline = (Timeline) PhysicsWindow.sharedData.getDataWrite_independant().get("Time");
-		genericNode = (Node)  PhysicsWindow.sharedData.getDataWrite_dependant().get("m1");
+		//genericNode = (Node)  PhysicsWindow.sharedData.getDataWrite_dependant().get("m1");
 		
 		//DEBUG: Print all dependant key values
 		for (int i = 0; i < keys.length; i++) {
 			System.out.println("Key #" + i + " is: " + keys[i]);
+			cbs[i] = new CheckBox((String)keys[i]);
 		}
 		
-		chart = initChart("X", null, "Y", null);
+		//chart = initChart("X", null, "Y", null);
 		
-		scene = new Scene(chart, 800, 600);
+		root.setCenter(initChart("Time", null, "Position", null));
+		root.setBottom(BottomMenu());
+		
+		//scene = new Scene(chart, 800, 600);
+		scene = new Scene(root);
 	}
 
 	
 	protected LineChart<Number, Number> initChart(String xLabel, String xUnit, String yLabel, String yUnit) {
 		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
-	    chart = new LineChart<>(xAxis, yAxis);
+	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup
 		chart.setTitle(xLabel + " vs " + yLabel);
@@ -73,29 +84,16 @@ public class ChartMaker {
 		yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
-		// Starting Data
-		DataSeries = new XYChart.Series<Number, Number>();
-		DataSeries.setName("Series: 1");
-        //DataSeries.getData().add(new XYChart.Data<Number, Number>(0, 5));
-        
-        DataSeries2 = new XYChart.Series<Number, Number>();
-		DataSeries2.setName("Series: 2");
-        //DataSeries2.getData().add(new XYChart.Data<Number, Number>(0, 5));
-
-		DataSeries3 = new XYChart.Series<Number, Number>();
-		DataSeries3.setName("Series: 3");
-
-		DataSeries4 = new XYChart.Series<Number, Number>();
-		DataSeries4.setName("Series: 4");
-		
-		DataSeries5 = new XYChart.Series<Number, Number>();
-		DataSeries5.setName("Series: 5");
-
+		//Data
+		Data =  FXCollections.observableArrayList();
+		for (int i = 0; i < keys.length; i++) {
+			Data.add(new Series<Number, Number>());
+			Data.get(i).setName("Series: " + keys[i]);
+		}
 
 		plotData();
-	
-		//Finalize	
-		chart.getData().addAll(DataSeries, DataSeries2, DataSeries3, DataSeries4, DataSeries5);
+
+		chart.getData().addAll(Data);
 		return chart;
 	}
 	
@@ -106,20 +104,27 @@ public class ChartMaker {
 			@Override
 			public void invalidated(Observable arg0) {
 				Number CurTime = timeline.currentTimeProperty().getValue().toSeconds();
-				Number CurTransX = genericNode.getTranslateX();
-				Number CurTransX2 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m2").getTranslateX();
-				Number CurTransX3 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m3").getTranslateX();
-				Number CurTransX4 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m4").getTranslateX();
-				Number CurTransX5 = PhysicsWindow.sharedData.getDataWrite_dependant().get("m5").getTranslateX();
-				
-				
-				DataSeries.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX));
-				DataSeries2.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX2));
-				DataSeries3.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX3));
-				DataSeries4.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX4));
-				DataSeries5.getData().add(new XYChart.Data<Number, Number>(CurTime, CurTransX5));
+
+				for (int i = 0; i < keys.length; i++) {
+					if (cbs[i].selectedProperty().getValue().equals(true)) {
+					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, PhysicsWindow.sharedData.getDataWrite_dependant().get(keys[i]).getTranslateX()));
+					}
+				}
 			}
 
 		});// LISTENER END
+	}
+	
+	private static HBox BottomMenu() {
+		HBox pane = new HBox();
+		pane.setPadding(new Insets(10,10,10,10));
+		pane.setSpacing(5);
+		pane.setAlignment(Pos.CENTER);
+
+		for (int i = 0; i < cbs.length; i++) {
+			pane.getChildren().addAll(cbs[i]);
+		}
+		
+		return pane;
 	}
 }

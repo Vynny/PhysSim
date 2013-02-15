@@ -10,12 +10,14 @@ import ps.system.frames.MenuWindow;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
+	//Enables sharing between JavaFX and Swing components of the
+	//application. Referred to statically.
 	public static DataStore sharedData;
 	
 	
 	private PhysicsWindow() {
 
-		//Initialize global data storage hash map
+		//Initialize global data storage hash map container
 		sharedData = new DataStore();
 		
 		//Create JFX pane container object
@@ -26,7 +28,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		// Create bottom info pane(contains buttons and configuration)
 		InfoPane bottomPane = new InfoPane();
 
-		// Create nested split container containing horiz layout jfxpanes setup
+		// Create nested split container containing horizontally layed out jfxpanes setup
 		// vertically with bottom pane
 		JSplitPane windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanes, bottomPane);
 		

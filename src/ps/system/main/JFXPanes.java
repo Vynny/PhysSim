@@ -56,8 +56,6 @@ public class JFXPanes extends JPanel implements SystemConstants {
 			
 			@Override
 			public void run() {
-				DataStore sharedData = new DataStore();
-				sharedData = PhysicsWindow.sharedData;
 				
 				JFXsimulation = new TrackWindow("Racing Simulator");
 				//sharedData.addData(JFXsimulation.getSharedReadData(),JFXsimulation.getSharedWriteData());
@@ -69,7 +67,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 			}
 		});
-
+		
 	}
 
 	public JSplitPane getSeperatedPanes() {
