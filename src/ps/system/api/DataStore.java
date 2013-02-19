@@ -9,13 +9,13 @@ public class DataStore {
 	
 	// Data read by the simulation, accepts variables that the simulation can respond to.
 	// (Example: initial velocity, gravity constant, angle theta, etc)
-	ConcurrentHashMap<String, Number> dataRead = new ConcurrentHashMap<String, Number>();
+	private ConcurrentHashMap<String, Number> dataRead = new ConcurrentHashMap<String, Number>();
 
 	// Data written by the simulation, for use in graphing and displaying.
 	// (Example: time)
-	ConcurrentHashMap<String, Timeline> dataWrite_independant = new ConcurrentHashMap<String, Timeline>();
+	private ConcurrentHashMap<String, Timeline> dataWrite_independant = new ConcurrentHashMap<String, Timeline>();
 	// (Example: property bindings)
-	ConcurrentHashMap<String, Node> dataWrite_dependant = new ConcurrentHashMap<String, Node>();
+	private ConcurrentHashMap<String, Node> dataWrite_dependant = new ConcurrentHashMap<String, Node>();
 	
 	public DataStore() {
 

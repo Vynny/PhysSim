@@ -3,6 +3,7 @@ package ps.system.main;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import ps.system.api.DataStore;
@@ -26,7 +27,8 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		JSplitPane topPanes = JFXPanes.getSeperatedPanes();
 
 		// Create bottom info pane(contains buttons and configuration)
-		InfoPane bottomPane = new InfoPane();
+		//InfoPane bottomPane = new InfoPane();
+		JPanel bottomPane = JFXPanes.getBottomPane();
 
 		// Create nested split container containing horizontally layed out jfxpanes setup
 		// vertically with bottom pane
@@ -37,8 +39,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 		// Set Minimum Size
 		topPanes.setMinimumSize(new Dimension(topPanes_MINW, topPanes_MINH));
-		bottomPane.setMinimumSize(new Dimension(bottomPane_MINW,
-				bottomPane_MINH));
+		bottomPane.setMinimumSize(new Dimension(bottomPane_MINW, bottomPane_MINH));
 
 		// Add split pane to frame
 		getContentPane().add(windowPanes);

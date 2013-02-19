@@ -30,7 +30,7 @@ public class ChartMaker {
 
 	//Main Series List (Populated automatically: depends on values written into 
 	//the data_shared_write_dependant object array in the simulator plugin. 
-	ObservableList<XYChart.Series<Number, Number>> Data;
+	private ObservableList<XYChart.Series<Number, Number>> Data;
 
 	private static Object[] keys = PhysicsWindow.sharedData.getDataWrite_dependant().keySet().toArray();
     static CheckBox[] cbs = new CheckBox[keys.length];
@@ -41,8 +41,7 @@ public class ChartMaker {
 
 	
 	//TEST
-	Timeline timeline;
-	Node genericNode;
+	private Timeline timeline;
 
 	public ChartMaker() {
 		BorderPane root = new BorderPane();

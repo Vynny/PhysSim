@@ -26,9 +26,11 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	//Pane separator
 	private static JSplitPane seperatedPanes;
+	private static JPanel bottomPane;
 	
 	private TrackWindow JFXsimulation;
 	private ChartMaker JFXchart;
+	private InfoPane JFXinput;
 	
 	//public BindingInterface sharedData;
 	
@@ -44,12 +46,17 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		final JFXPanel jfx_Graph = new JFXPanel();
 		window_Graph.add(jfx_Graph, BorderLayout.CENTER);
 		
+		//Create panel dedicated to showing input and buttons
+		bottomPane = new JPanel(new BorderLayout());
+		final JFXPanel jfx_Input = new JFXPanel();
+		bottomPane.add(jfx_Input, BorderLayout.CENTER);
+		
 		//Add panels to horizontally separated panes
 		seperatedPanes = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, window_Simulation, window_Graph);
 		seperatedPanes.setResizeWeight(JFXPanes_RESIZEWEIGHT);
 		seperatedPanes.setContinuousLayout(JFXPanes_CONTINUOUSLAYOUT);
 		
-		
+
 		//sharedData = new BindingInterface();
 				
 		Platform.runLater(new Runnable() {
@@ -61,9 +68,11 @@ public class JFXPanes extends JPanel implements SystemConstants {
 				//sharedData.addData(JFXsimulation.getSharedReadData(),JFXsimulation.getSharedWriteData());
 				//JFXchart = new ChartMaker(sharedData);
 				JFXchart = new ChartMaker();
+				JFXinput = new InfoPane();
 				
 				initJFX_Module(jfx_Simulation, JFXsimulation.getScene());
 				initJFX_Module(jfx_Graph, JFXchart.getScene());
+				initJFX_Module(jfx_Input, JFXinput.getScene());
 
 			}
 		});
@@ -73,22 +82,13 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	public JSplitPane getSeperatedPanes() {
 		return seperatedPanes;
 	}
+	
+	public JPanel getBottomPane() {
+		return bottomPane;
+	}
 
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
 		panel.setScene(scene);
-	}
-	
-	//TEST METHOD
-	private static Scene initScene(int i) {
-		Group root = new Group();
-		Scene scene = new Scene(root);
-		
-		Text text = new Text("SCENE:" + i);
-		text.setX(50);
-		text.setY(50);
-		text.setScaleX(20);
-		root.getChildren().add(text);
-		return scene;
 	}
 	
 }
