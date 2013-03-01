@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ps.logic.beans.TimerBean;
 import ps.system.api.SimulatorInstance;
+import ps.system.main.JFXPanes;
 import ps.system.main.PhysicsWindow;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -54,6 +55,7 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 	public TrackWindow(String title) {
 		//BEGIN JAVAFX
 		GenerateMarathonerProperties();
+		Handlers();
 
 		for (int i = 0; i < Marathoners.length; i++) {
 			System.out.println("TEST: " + Marathoners[i].toString());
@@ -84,7 +86,7 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 
 		root.setTop(banner.showBanner());
 		root.setCenter(TrackPane());
-		root.setBottom(BottomMenu());
+		//root.setBottom(BottomMenu());
 	}
 	
 	private static BorderPane TrackPane() {
@@ -168,24 +170,18 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 		return statusPane;
 	}
 	
-	private static HBox BottomMenu() {
-		HBox pane = new HBox();
+	private static void Handlers() {
+/*		HBox pane = new HBox();
 		pane.setStyle(BGCOLOR);
 		pane.setPadding(new Insets(PADDING,PADDING,PADDING,PADDING));
 		pane.setSpacing(WIDTH/1.4);
-		pane.setAlignment(Pos.CENTER);
+		pane.setAlignment(Pos.CENTER);*/
 		
-		final Button startButton = new Button("Start");
 		
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			boolean Pressed = false;
 			
 			@Override
-			public void handle(ActionEvent arg0) {
-				
-				if (!Pressed) {
-				Pressed = true;
+			public void handle(ActionEvent arg0) {		
 				Random randomNumber = new Random();
 				keyValues = new KeyValue[Marathoners.length];
 				keyFrames = new KeyFrame[Marathoners.length];
@@ -206,35 +202,33 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 				
 				runners.play();
 				
-				startButton.setText("Reset");
-				
-				} else {
-					
-					Pressed = false;
-					startButton.setText("Start");
-					
-					ResetTrack();
-					
-				}
 			}
 			
 		});
 		
-		Button backButton = new Button("Back");
-		backButton.setOnAction(new EventHandler<ActionEvent>() {
+		resetButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
 				ResetTrack();
+			}
+			
+		});
+		
+		
+		backButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
 				/*MenuWindow.MenuWindow(currentStage);*/
 				System.out.println("FUNCTIONALITY DISABLED");
 			}
 			
 		});
 		
-		pane.getChildren().addAll(backButton, startButton);
+		//pane.getChildren().addAll(backButton, startButton);
 		
-		return pane;
+		//return pane;
 	}
 	
 	private static void GenerateMarathonerProperties() {

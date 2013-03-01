@@ -30,9 +30,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	
 	private TrackWindow JFXsimulation;
 	private ChartMaker JFXchart;
-	private InfoPane JFXinput;
-	
-	//public BindingInterface sharedData;
+	public static InfoPane JFXinput;
 	
 	public JFXPanes() {
 		
@@ -68,7 +66,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 				//sharedData.addData(JFXsimulation.getSharedReadData(),JFXsimulation.getSharedWriteData());
 				//JFXchart = new ChartMaker(sharedData);
 				JFXchart = new ChartMaker();
-				JFXinput = new InfoPane();
+				JFXPanes.JFXinput = new InfoPane();
+				//JFXinput = new InfoPane();
 				
 				initJFX_Module(jfx_Simulation, JFXsimulation.getScene());
 				initJFX_Module(jfx_Graph, JFXchart.getScene());

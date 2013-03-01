@@ -15,7 +15,6 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	//application. Referred to statically.
 	public static DataStore sharedData;
 	
-	
 	private PhysicsWindow() {
 
 		//Initialize global data storage hash map container

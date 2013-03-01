@@ -16,6 +16,27 @@ public class InfoPane {
 		return scene;
 	}
 	
+	
+	public static Button startButton = new Button("Start");
+	
+	public static Button getStartButton() {
+		return startButton;
+	}
+
+	public static Button resetButton = new Button("Reset");
+
+	public static Button getResetButton() {
+		return resetButton;
+	}
+
+
+	public static Button backButton = new Button("Back");
+
+	public static Button getBackButton() {
+		return backButton;
+	}
+
+	
 	public InfoPane() {
 
 		BorderPane root = new BorderPane();
@@ -26,20 +47,10 @@ public class InfoPane {
 
 	private HBox Menu() {
 		HBox pane = new HBox();
-		//setStyle("-fx-background-color: #336699");
 		pane.setPadding(new Insets(10,10,10,10));
 		pane.setSpacing(500/1.4);
 		pane.setAlignment(Pos.CENTER);
-		
-		Button startButton = new Button("Start");
-		
-		//startButton.setOnAction();
-		
-		Button resetButton = new Button("Reset");
-		//resetButton.setOnAction();
-		
-		Button backButton = new Button("Back");
-		//backButton.setOnAction();
+	
 		
 		pane.getChildren().addAll(startButton, resetButton, backButton);
 		
