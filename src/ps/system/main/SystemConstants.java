@@ -1,5 +1,10 @@
 package ps.system.main;
 
+import java.util.HashMap;
+
+import ps.system.api.SimulatorInstance;
+import ps.system.frames.TrackWindow;
+
 public interface SystemConstants {
 
 	//Main Window Title
@@ -21,4 +26,5 @@ public interface SystemConstants {
 	
 	boolean JFXPanes_CONTINUOUSLAYOUT = true;
 	boolean MainSplitPanes_CONTINUOUSLAYOUT = true;
+										
 }

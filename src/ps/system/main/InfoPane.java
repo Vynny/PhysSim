@@ -17,22 +17,22 @@ public class InfoPane {
 	}
 	
 	
-	public static Button startButton = new Button("Start");
+	private static Button startButton = new Button("Start");
 	
-	public static Button getStartButton() {
+	public Button getStartButton() {
 		return startButton;
 	}
 
-	public static Button resetButton = new Button("Reset");
+	private static Button resetButton = new Button("Reset");
 
-	public static Button getResetButton() {
+	public Button getResetButton() {
 		return resetButton;
 	}
 
 
-	public static Button backButton = new Button("Back");
+	private static Button backButton = new Button("Back");
 
-	public static Button getBackButton() {
+	public Button getBackButton() {
 		return backButton;
 	}
 

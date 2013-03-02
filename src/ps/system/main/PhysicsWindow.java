@@ -7,13 +7,17 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import ps.system.api.DataStore;
-import ps.system.frames.MenuWindow;
+import ps.system.api.SimulatorInstance;
+import ps.system.frames.TrackWindow;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
 	//Enables sharing between JavaFX and Swing components of the
 	//application. Referred to statically.
 	public static DataStore sharedData;
+	
+	public SimulatorInstance simulationDisplay;
+	public JFXPanes JFXPanes; 
 	
 	private PhysicsWindow() {
 
@@ -22,7 +26,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		
 		//Create JFX pane container object
 		//Contains: JSplitPane of two javaFX scenes (R: Simulation, L: Graph)
-		JFXPanes JFXPanes = new JFXPanes();
+		JFXPanes = new JFXPanes("Mechanics_TrackWindow");
 		JSplitPane topPanes = JFXPanes.getSeperatedPanes();
 
 		// Create bottom info pane(contains buttons and configuration)

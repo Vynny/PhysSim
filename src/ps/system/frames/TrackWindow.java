@@ -47,11 +47,6 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 	public static int SIM_basetime = 5;
 	public static double SIM_distance = 500;
 	
-	//Shared Data (For graph && Input Interface)
-	public Object[][] data_shared_read;
-	public Object[][] data_shared_write_independant;
-	public Object[][] data_shared_write_dependant;
-	
 	public TrackWindow(String title) {
 		//BEGIN JAVAFX
 		GenerateMarathonerProperties();
@@ -60,24 +55,6 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 		for (int i = 0; i < Marathoners.length; i++) {
 			System.out.println("TEST: " + Marathoners[i].toString());
 		}
-		
-		
-		data_shared_write_independant = new Object[][] { {"Time", runners} };
-		
-		data_shared_write_dependant = new Object[][] { {"m1", Marathoners[0].runnerNode()},
-													   {"m2", Marathoners[1].runnerNode()},
-													   {"m3", Marathoners[2].runnerNode()},
-													   {"m4", Marathoners[3].runnerNode()},
-													   {"m5", Marathoners[4].runnerNode()}};
-		
-		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
-											 {"SIM_distance", SIM_distance}}; 
-
-		//Data Read by sim
-		PhysicsWindow.sharedData.addReadData(data_shared_read);
-		
-		//Data Written by sim
-		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
 		
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
@@ -265,5 +242,28 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 			trackText[i].setText("Track " + (i + 1) + ": 0");
 			marathonFinished[i] = false;
 		}
+	}
+	
+	
+	public void LoadData() {
+		
+		data_shared_write_independant = new Object[][] { {"Time", runners} };
+		
+		data_shared_write_dependant = new Object[][] { {"m1-1", Marathoners[0].runnerNode()},
+													   {"m2-1", Marathoners[1].runnerNode()},
+													   {"m3-1", Marathoners[2].runnerNode()},
+													   {"m4-1", Marathoners[3].runnerNode()},
+													   {"m5-1", Marathoners[4].runnerNode()}};
+		
+		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
+											 {"SIM_distance", SIM_distance}}; 
+		// Bind buttons to infopane
+		Handlers();
+
+		// Data Read by sim
+		PhysicsWindow.sharedData.addReadData(data_shared_read);
+
+		// Data Written by sim
+		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
 	}
 }
