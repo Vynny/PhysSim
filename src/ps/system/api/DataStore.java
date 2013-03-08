@@ -1,6 +1,6 @@
 package ps.system.api;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedHashMap;
 
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -9,20 +9,20 @@ public class DataStore {
 	
 	// Data read by the simulation, accepts variables that the simulation can respond to.
 	// (Example: initial velocity, gravity constant, angle theta, etc)
-	private ConcurrentHashMap<String, Number> dataRead = new ConcurrentHashMap<String, Number>();
+	private static LinkedHashMap<String, Number> dataRead = new LinkedHashMap<String, Number>();
 
 	// Data written by the simulation, for use in graphing and displaying.
 	// (Example: time)
-	private ConcurrentHashMap<String, Timeline> dataWrite_independant = new ConcurrentHashMap<String, Timeline>();
+	private static LinkedHashMap<String, Timeline> dataWrite_independant = new LinkedHashMap<String, Timeline>();
 	// (Example: property bindings)
-	private ConcurrentHashMap<String, Node> dataWrite_dependant = new ConcurrentHashMap<String, Node>();
+	private static LinkedHashMap<String, Node> dataWrite_dependant = new LinkedHashMap<String, Node>();
 	
 	public DataStore() {
 
 	}
 	
 	//Read
-	public ConcurrentHashMap<String, Number> getDataRead() {
+	public LinkedHashMap<String, Number> getDataRead() {
 		return dataRead;
 	}
 
@@ -44,11 +44,11 @@ public class DataStore {
 		}
 	}
 
-	public ConcurrentHashMap<String, Timeline> getDataWrite_independant() {
+	public LinkedHashMap<String, Timeline> getDataWrite_independant() {
 		return dataWrite_independant;
 	}
 
-	public ConcurrentHashMap<String, Node> getDataWrite_dependant() {
+	public LinkedHashMap<String, Node> getDataWrite_dependant() {
 		return dataWrite_dependant;
 	}
 

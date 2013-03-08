@@ -1,7 +1,5 @@
 package ps.system.api;
 
-
-import ps.system.main.PhysicsWindow;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -9,18 +7,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import ps.system.main.SystemConstants;
 
-public class ChartMaker {
+public class ChartMaker implements SystemConstants {
 	
 	private Scene scene;
 
@@ -32,11 +29,11 @@ public class ChartMaker {
 	//the data_shared_write_dependant object array in the simulator plugin. 
 	private ObservableList<XYChart.Series<Number, Number>> Data;
 
-	private static Object[] keys = PhysicsWindow.sharedData.getDataWrite_dependant().keySet().toArray();
-    static CheckBox[] cbs = new CheckBox[keys.length];
+	private static Object[] keys = DataWrite_dependant.keySet().toArray();
+    private static CheckBox[] cbs = new CheckBox[keys.length];
 	
 	private NumberAxis xAxis;
-	//private NumberAxis yAxis;
+	private NumberAxis yAxis;
 	private LineChart<Number, Number> chart;
 
 	
@@ -44,24 +41,23 @@ public class ChartMaker {
 	private Timeline timeline;
 
 	public ChartMaker() {
-		BorderPane root = new BorderPane();
-		xAxis = new NumberAxis();
-		//yAxis = new NumberAxis();
 		
-		timeline = (Timeline) PhysicsWindow.sharedData.getDataWrite_independant().get("Time");
+		BorderPane root = new BorderPane();
+		
+		xAxis = new NumberAxis();
+		yAxis = new NumberAxis();
+		
+		timeline = (Timeline) DataWrite_independant.get("Time");
 		
 		//DEBUG: Print all dependant key values
 		for (int i = 0; i < keys.length; i++) {
 			System.out.println("Key #" + i + " is: " + keys[i]);
 			cbs[i] = new CheckBox((String)keys[i]);
 		}
-		
-		//chart = initChart("X", null, "Y", null);
-		
+
 		root.setCenter(initChart("Time", null, "Position", null));
 		root.setBottom(BottomMenu());
 		
-		//scene = new Scene(chart, 800, 600);
 		scene = new Scene(root);
 	}
 
@@ -105,7 +101,7 @@ public class ChartMaker {
 
 				for (int i = 0; i < keys.length; i++) {
 					if (cbs[i].selectedProperty().getValue().equals(true)) {
-					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, PhysicsWindow.sharedData.getDataWrite_dependant().get(keys[i]).getTranslateX()));
+					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DataWrite_dependant.get(keys[i]).getTranslateX()));
 					}
 				}
 			}

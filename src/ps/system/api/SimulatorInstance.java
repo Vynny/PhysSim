@@ -1,35 +1,25 @@
 package ps.system.api;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-
-import ps.system.main.InfoPane;
-import ps.system.main.JFXPanes;
-import ps.system.main.PhysicsWindow;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.util.Duration;
+import ps.system.main.InfoPane;
+import ps.system.main.PhysicsWindow;
+import ps.system.main.SystemConstants;
 
-public abstract class SimulatorInstance {
+public abstract class SimulatorInstance implements SystemConstants { 
 
-	//Hashmaps
+	//Data to load DataStore hashmaps with
 	public Object[][] data_shared_read;
 	public Object[][] data_shared_write_independant;
 	public Object[][] data_shared_write_dependant;
 	
-	//Buttons
-	private static InfoPane test = new InfoPane();
-	public static Button startButton = test.getStartButton();
-	public static Button resetButton = test.getResetButton();
-	public static Button backButton = test.getBackButton();
+	//Buttons that will appear in the infopane section
+	private static InfoPane infoPane_local = new InfoPane();
+	public static Button startButton = infoPane_local.getStartButton();
+	public static Button resetButton = infoPane_local.getResetButton();
+	public static Button backButton = infoPane_local.getBackButton();
 	
 	
 	//Scene in which the simulation will take place
@@ -67,7 +57,6 @@ public abstract class SimulatorInstance {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				System.out.println("FUNCTIONALITY DISABLED");
 			}
 			
 		});

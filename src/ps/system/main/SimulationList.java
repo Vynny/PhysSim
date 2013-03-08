@@ -13,6 +13,7 @@ public class SimulationList {
 	
 	public SimulationList() {
 		simulationList.put("Mechanics_TrackWindow", new TrackWindow("TrackWindow1"));
+		simulationList.put("Mechanics_TrackWindow2", new TrackWindow2("TrackWindow2"));
 	}
 }
 

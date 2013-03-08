@@ -148,12 +148,6 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 	}
 	
 	private static void Handlers() {
-/*		HBox pane = new HBox();
-		pane.setStyle(BGCOLOR);
-		pane.setPadding(new Insets(PADDING,PADDING,PADDING,PADDING));
-		pane.setSpacing(WIDTH/1.4);
-		pane.setAlignment(Pos.CENTER);*/
-		
 		
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -202,10 +196,6 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 			}
 			
 		});
-		
-		//pane.getChildren().addAll(backButton, startButton);
-		
-		//return pane;
 	}
 	
 	private static void GenerateMarathonerProperties() {

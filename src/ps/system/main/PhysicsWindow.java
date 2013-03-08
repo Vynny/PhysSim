@@ -46,7 +46,6 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 		// Add split pane to frame
 		getContentPane().add(windowPanes);
-
 	}
 	
 	public static void InitializeGUI() {
