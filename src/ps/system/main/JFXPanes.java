@@ -18,12 +18,15 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	//Pane separators
 	private static JSplitPane seperatedPanes;
 	private static JPanel bottomPane;
-	//private static JPanel menuPane;
+	
+	private static JPanel menuPane;
 	
 	//JavaFX components
 	private SimulatorInstance JFXsimulation;
 	private ChartMaker JFXchart;
-	//private static MainMenu JFXmenu;
+	
+	private static MainMenu JFXmenu;
+	
 	public static InfoPane JFXinput;
 	
 	//Containers for swing and JavaFX integration
@@ -31,7 +34,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	private static JFXPanel JFXPanel_Graph = new JFXPanel();
 	private static JFXPanel JFXPanel_Input = new JFXPanel();
 	
-	//private static JFXPanel JFXPanel_Menu = new JFXPanel();
+	private static JFXPanel JFXPanel_Menu = new JFXPanel();
 
 	//Which simulation to display
 	private String simulationID;
@@ -40,8 +43,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		
 		this.simulationID = simulationID;
 		//Create menu panel
-		//JPanel window_Menu = new JPanel(new BorderLayout());
-		//window_Menu.add(JFXPanel_Menu, BorderLayout.CENTER);
+		JPanel window_Menu = new JPanel(new BorderLayout());
+		window_Menu.add(JFXPanel_Menu, BorderLayout.CENTER);
 		
 		//Create panel dedicated to showing the simulation 
 		JPanel window_Simulation = new JPanel(new BorderLayout());
@@ -61,8 +64,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		seperatedPanes.setContinuousLayout(JFXPanes_CONTINUOUSLAYOUT);
 		
 		//Menu
-		//menuPane = new JPanel(new BorderLayout());
-		//menuPane.add(JFXPanel_Menu, BorderLayout.CENTER);
+		menuPane = new JPanel(new BorderLayout());
+		menuPane.add(JFXPanel_Menu, BorderLayout.CENTER);
 				
 		//Initialize JavaFX Event Thread
 		Platform.runLater(new Runnable() {		
@@ -88,12 +91,12 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		//Initialize InfoPane for content
 		JFXPanes.JFXinput = new InfoPane();
 		
-		//JFXmenu = new MainMenu();
+		JFXmenu = new MainMenu();
 
 		initJFX_Module(JFXPanel_Simulation, ((SimulatorInstance) JFXsimulation).getScene());
 		initJFX_Module(JFXPanel_Graph, JFXchart.getScene());
 		initJFX_Module(JFXPanel_Input, JFXinput.getScene());
-		//initJFX_Module(JFXPanel_Menu, JFXmenu.getScene());
+		initJFX_Module(JFXPanel_Menu, JFXmenu.getScene());
 	}
 
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
@@ -108,8 +111,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		return bottomPane;
 	}
 	
-/*	public JPanel getMenuPane() {
+	public JPanel getMenuPane() {
 		return menuPane;
-	}*/
+	}
 	
 }

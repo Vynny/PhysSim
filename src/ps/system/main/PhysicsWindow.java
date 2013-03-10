@@ -8,7 +8,6 @@ import javax.swing.JSplitPane;
 
 import ps.system.api.DataStore;
 import ps.system.api.SimulatorInstance;
-import ps.system.frames.TrackWindow;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
@@ -26,11 +25,10 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		
 		//Create JFX pane container object
 		//Contains: JSplitPane of two javaFX scenes (R: Simulation, L: Graph)
-		JFXPanes = new JFXPanes("Mechanics_TrackWindow");
+		JFXPanes = new JFXPanes("Mechanics_Track Window");
 		JSplitPane topPanes = JFXPanes.getSeperatedPanes();
 
 		// Create bottom info pane(contains buttons and configuration)
-		//InfoPane bottomPane = new InfoPane();
 		JPanel bottomPane = JFXPanes.getBottomPane();
 
 		// Create nested split container containing horizontally layed out jfxpanes setup
@@ -46,6 +44,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 		// Add split pane to frame
 		getContentPane().add(windowPanes);
+		//getContentPane().add(JFXPanes.getMenuPane());
 	}
 	
 	public static void InitializeGUI() {
