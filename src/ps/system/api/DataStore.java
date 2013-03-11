@@ -51,6 +51,16 @@ public class DataStore {
 	public LinkedHashMap<String, Node> getDataWrite_dependant() {
 		return dataWrite_dependant;
 	}
+	
+	//Clear
+	public void clearWriteData(Object[][] sharedIndependantData, Object[][] sharedDependantData) {
+		dataWrite_independant.clear();
+		dataWrite_dependant.clear();
+	}
+	
+	public void clearReadData(Object[][] sharedData) {
+		dataRead.clear();
+	}
 
 	//Retrieve Data
 	public Number getDataByKey(String key) {

@@ -57,6 +57,8 @@ public abstract class SimulatorInstance implements SystemConstants {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
+				PhysicsWindow.changeWindow("Menu");
 			}
 			
 		});
@@ -83,6 +85,17 @@ public abstract class SimulatorInstance implements SystemConstants {
 		
 		//Data Written by sim
 		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
+	}
+	
+	public void UnLoadData() {
+		//Bind buttons to infopane
+		//InitializeButtonHandlers();
+		
+		//Data Read by sim
+		PhysicsWindow.sharedData.clearReadData(data_shared_read);
+		
+		//Data Written by sim
+		PhysicsWindow.sharedData.clearWriteData(data_shared_write_independant, data_shared_write_dependant);
 	}
 
 }
