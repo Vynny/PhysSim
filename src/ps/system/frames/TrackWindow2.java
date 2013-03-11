@@ -213,10 +213,10 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		
 		for (int i = 0; i < Marathoners.length; i++) {
 			Marathoners[i] = new Person(
-					(String) MenuWindow.marathonerAttributes[i][0],
-					(Color) MenuWindow.marathonerAttributes[i][1],
-					(Color) MenuWindow.marathonerAttributes[i][2],
-					(Color) MenuWindow.marathonerAttributes[i][3]);
+					(String) marathonerAttributes[i][0],
+					(Color) marathonerAttributes[i][1],
+					(Color) marathonerAttributes[i][2],
+					(Color) marathonerAttributes[i][3]);
 		}
 		
 }
