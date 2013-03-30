@@ -29,7 +29,7 @@ public class ChartMaker implements SystemConstants {
 	//the data_shared_write_dependant object array in the simulator plugin. 
 	private ObservableList<XYChart.Series<Number, Number>> Data;
 
-	private static Object[] keys = DataWrite_dependant.keySet().toArray();
+	private static Object[] keys = DATAWRITE_dependant.keySet().toArray();
     private static CheckBox[] cbs = new CheckBox[keys.length];
 	
 	private NumberAxis xAxis;
@@ -47,7 +47,7 @@ public class ChartMaker implements SystemConstants {
 		xAxis = new NumberAxis();
 		yAxis = new NumberAxis();
 		
-		timeline = (Timeline) DataWrite_independant.get("Time");
+		timeline = (Timeline) DATAWRITE_independant.get("Time");
 		
 		//DEBUG: Print all dependant key values
 		for (int i = 0; i < keys.length; i++) {
@@ -101,7 +101,7 @@ public class ChartMaker implements SystemConstants {
 
 				for (int i = 0; i < keys.length; i++) {
 					if (cbs[i].selectedProperty().getValue().equals(true)) {
-					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DataWrite_dependant.get(keys[i]).getTranslateX()));
+					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_dependant.get(keys[i]).getTranslateX()));
 					}
 				}
 			}

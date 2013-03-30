@@ -41,10 +41,10 @@ public interface SystemConstants {
 	//DataExchange
 	
 	//->DataWrite
-	LinkedHashMap<String, Node> DataWrite_dependant = PhysicsWindow.sharedData.getDataWrite_dependant();
-	LinkedHashMap<String, Timeline> DataWrite_independant = PhysicsWindow.sharedData.getDataWrite_independant(); 
+	LinkedHashMap<String, Node> DATAWRITE_dependant = PhysicsWindow.sharedData.getDataWrite_dependant();
+	LinkedHashMap<String, Timeline> DATAWRITE_independant = PhysicsWindow.sharedData.getDataWrite_independant(); 
 	
 	//->DataRead
-	LinkedHashMap<String, Number> dataRead = PhysicsWindow.sharedData.getDataRead();
+	LinkedHashMap<String, Number> DATAREAD = PhysicsWindow.sharedData.getDataRead();
 										
 }
