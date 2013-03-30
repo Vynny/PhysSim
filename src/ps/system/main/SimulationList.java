@@ -2,14 +2,16 @@ package ps.system.main;
 
 import java.util.LinkedHashMap;
 
+import ps.system.api.JoFrame;
 import ps.system.api.SimulatorInstance;
+import ps.system.frames.JoBounceBall;
 import ps.system.frames.TrackWindow;
 import ps.system.frames.TrackWindow2;
 
 public class SimulationList {
 	
 	// Simulation list
-	public static LinkedHashMap<String, SimulatorInstance> simulationList = new LinkedHashMap<String, SimulatorInstance>();
+	public static LinkedHashMap<String, Object> simulationList = new LinkedHashMap<String, Object>();
 	
 	/*
 	 * -->Adding an element to the simulation list will automatically add it to the main menu and handle 
@@ -37,6 +39,7 @@ public class SimulationList {
 		 * Mechanics
 		 */
 		simulationList.put("Mechanics_Projectile Motion", new TrackWindow("Projectile Motion"));
+		simulationList.put("Mechanics_Bouncing Ball", new JoBounceBall());
 
 		/*
 		 * Waves, Optics and Modern Physics

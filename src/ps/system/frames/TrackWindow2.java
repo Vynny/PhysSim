@@ -1,33 +1,26 @@
 package ps.system.frames;
 
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
-import ps.logic.beans.TimerBean;
-import ps.system.api.SimulatorInstance;
-import ps.system.main.JFXPanes;
-import ps.system.main.PhysicsWindow;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.Property;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import ps.logic.beans.TimeBean;
+import ps.system.api.SimulatorInstance;
+import ps.system.main.PhysicsWindow;
 
 public class TrackWindow2 extends SimulatorInstance implements Constants {
 
@@ -84,8 +77,8 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 	}
 	
 	private static VBox StatusMenu() {
-		final TimerBean timer = new TimerBean();
-		timer.setTimer(0);
+		final TimeBean timer = new TimeBean();
+		timer.setTime(0);
 		
 		VBox statusPane = new VBox();
 		statusPane.setStyle(BGCOLOR);
@@ -135,8 +128,8 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 						}
 
 					} else if (!marathonFinished[i]) {
-						timer.setTimer((int) runners.getCurrentTime().toMillis());
-						trackText[i].setText(text + timer.getTimer() + "ms");
+						timer.setTime((int) runners.getCurrentTime().toMillis());
+						trackText[i].setText(text + timer.getTime() + "ms");
 					}
 				}
 			}
@@ -251,6 +244,6 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
 
 		// Data Written by sim
-		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
+		PhysicsWindow.sharedData.addWriteDataJFX(data_shared_write_independant, data_shared_write_dependant);
 	}
 }

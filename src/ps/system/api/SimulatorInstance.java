@@ -84,7 +84,7 @@ public abstract class SimulatorInstance implements SystemConstants {
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
 		
 		//Data Written by sim
-		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
+		PhysicsWindow.sharedData.addWriteDataJFX(data_shared_write_independant, data_shared_write_dependant);
 	}
 	
 	public void UnLoadData() {
@@ -95,7 +95,7 @@ public abstract class SimulatorInstance implements SystemConstants {
 		PhysicsWindow.sharedData.clearReadData(data_shared_read);
 		
 		//Data Written by sim
-		PhysicsWindow.sharedData.clearWriteData(data_shared_write_independant, data_shared_write_dependant);
+		PhysicsWindow.sharedData.clearWriteDataJFX(data_shared_write_independant, data_shared_write_dependant);
 	}
 
 }

@@ -13,7 +13,9 @@ import javax.swing.JSplitPane;
 
 import ps.logic.beans.SimulationIDBean;
 import ps.system.api.ChartMaker;
+import ps.system.api.JoFrame;
 import ps.system.api.SimulatorInstance;
+import ps.system.frames.JoBounceBall;
 
 public class JFXPanes extends JPanel implements SystemConstants {
 
@@ -22,13 +24,27 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	private static JPanel bottomPane;
 	private static JPanel menuPane;
 
+	// Swing components
+	private JoFrame SwingSimulation;
+	
 	// JavaFX components
-	private SimulatorInstance JFXsimulation;
-	private static ChartMaker JFXchart;
-	private MainMenu JFXmenu;
-	public static InfoPane JFXinput;
+	private SimulatorInstance JFXSimulation;
+	private MainMenu JFXMenu;
+	private static ChartMaker JFXChart;
+	public static InfoPane JFXInput;
 
-	// Containers for swing and JavaFX integration
+	private JPanel window_Menu;
+	private JPanel window_Simulation;
+	private JPanel window_Graph;
+	
+	/*
+	 * Containers for swing and JavaFX integration
+	 */
+	
+	//Swing
+	private static JPanel JPanel_Simulation = new JPanel();
+	
+	//JavaFX
 	private static JFXPanel JFXPanel_Simulation = new JFXPanel();
 	private static JFXPanel JFXPanel_Graph = new JFXPanel();
 	private static JFXPanel JFXPanel_Input = new JFXPanel();
@@ -42,15 +58,14 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 		// this.simulationID = simulationID;
 		// Create menu panel
-		JPanel window_Menu = new JPanel(new BorderLayout());
+		window_Menu = new JPanel(new BorderLayout());
 		window_Menu.add(JFXPanel_Menu, BorderLayout.CENTER);
 
 		// Create panel dedicated to showing the simulation
-		JPanel window_Simulation = new JPanel(new BorderLayout());
-		window_Simulation.add(JFXPanel_Simulation, BorderLayout.CENTER);
+		window_Simulation = new JPanel(new BorderLayout());
 
 		// Create panel dedicated to showing graphs
-		JPanel window_Graph = new JPanel(new BorderLayout());
+		window_Graph = new JPanel(new BorderLayout());
 		window_Graph.add(JFXPanel_Graph, BorderLayout.CENTER);
 
 		// Create panel dedicated to showing input and buttons
@@ -58,8 +73,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		bottomPane.add(JFXPanel_Input, BorderLayout.CENTER);
 
 		// Add panels to horizontally separated panes
-		seperatedPanes = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				window_Simulation, window_Graph);
+		seperatedPanes = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, window_Simulation, window_Graph);
 		seperatedPanes.setResizeWeight(JFXPanes_RESIZEWEIGHT);
 		seperatedPanes.setContinuousLayout(JFXPanes_CONTINUOUSLAYOUT);
 
@@ -82,8 +96,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		SimulationList simList = new SimulationList();
 
 		if (simulationID.getSimulationID() == null) {
-			JFXmenu = new MainMenu();
-			initJFX_Module(JFXPanel_Menu, JFXmenu.getScene());
+			JFXMenu = new MainMenu();
+			initJFX_Module(JFXPanel_Menu, JFXMenu.getScene());
 		}
 
 		simulationID.SimulationIDProperty().addListener(
@@ -94,25 +108,35 @@ public class JFXPanes extends JPanel implements SystemConstants {
 						System.out.println(simulationID.getSimulationID());
 
 						if (!(simulationID.getSimulationID().equals(" "))) {
+							
 							// Initialize Simulation Content
-							JFXsimulation = SimulationList.simulationList.get(simulationID.getSimulationID());
-							JFXsimulation.LoadData();
+							Object genericSimulation = SimulationList.simulationList.get(simulationID.getSimulationID());
+							
+							if (genericSimulation instanceof SimulatorInstance) {
+								JFXSimulation = (SimulatorInstance) genericSimulation;
+								JFXSimulation.LoadData();
+								window_Simulation.add(JFXPanel_Simulation, BorderLayout.CENTER);
+								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstance) JFXSimulation).getScene());
+							} else {
+								SwingSimulation = (JoFrame) genericSimulation;
+								SwingSimulation.LoadData();
+								window_Simulation.add(JPanel_Simulation, BorderLayout.CENTER);
+							}
 
 							// Initialize Chart for content
-							JFXPanes.JFXchart = new ChartMaker();
+							JFXPanes.JFXChart = new ChartMaker();
 
 							// Initialize InfoPane for content
-							JFXPanes.JFXinput = new InfoPane();
+							JFXPanes.JFXInput = new InfoPane();
 
-							initJFX_Module(JFXPanel_Simulation, ((SimulatorInstance) JFXsimulation).getScene());
-							initJFX_Module(JFXPanel_Graph, JFXchart.getScene());
-							initJFX_Module(JFXPanel_Input, JFXinput.getScene());
+							initJFX_Module(JFXPanel_Graph, JFXChart.getScene());
+							initJFX_Module(JFXPanel_Input, JFXInput.getScene());
 						} else {
 							/*
 							 * TO DO:
 							 * 	-> Fix data unloading to properly load according chart 
 							 */
-							JFXsimulation.UnLoadData();
+							JFXSimulation.UnLoadData();
 							PhysicsWindow.changeWindow("Menu");
 						}
 					}

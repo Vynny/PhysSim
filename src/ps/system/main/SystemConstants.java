@@ -3,6 +3,7 @@ package ps.system.main;
 import java.util.LinkedHashMap;
 
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 
 public interface SystemConstants {
@@ -34,15 +35,19 @@ public interface SystemConstants {
 	boolean MainSplitPanes_CONTINUOUSLAYOUT = true;
 
 	/*
-	 * ----------------------LinkedHashMapS----------------------
+	 * ----------------------LinkedHashMaps----------------------
 	 * 
 	 */
 	
 	//DataExchange
 	
-	//->DataWrite
-	LinkedHashMap<String, Node> DATAWRITE_dependant = PhysicsWindow.sharedData.getDataWrite_dependant();
-	LinkedHashMap<String, Timeline> DATAWRITE_independant = PhysicsWindow.sharedData.getDataWrite_independant(); 
+	//->DataWrite JFX
+	LinkedHashMap<String, Node> DATAWRITE_JFX_dependant = PhysicsWindow.sharedData.getDataWriteJFX_dependant();
+	LinkedHashMap<String, Timeline> DATAWRITE_JFX_independant = PhysicsWindow.sharedData.getDataWriteJFX_independant(); 
+	
+	//->DataWrite Swing
+	LinkedHashMap<String, SimpleDoubleProperty> DATAWRITE_Swing_dependant = PhysicsWindow.sharedData.getDataWriteSwing_dependant();
+	LinkedHashMap<String, SimpleDoubleProperty> DATAWRITE_Swing_independant = PhysicsWindow.sharedData.getDataWriteSwing_independant(); 
 	
 	//->DataRead
 	LinkedHashMap<String, Number> DATAREAD = PhysicsWindow.sharedData.getDataRead();

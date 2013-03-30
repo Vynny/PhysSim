@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import ps.logic.beans.TimerBean;
+import ps.logic.beans.TimeBean;
 import ps.system.api.SimulatorInstance;
 import ps.system.main.PhysicsWindow;
 
@@ -78,8 +78,8 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 	}
 	
 	private static VBox StatusMenu() {
-		final TimerBean timer = new TimerBean();
-		timer.setTimer(0);
+		final TimeBean timer = new TimeBean();
+		timer.setTime(0);
 		
 		VBox statusPane = new VBox();
 		statusPane.setStyle(BGCOLOR);
@@ -129,8 +129,8 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 						}
 
 					} else if (!marathonFinished[i]) {
-						timer.setTimer((int) runners.getCurrentTime().toMillis());
-						trackText[i].setText(text + timer.getTimer() + "ms");
+						timer.setTime((int) runners.getCurrentTime().toMillis());
+						trackText[i].setText(text + timer.getTime() + "ms");
 					}
 				}
 			}
@@ -245,7 +245,7 @@ public class TrackWindow extends SimulatorInstance implements Constants {
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
 
 		// Data Written by sim
-		PhysicsWindow.sharedData.addWriteData(data_shared_write_independant, data_shared_write_dependant);
+		PhysicsWindow.sharedData.addWriteDataJFX(data_shared_write_independant, data_shared_write_dependant);
 	}
 	
 }
