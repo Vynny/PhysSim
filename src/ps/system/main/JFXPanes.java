@@ -114,20 +114,31 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							
 							if (genericSimulation instanceof SimulatorInstance) {
 								JFXSimulation = (SimulatorInstance) genericSimulation;
-								JFXSimulation.LoadData();
 								window_Simulation.add(JFXPanel_Simulation, BorderLayout.CENTER);
 								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstance) JFXSimulation).getScene());
+								
+								JFXSimulation.LoadData();
+								
+								// Initialize Chart for content
+								JFXPanes.JFXChart = new ChartMaker(ChartMaker.JFXDATASET);
+
+								// Initialize InfoPane for content
+								JFXPanes.JFXInput = new InfoPane();
+								
 							} else {
 								SwingSimulation = (JoFrame) genericSimulation;
+								JPanel_Simulation = SwingSimulation;
+								window_Simulation.add(JPanel_Simulation);
+								
 								SwingSimulation.LoadData();
-								window_Simulation.add(JPanel_Simulation, BorderLayout.CENTER);
+								
+								// Initialize Chart for content
+								JFXPanes.JFXChart = new ChartMaker(ChartMaker.SWINGDATASET);
+
+								// Initialize InfoPane for content
+								JFXPanes.JFXInput = new InfoPane();
 							}
 
-							// Initialize Chart for content
-							JFXPanes.JFXChart = new ChartMaker();
-
-							// Initialize InfoPane for content
-							JFXPanes.JFXInput = new InfoPane();
 
 							initJFX_Module(JFXPanel_Graph, JFXChart.getScene());
 							initJFX_Module(JFXPanel_Input, JFXInput.getScene());
@@ -146,6 +157,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	}
 
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
+		panel.setScene(scene);
+	}
+	
+	private static void initSwing_Module(JFXPanel panel, Scene scene) {
 		panel.setScene(scene);
 	}
 

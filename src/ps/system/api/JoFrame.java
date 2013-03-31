@@ -19,10 +19,14 @@ public class JoFrame extends JPanel implements Runnable {
 	protected Graphics dbGraphics;
 
 	// Time variables
-	protected double time = 0;
-	TimeBean timeBean = new TimeBean();
+	protected TimeBean timeBean = new TimeBean();
+	protected TimeBean timeBeanLocal = new TimeBean();
+
 	protected double secondsInit = 0;
 	protected double secondsCurrent = 0;
+	
+	protected double secondsInitLocal = 0;
+	protected double secondsCurrentLocal = 0;
 
 	// Main Animation Thread
 	protected Thread anim;
@@ -47,12 +51,11 @@ public class JoFrame extends JPanel implements Runnable {
 
 	public void init() {
 		// Initialize start time of animation
-		secondsInit = System.currentTimeMillis();
+		secondsInit = secondsInitLocal = System.currentTimeMillis(); 
 	}
 
 	// Standard thread start
 	public void start() {
-		System.out.println("START-outer()");
 		if (anim == null) {
 			anim = new Thread(this);
 			anim.start();
@@ -62,7 +65,12 @@ public class JoFrame extends JPanel implements Runnable {
 	// Standard thread stop
 	public void stop() {
 		if (anim != null)
-			anim = null;
+			try {
+				anim.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	/*---------------------------------------------------------------------
@@ -77,9 +85,10 @@ public class JoFrame extends JPanel implements Runnable {
 		while (true) {
 
 			secondsCurrent = System.currentTimeMillis() - secondsInit;
+			secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
+			
 			timeBean.setTime(secondsCurrent / 1000); 
-
-			System.out.println("CUR: " + timeBean.getTime());
+			timeBeanLocal.setTime(secondsCurrentLocal / 1000); 
 
 			animationLogic();
 
@@ -118,6 +127,11 @@ public class JoFrame extends JPanel implements Runnable {
 
 	}
 	
+	public void resetLocalTime() {
+		secondsInitLocal = System.currentTimeMillis();
+	}
+
+	
 	/*---------------------------------------------------------------------
 							DATASTORE LOADING METHODS
 	 *-------------------------------------------------------------------*/
@@ -135,14 +149,14 @@ public class JoFrame extends JPanel implements Runnable {
 	}
 	
 	public void LoadData() {
-		//Add Universal Time
+	/*	//Add Universal Time
 		data_shared_write_independant = new Object[][] { {"Time", timeBean} };
 		
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
 
 		// Data Written by sim
-		PhysicsWindow.sharedData.addWriteDataSwing(data_shared_write_independant, data_shared_write_dependant);
+		PhysicsWindow.sharedData.addWriteDataSwing(data_shared_write_independant, data_shared_write_dependant);*/
 	}
 
 	public void UnLoadData() {
