@@ -12,84 +12,96 @@ public class JoBounceBall extends JoFrame {
 	/*
 	 * --------------- VARIABLES ---------------
 	 * 
-	 * 
-	 * -> g is scaled 300 times up to take into account how small the pixels are.
-	 * other wise its like throwing a 30 diameter ball up in the air and looking
-	 * at it from a distance
-	 * 
 	 */
 	
 	int SPACECONSTANT = 10;
 
 	int position = 0;
-	double mass = 1; //Mass of object
-	double COR = 0.7; //Coefficient of restitution (1 - bounciest, 0 - not bouncy)
-	double y = 600; //y position
-	double yMaxHeight = y; //Initial y position
-	double yMaxHeightLast = yMaxHeight;
-	double ydamp = 0;
-	SimVariableBean yBean = new SimVariableBean();
-	double velocityFinal = 0;
-	double v = -1300;
+	// all variables that affect the simulation are here.
+	double y = 500;
+	double x = 40;
+	double v = -700;
+	double time = 0;
 	double frame = 0;
 	double high = 0;
-//	double g = 9.8 * 300;
-	double g = 9.81 * SPACECONSTANT;
+	double secondsInit = 0;
+	double secondsCurrent = 0;
+	double g = 9.8 * 200;
+	double damping = 90;
+	double xspeed = 1;
+	int framesOnGround;
 	
-	//TESTING
+	// TESTING
 	public static int SIM_basetime = 5;
 	public static double SIM_distance = 500;
 	
+	SimVariableBean positionBean = new SimVariableBean();
+	
+	
 	public JoBounceBall() {		
-		yBean.setValue(y);
-
-		start();
+		positionBean.setValue(y);
 	}
 
 	public void animationLogic() {
 
-		System.out.println("y: " + yBean.getValue());
-		System.out.println("yMaxHeight: " + yMaxHeight);
-		System.out.println("yMaxHeightL: " + yMaxHeightLast);
+		System.out.println("y: " + positionBean.getValue());
 
-		// Fall from max height
-		if (y <= 0 && yMaxHeight <= 0 && velocityFinal <= 0){
-			System.out.println("STOPPED");
-			stop();
-		} else if (yBean.getValue() > 0 && yMaxHeight == yMaxHeightLast) {
-
-			// Height = Height(initial) - 1/2g*t^2
-			ydamp = (0.5 * ((g) * (Math.pow(timeBeanLocal.getTime(), 2))));
-			yBean.setValue(yMaxHeight - ydamp);
-			repaint();
-			
-		} else if (yMaxHeight > yBean.getValue() && yMaxHeightLast > yMaxHeight && yBean.getValue() != yMaxHeight) { // Going up to new max height
-
-			ydamp = velocityFinal - (0.5 * ((g) * (Math.pow(timeBeanLocal.getTime(), 2)))) ;
-			System.out.println("ydamp: " + ydamp);
-			yBean.setValue(yBean.getValue() + ydamp);
-			
-			if (yBean.getValue() >= yMaxHeight) {
-				resetLocalTime();
-				yMaxHeightLast = yMaxHeight;
-			}
-			
-			repaint();
-			
-		}  else if (yBean.getValue() <= 0) { // New height calculation when ground touched
-			
-			// Final velocity right as it hits the floor
-			velocityFinal = (COR * Math.sqrt(2 * g * yMaxHeight));
-			System.out.println("vf: " + velocityFinal);
-			// This is the new max height it goes to after the fall
-			yMaxHeight = ((Math.pow(velocityFinal, 2)) / (2 * g));
-			
+		/*high = (v * timeBeanLocal.getTime() + (0.5 * g * (Math.pow(timeBeanLocal.getTime(), 2))));
+		positionBean.setValue((int) (y + high));
+         
+         
+		if ((int) (positionBean.getValue() + high) > y && v < 0) {
+			// This resets the time of the system to zero everytime the ball
+			// hits the floor
 			resetLocalTime();
-			repaint();
-			
-		} 
+			//v *= COR;
 
-	} 
+		} else {
+			repaint();
+		}*/
+		
+		if ((int) (y + high) >= y) {
+			framesOnGround++;
+			if (framesOnGround >= 7) {
+				xspeed = 0;
+			}
+		} else {
+			framesOnGround = 0;
+		}
+		x = x + xspeed;
+		
+		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
+		positionBean.setValue((int) (y + high));
+		
+		if ((v + damping) >= 0) {
+			position = (int) y;
+			v = 0;
+		}
+		
+		if ((int) (y + high) > y && v < 0) {
+			// This resets the time of the system to zero everytime the ball
+			// hits the floor
+			resetLocalTime();
+			
+			if (v < 0) {
+				v = v + damping;
+			}
+			if (xspeed > 0) {
+				xspeed -= 0.3;
+				if (xspeed < 0) {
+					xspeed = 0;
+				}
+			} else {
+				xspeed = 0;
+			}
+			System.out.println("xspeed " + xspeed);
+
+		} else {
+			repaint();
+			System.out.println("v " + v);
+		}
+
+	}
 
 
 	public void paint(Graphics g) {
@@ -100,8 +112,8 @@ public class JoBounceBall extends JoFrame {
 		g.setColor(Color.darkGray);
 		g.fillRect(0, 500, 900, 100);
 		g.setColor(Color.white);
-		g.fillOval(200, (int) yBean.getValue(), 30, 30);
-		g.drawString("yPos: " + yBean.getValue(), 200, 40);
+		g.fillOval(200, (int) positionBean.getValue(), 30, 30);
+		g.drawString("yPos: " + positionBean.getValue(), 200, 40);
 		g.drawString("SSS: " + secondsCurrent, 200, 70);
 		g.drawString("Anim Time: " + timeBean.getTime(), 200, 100);
 
@@ -111,7 +123,7 @@ public class JoBounceBall extends JoFrame {
 		
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
-		data_shared_write_dependant = new Object[][] { {"Ball Y", yBean.getSimVariableBeanProperty()} };
+		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()} };
 	
 		data_shared_read = new Object[0][0] ; 
 

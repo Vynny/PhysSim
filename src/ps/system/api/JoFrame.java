@@ -19,7 +19,10 @@ public class JoFrame extends JPanel implements Runnable {
 	protected Graphics dbGraphics;
 
 	// Time variables
+	
+	//GLOBAL Time Bean
 	protected TimeBean timeBean = new TimeBean();
+	//INSTANCE Time Bean: Can be reset without affecting graph data
 	protected TimeBean timeBeanLocal = new TimeBean();
 
 	protected double secondsInit = 0;
@@ -30,6 +33,7 @@ public class JoFrame extends JPanel implements Runnable {
 
 	// Main Animation Thread
 	protected Thread anim;
+	protected boolean RUNNING = false;
 
 	// Data to load DataStore hashmaps with (for io between program components)
 	public Object[][] data_shared_read;
@@ -57,6 +61,7 @@ public class JoFrame extends JPanel implements Runnable {
 	// Standard thread start
 	public void start() {
 		if (anim == null) {
+			RUNNING = true;
 			anim = new Thread(this);
 			anim.start();
 		}
@@ -64,13 +69,10 @@ public class JoFrame extends JPanel implements Runnable {
 
 	// Standard thread stop
 	public void stop() {
-		if (anim != null)
-			try {
-				anim.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (anim != null) {
+			RUNNING = false;
+			anim = null;
+		}
 	}
 
 	/*---------------------------------------------------------------------
@@ -81,18 +83,20 @@ public class JoFrame extends JPanel implements Runnable {
 	|      
 	 *-------------------------------------------------------------------*/
 	public void run() {
-
-		while (true) {
+	
+		while (RUNNING) {
 
 			secondsCurrent = System.currentTimeMillis() - secondsInit;
 			secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
 			
 			timeBean.setTime(secondsCurrent / 1000); 
+			System.out.println("TimeCur: " + timeBean.getTime());
 			timeBeanLocal.setTime(secondsCurrentLocal / 1000); 
+			System.out.println("TimeCurLoc: " + timeBeanLocal.getTime());
 
 			animationLogic();
 
-			// the 17 is 17 milliseconds of sleep between frames which is 60fps
+			//17 milliseconds of sleep between frames which is 60fps
 			try {
 				Thread.sleep(17);
 			} catch (InterruptedException e) {
@@ -115,6 +119,10 @@ public class JoFrame extends JPanel implements Runnable {
 	 *-------------------------------------------------------------------*/
 	public void animationLogic() {
 
+	}
+	
+	public void resetState() {
+		
 	}
 
 	/*---------------------------------------------------------------------

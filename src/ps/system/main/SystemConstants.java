@@ -31,8 +31,18 @@ public interface SystemConstants {
 	double JFXPanes_RESIZEWEIGHT = 0.5;
 	double MainSplitPanes_RESIZEWEIGHT = 0.99;
 	
-	boolean JFXPanes_CONTINUOUSLAYOUT = true;
-	boolean MainSplitPanes_CONTINUOUSLAYOUT = true;
+	boolean JFXPanes_CONTINUOUSLAYOUT = false;
+	boolean MainSplitPanes_CONTINUOUSLAYOUT = false;
+	
+	/*
+	 * Swing handler constants
+	 */
+	
+	//Pixels per standard unit measurement (Unit: meter)
+	//100pixels = 1m
+	int PIXELRATIO = 100;
+	
+	
 
 	/*
 	 * ----------------------LinkedHashMaps----------------------

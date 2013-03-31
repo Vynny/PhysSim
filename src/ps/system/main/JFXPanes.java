@@ -127,8 +127,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								
 							} else {
 								SwingSimulation = (JoFrame) genericSimulation;
-								JPanel_Simulation = SwingSimulation;
-								window_Simulation.add(JPanel_Simulation);
+								window_Simulation.add(SwingSimulation, BorderLayout.CENTER);
 								
 								SwingSimulation.LoadData();
 								
@@ -136,7 +135,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								JFXPanes.JFXChart = new ChartMaker(ChartMaker.SWINGDATASET);
 
 								// Initialize InfoPane for content
-								JFXPanes.JFXInput = new InfoPane();
+								JFXPanes.JFXInput = new InfoPane(SwingSimulation);
 							}
 
 
