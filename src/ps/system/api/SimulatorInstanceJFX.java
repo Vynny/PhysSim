@@ -4,11 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import ps.system.main.InfoPane;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
 
-public abstract class SimulatorInstance implements SystemConstants { 
+public abstract class SimulatorInstanceJFX implements SystemConstants { 
 
 	//Data to load DataStore hashmaps with
 	public Object[][] data_shared_read;
@@ -30,7 +29,7 @@ public abstract class SimulatorInstance implements SystemConstants {
 	}
 	
 	//Constructor
-	public SimulatorInstance() {
+	public SimulatorInstanceJFX() {
 		
 	}
 	
@@ -88,9 +87,6 @@ public abstract class SimulatorInstance implements SystemConstants {
 	}
 	
 	public void UnLoadData() {
-		//Bind buttons to infopane
-		//InitializeButtonHandlers();
-		
 		//Data Read by sim
 		PhysicsWindow.sharedData.clearReadData(data_shared_read);
 		

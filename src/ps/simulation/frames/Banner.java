@@ -1,4 +1,4 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

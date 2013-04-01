@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import ps.logic.beans.TimeBean;
 import ps.system.main.PhysicsWindow;
 
-public class JoFrame extends JPanel implements Runnable {
+public class SimulatorInstanceSwing extends JPanel implements Runnable {
 
 	/*---------------------------------------------------------------------
 								VARIABLE INIT
@@ -22,8 +22,10 @@ public class JoFrame extends JPanel implements Runnable {
 	
 	//GLOBAL Time Bean
 	protected TimeBean timeBean = new TimeBean();
+	protected boolean timeRUNNING = false;
 	//INSTANCE Time Bean: Can be reset without affecting graph data
 	protected TimeBean timeBeanLocal = new TimeBean();
+	protected boolean timeLocalRUNNING = false;
 
 	protected double secondsInit = 0;
 	protected double secondsCurrent = 0;
@@ -45,7 +47,7 @@ public class JoFrame extends JPanel implements Runnable {
 								CONSTRUCTOR(S)
 	 *-------------------------------------------------------------------*/
 
-	public JoFrame() {
+	public SimulatorInstanceSwing() {
 		init();
 	}
 
@@ -56,6 +58,8 @@ public class JoFrame extends JPanel implements Runnable {
 	public void init() {
 		// Initialize start time of animation
 		secondsInit = secondsInitLocal = System.currentTimeMillis(); 
+		startTime();
+		startLocalTime();
 	}
 
 	// Standard thread start
@@ -86,9 +90,17 @@ public class JoFrame extends JPanel implements Runnable {
 	
 		while (RUNNING) {
 
-			secondsCurrent = System.currentTimeMillis() - secondsInit;
-			secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
-			
+			if (timeRUNNING && timeLocalRUNNING) {
+				secondsCurrent = System.currentTimeMillis() - secondsInit;
+				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
+			} else if (!timeRUNNING) {
+
+				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
+			} else if (!timeLocalRUNNING) {
+
+				secondsCurrent = System.currentTimeMillis() - secondsInit;
+			}
+
 			timeBean.setTime(secondsCurrent / 1000); 
 			System.out.println("TimeCur: " + timeBean.getTime());
 			timeBeanLocal.setTime(secondsCurrentLocal / 1000); 
@@ -131,8 +143,28 @@ public class JoFrame extends JPanel implements Runnable {
 	|  Purpose:  Instance specific graphics
 	|
 	 *-------------------------------------------------------------------*/
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	}
+	
+	public void startTime() {
+		timeRUNNING = true;
+	}
+	
+	public void stopTime() {
+		timeRUNNING = false;
+	}
+	
+	public void resetTime() {
+		secondsInit = System.currentTimeMillis();
+	}
 
+	public void startLocalTime() {
+		timeLocalRUNNING = true;
+	}
+	
+	public void stopLocalTime() {
+		timeLocalRUNNING = false;
 	}
 	
 	public void resetLocalTime() {
@@ -157,17 +189,21 @@ public class JoFrame extends JPanel implements Runnable {
 	}
 	
 	public void LoadData() {
-	/*	//Add Universal Time
+		//Add Universal Time
 		data_shared_write_independant = new Object[][] { {"Time", timeBean} };
 		
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
 
 		// Data Written by sim
-		PhysicsWindow.sharedData.addWriteDataSwing(data_shared_write_independant, data_shared_write_dependant);*/
+		PhysicsWindow.sharedData.addWriteDataSwing(data_shared_write_independant, data_shared_write_dependant);
 	}
 
 	public void UnLoadData() {
+		
+		//Terminate animation thread
+		stop();
+		
 		// Data Read by sim
 		PhysicsWindow.sharedData.clearReadData(data_shared_read);
 

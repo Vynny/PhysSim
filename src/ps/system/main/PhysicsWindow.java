@@ -8,7 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import ps.system.api.DataStore;
-import ps.system.api.SimulatorInstance;
+import ps.system.api.SimulatorInstanceJFX;
+import ps.system.frames.JFXPanes;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
@@ -17,7 +18,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	public static DataStore sharedData;
 	
 	public static JFXPanes JFXPanes; 
-	public SimulatorInstance simulationDisplay;
+	public SimulatorInstanceJFX simulationDisplay;
 	
 	//CardLayout
 	private static CardLayout windowCards;

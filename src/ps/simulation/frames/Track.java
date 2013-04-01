@@ -1,10 +1,10 @@
-package ps.system.frames;
+package ps.simulation.frames;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Track implements GraphicsConstants {
+public class Track implements TrackGraphicsConstants {
 
     public Track() {
     	

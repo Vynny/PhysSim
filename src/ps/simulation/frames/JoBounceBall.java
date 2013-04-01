@@ -1,13 +1,13 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import ps.logic.beans.SimVariableBean;
-import ps.system.api.JoFrame;
+import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
-public class JoBounceBall extends JoFrame {
+public class JoBounceBall extends SimulatorInstanceSwing {
 
 	/*
 	 * --------------- VARIABLES ---------------
@@ -38,7 +38,7 @@ public class JoBounceBall extends JoFrame {
 	SimVariableBean positionBean = new SimVariableBean();
 	
 	
-	public JoBounceBall() {		
+	public JoBounceBall() {	
 		positionBean.setValue(y);
 	}
 
@@ -74,7 +74,7 @@ public class JoBounceBall extends JoFrame {
 		positionBean.setValue((int) (y + high));
 		
 		if ((v + damping) >= 0) {
-			position = (int) y;
+			positionBean.setValue((int) y);
 			v = 0;
 		}
 		
@@ -104,8 +104,9 @@ public class JoBounceBall extends JoFrame {
 	}
 
 
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 
+		super.paintComponent(g);
 		// Put anything here and it will render on screen (this includes images)
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 600);

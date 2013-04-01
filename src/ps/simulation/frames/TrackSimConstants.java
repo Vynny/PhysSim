@@ -1,9 +1,9 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 import javafx.animation.Interpolator;
 import javafx.scene.paint.Color;
 
-public interface Constants {
+public interface TrackSimConstants {
 		
 	//Titles
 	String WINDOWTITLE = "Assignment 4: The Race";

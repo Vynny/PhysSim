@@ -1,4 +1,4 @@
-package ps.system.main;
+package ps.system.frames;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,10 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ps.system.frames.Banner;
+import ps.simulation.frames.Banner;
+import ps.system.main.PhysicsWindow;
+import ps.system.main.SimulationList;
+import ps.system.main.SystemConstants;
 
 /*
  * 

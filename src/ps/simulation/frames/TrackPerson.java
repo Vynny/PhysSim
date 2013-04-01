@@ -1,4 +1,4 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class Person implements GraphicsConstants {
+public class TrackPerson implements TrackGraphicsConstants {
 
 	private Group athlete = new Group();
 	private String shirtNumber;
@@ -25,7 +25,7 @@ public class Person implements GraphicsConstants {
 	private Color pantsColor;
 	private ParallelTransition marathonerRun;
 
-	public Person(String shirtNumber, Color faceColor, Color shirtColor, Color pantsColor) {
+	public TrackPerson(String shirtNumber, Color faceColor, Color shirtColor, Color pantsColor) {
 		this.shirtNumber = shirtNumber;
 		this.faceColor = faceColor;
 		this.shirtColor = shirtColor;

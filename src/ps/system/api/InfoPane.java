@@ -1,4 +1,4 @@
-package ps.system.main;
+package ps.system.api;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,13 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import ps.system.api.JoFrame;
+import ps.system.main.PhysicsWindow;
 
 
 public class InfoPane {
 	
 	
-	private JoFrame swingInstance;
+	private SimulatorInstanceSwing swingInstance;
 	private Scene scene;
 
 	public Scene getScene() {
@@ -50,7 +50,7 @@ public class InfoPane {
 		root.setCenter(Menu());
 	}
 	
-	public InfoPane(JoFrame swingInstance) {
+	public InfoPane(SimulatorInstanceSwing swingInstance) {
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
 		
@@ -84,6 +84,8 @@ public class InfoPane {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				swingInstance.stop();
+				
 				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
 				PhysicsWindow.changeWindow("Menu");
 			}

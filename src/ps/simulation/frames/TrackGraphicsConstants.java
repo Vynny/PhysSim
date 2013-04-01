@@ -1,7 +1,7 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 
-public interface GraphicsConstants {
+public interface TrackGraphicsConstants {
 	
     //Slideshow constants
     int sFaceWidth = 40;

@@ -1,4 +1,4 @@
-package ps.system.main;
+package ps.system.frames;
 
 import java.awt.BorderLayout;
 
@@ -13,9 +13,12 @@ import javax.swing.JSplitPane;
 
 import ps.logic.beans.SimulationIDBean;
 import ps.system.api.ChartMaker;
-import ps.system.api.JoFrame;
-import ps.system.api.SimulatorInstance;
-import ps.system.frames.JoBounceBall;
+import ps.system.api.InfoPane;
+import ps.system.api.SimulatorInstanceSwing;
+import ps.system.api.SimulatorInstanceJFX;
+import ps.system.main.PhysicsWindow;
+import ps.system.main.SimulationList;
+import ps.system.main.SystemConstants;
 
 public class JFXPanes extends JPanel implements SystemConstants {
 
@@ -24,11 +27,14 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	private static JPanel bottomPane;
 	private static JPanel menuPane;
 
+	//Generic components
+	private Object genericSimulation = null;
+	
 	// Swing components
-	private JoFrame SwingSimulation;
+	private SimulatorInstanceSwing SwingSimulation;
 	
 	// JavaFX components
-	private SimulatorInstance JFXSimulation;
+	private SimulatorInstanceJFX JFXSimulation;
 	private MainMenu JFXMenu;
 	private static ChartMaker JFXChart;
 	public static InfoPane JFXInput;
@@ -40,9 +46,6 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	/*
 	 * Containers for swing and JavaFX integration
 	 */
-	
-	//Swing
-	private static JPanel JPanel_Simulation = new JPanel();
 	
 	//JavaFX
 	private static JFXPanel JFXPanel_Simulation = new JFXPanel();
@@ -110,12 +113,24 @@ public class JFXPanes extends JPanel implements SystemConstants {
 						if (!(simulationID.getSimulationID().equals(" "))) {
 							
 							// Initialize Simulation Content
-							Object genericSimulation = SimulationList.simulationList.get(simulationID.getSimulationID());
+							genericSimulation = SimulationList.simulationList.get(simulationID.getSimulationID());
+							String instanceName = null;
+
+							if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
+								instanceName = (simulationID.getSimulationID()) .split("_")[2];
+
+								try {
+									genericSimulation = Class.forName( SIMFRAMEPATH + instanceName).newInstance();
+								} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+									e.printStackTrace();
+								}
+							}
 							
-							if (genericSimulation instanceof SimulatorInstance) {
-								JFXSimulation = (SimulatorInstance) genericSimulation;
+							if (genericSimulation instanceof SimulatorInstanceJFX) {
+								
+								JFXSimulation = (SimulatorInstanceJFX) genericSimulation;
 								window_Simulation.add(JFXPanel_Simulation, BorderLayout.CENTER);
-								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstance) JFXSimulation).getScene());
+								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								JFXSimulation.LoadData();
 								
@@ -126,7 +141,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								JFXPanes.JFXInput = new InfoPane();
 								
 							} else {
-								SwingSimulation = (JoFrame) genericSimulation;
+								SwingSimulation = (SimulatorInstanceSwing) genericSimulation;
 								window_Simulation.add(SwingSimulation, BorderLayout.CENTER);
 								
 								SwingSimulation.LoadData();
@@ -146,7 +161,23 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							 * TO DO:
 							 * 	-> Fix data unloading to properly load according chart 
 							 */
-							JFXSimulation.UnLoadData();
+							if (genericSimulation instanceof SimulatorInstanceJFX) {
+								JFXSimulation.UnLoadData();
+								JFXSimulation = null;
+								window_Simulation.removeAll();
+								
+								JFXPanes.JFXChart = null;
+								JFXPanes.JFXInput =  null;
+								
+							} else if (genericSimulation instanceof SimulatorInstanceSwing){
+								SwingSimulation.UnLoadData();
+								SwingSimulation = null;
+								window_Simulation.removeAll();
+								
+								JFXPanes.JFXChart = null;
+								JFXPanes.JFXInput =  null;
+							}
+							
 							PhysicsWindow.changeWindow("Menu");
 						}
 					}
@@ -156,10 +187,6 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	}
 
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
-		panel.setScene(scene);
-	}
-	
-	private static void initSwing_Module(JFXPanel panel, Scene scene) {
 		panel.setScene(scene);
 	}
 

@@ -1,4 +1,4 @@
-package ps.system.frames;
+package ps.simulation.frames;
 
 import java.util.Random;
 
@@ -19,14 +19,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import ps.logic.beans.TimeBean;
-import ps.system.api.SimulatorInstance;
+import ps.system.api.SimulatorInstanceJFX;
 import ps.system.main.PhysicsWindow;
 
-public class TrackWindow2 extends SimulatorInstance implements Constants {
+public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstants {
 
 	//Global arrays
 	private static Object[][] marathonerAttributes = new Object[NUMBER_OF_MARATHONERS][NUMBER_OF_ATTRIBUTES];
-	private static Person[] Marathoners = new Person[NUMBER_OF_MARATHONERS];
+	private static TrackPerson[] Marathoners = new TrackPerson[NUMBER_OF_MARATHONERS];
 	private static Timeline runners = new Timeline();
 	private static Text[] trackText = new Text[Marathoners.length];
 	private static boolean[] marathonFinished = new boolean[Marathoners.length];
@@ -40,20 +40,21 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 	public static int SIM_basetime = 5;
 	public static double SIM_distance = 500;
 	
-	public TrackWindow2(String title) {
+	public TrackWindow() {
 		//BEGIN JAVAFX
 		GenerateMarathonerProperties();
+		Handlers();
 
 		for (int i = 0; i < Marathoners.length; i++) {
-			System.out.println("TEST2: " + Marathoners[i].toString());
+			System.out.println("TEST: " + Marathoners[i].toString());
 		}
 		
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
 
-		Banner banner = new Banner(title);
+		//Banner banner = new Banner(title);
 
-		root.setTop(banner.showBanner());
+		//root.setTop(banner.showBanner());
 		root.setCenter(TrackPane());
 		//root.setBottom(BottomMenu());
 	}
@@ -139,7 +140,7 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		return statusPane;
 	}
 	
-	private void Handlers() {
+	private static void Handlers() {
 		
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -178,12 +179,11 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 			
 		});
 		
-		
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				System.out.println("FUNCTIONALITY DISABLED");
+				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
 			}
 			
 		});
@@ -205,7 +205,7 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		}
 		
 		for (int i = 0; i < Marathoners.length; i++) {
-			Marathoners[i] = new Person(
+			Marathoners[i] = new TrackPerson(
 					(String) marathonerAttributes[i][0],
 					(Color) marathonerAttributes[i][1],
 					(Color) marathonerAttributes[i][2],
@@ -225,15 +225,16 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		}
 	}
 	
+	
 	public void LoadData() {
 		
 		data_shared_write_independant = new Object[][] { {"Time", runners} };
 		
-		data_shared_write_dependant = new Object[][] { {"m1-2", Marathoners[0].runnerNode()},
-													   {"m2-2", Marathoners[1].runnerNode()},
-													   {"m3-2", Marathoners[2].runnerNode()},
-													   {"m4-2", Marathoners[3].runnerNode()},
-													   {"m5-2", Marathoners[4].runnerNode()}};
+		data_shared_write_dependant = new Object[][] { {"m1-1", Marathoners[0].runnerNode()},
+													   {"m2-1", Marathoners[1].runnerNode()},
+													   {"m3-1", Marathoners[2].runnerNode()},
+													   {"m4-1", Marathoners[3].runnerNode()},
+													   {"m5-1", Marathoners[4].runnerNode()}};
 		
 		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
 											 {"SIM_distance", SIM_distance}}; 
@@ -246,4 +247,5 @@ public class TrackWindow2 extends SimulatorInstance implements Constants {
 		// Data Written by sim
 		PhysicsWindow.sharedData.addWriteDataJFX(data_shared_write_independant, data_shared_write_dependant);
 	}
+	
 }
