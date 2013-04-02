@@ -186,6 +186,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	}
 
+	public static ChartMaker getJFXChart() {
+		return JFXChart;
+	}
+
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
 		panel.setScene(scene);
 	}

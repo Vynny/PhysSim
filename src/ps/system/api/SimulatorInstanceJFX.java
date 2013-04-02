@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
 
@@ -47,6 +48,7 @@ public abstract class SimulatorInstanceJFX implements SystemConstants {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				JFXPanes.getJFXChart().clearData();
 			}
 
 		});

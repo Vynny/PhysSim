@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import ps.logic.beans.TimeBean;
 import ps.system.api.SimulatorInstanceJFX;
+import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 
 public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstants {
@@ -175,6 +176,7 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 			@Override
 			public void handle(ActionEvent arg0) {
 				ResetTrack();
+				JFXPanes.getJFXChart().clearData();
 			}
 			
 		});

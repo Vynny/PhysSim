@@ -110,16 +110,10 @@ public class ChartMaker implements SystemConstants {
 		yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
-		//Data
-		Data =  FXCollections.observableArrayList();
-		for (int i = 0; i < keys.length; i++) {
-			Data.add(new Series<Number, Number>());
-			Data.get(i).setName("Series: " + keys[i]);
-		}
+		dataInit();
 
 		plotJFXData();
 
-		chart.getData().addAll(Data);
 		return chart;
 	}
 	
@@ -162,16 +156,10 @@ public class ChartMaker implements SystemConstants {
 		yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
-		//Data
-		Data =  FXCollections.observableArrayList();
-		for (int i = 0; i < keys.length; i++) {
-			Data.add(new Series<Number, Number>());
-			Data.get(i).setName("Series: " + keys[i]);
-		}
+		dataInit();
 
 		plotSwingData();
 
-		chart.getData().addAll(Data);
 		return chart;
 	}
 	
@@ -193,6 +181,22 @@ public class ChartMaker implements SystemConstants {
 		});// LISTENER END
 	}
 	
+	private void dataInit() {
+		// Data
+		Data = FXCollections.observableArrayList();
+		for (int i = 0; i < keys.length; i++) {
+			Data.add(new Series<Number, Number>());
+			Data.get(i).setName("Series: " + keys[i]);
+		}
+		
+		chart.getData().addAll(Data);
+	}
+	
+	public void clearData() {
+		chart.getData().clear();
+		dataInit();
+	}
+
 	/*
 	 * CONTENT LEAFS
 	 */

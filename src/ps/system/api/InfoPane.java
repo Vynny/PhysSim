@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 
 
@@ -75,6 +76,41 @@ public class InfoPane {
 			@Override
 			public void handle(ActionEvent arg0) {
 				swingInstance.stop();
+				JFXPanes.getJFXChart().clearData();
+			}
+
+		});
+		
+		
+		backButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				swingInstance.stop();
+				
+				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
+				PhysicsWindow.changeWindow("Menu");
+			}
+			
+		});
+	}
+	
+	private void initalizeJFXButtonHandlers() {
+		
+		startButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				swingInstance.start();
+			}
+		});
+
+		resetButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				swingInstance.stop();
+				JFXPanes.getJFXChart().clearData();
 			}
 
 		});
