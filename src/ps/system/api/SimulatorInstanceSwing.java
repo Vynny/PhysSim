@@ -36,6 +36,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	// Main Animation Thread
 	protected Thread anim;
 	protected boolean RUNNING = false;
+	protected int iterationCount = 0;
 
 	// Data to load DataStore hashmaps with (for io between program components)
 	public Object[][] data_shared_read;
@@ -89,6 +90,9 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	public void run() {
 	
 		while (RUNNING) {
+			
+			if (iterationCount == 0) 
+				runOnce();
 
 			if (timeRUNNING && timeLocalRUNNING) {
 				secondsCurrent = System.currentTimeMillis() - secondsInit;
@@ -131,6 +135,10 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	 *-------------------------------------------------------------------*/
 	public void animationLogic() {
 
+	}
+	
+	public void runOnce() {
+		
 	}
 	
 	public void resetState() {

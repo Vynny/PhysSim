@@ -1,13 +1,22 @@
 package ps.system.api;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
@@ -54,7 +63,8 @@ public class InfoPane implements SystemConstants {
 			System.out.println(i + " DATAREAD: " + DATAREAD.get(test[i]));
 		}
 		
-		root.setCenter(Menu());
+		root.setCenter(variableEditor());
+		root.setBottom(Menu());
 	}
 	
 	public InfoPane(SimulatorInstanceSwing swingInstance) {
@@ -64,8 +74,9 @@ public class InfoPane implements SystemConstants {
 		this.swingInstance = swingInstance;
 		initalizeSwingButtonHandlers();
 
-		root.setCenter(Menu());
-	}
+		root.setCenter(variableEditor());
+		root.setBottom(Menu());
+}
 	
 	private void initalizeSwingButtonHandlers() {
 		
@@ -140,11 +151,76 @@ public class InfoPane implements SystemConstants {
 		pane.setPadding(new Insets(10,10,10,10));
 		pane.setSpacing(500/1.4);
 		pane.setAlignment(Pos.CENTER);
-	
 		
 		pane.getChildren().addAll(startButton, resetButton, backButton);
 		
 		return pane;
+	}
+	
+	private ScrollPane variableEditor() {
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setFitToWidth(true);
+		scrollPane.autosize();
+
+		scrollPane.setContent(variableEditor_node());
+		
+		return scrollPane;
+	}
+	
+	
+	private GridPane variableEditor_node() {
+		GridPane gridPane = new GridPane();
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		gridPane.setPadding(new Insets(25, 15, 25, 15));
+		
+		final Object[] variableNames = DATAREAD.keySet().toArray();
+		
+		int gridCol = 1;
+		int gridRow = 0;
+		
+		for (int i = 0; i < variableNames.length; i++) {
+			final String currentKey = (String) variableNames[i];
+			
+			// Variable Name
+			Label varLabel = new Label(currentKey + ":");
+			varLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+			gridPane.add(varLabel, gridCol, gridRow);
+
+			// Textfield for Editing
+			final TextField varField = new TextField();
+			varField.setAlignment(Pos.CENTER);
+			varField.setText(DATAREAD.get(currentKey).getValue().toString());
+			gridPane.add(varField, gridCol, gridRow + 1);
+
+			//Slider
+			double minSliderValue = 0;
+			double maxSliderValue = (double)DATAREAD.get(currentKey).getValue() * 4;
+			double curSliderValue = (double)DATAREAD.get(currentKey).getValue();
+			
+			Slider varSlider = new Slider((int)minSliderValue, (int)maxSliderValue, (int)curSliderValue);
+			varSlider.setShowTickLabels(true);
+			varSlider.setShowTickMarks(true);
+			varSlider.setMajorTickUnit((double)DATAREAD.get(currentKey).getValue() * 2);
+			varSlider.setMinorTickCount(5);
+			varSlider.setBlockIncrement(10);
+			
+			
+			System.out.println("VARNAME: " + DATAREAD.get(variableNames[i]).getValue());
+			
+			varSlider.valueProperty().addListener(new ChangeListener<Number>() {
+	            public void changed(ObservableValue<? extends Number> ov,  Number old_val, Number new_val) {
+	            	DATAREAD.get(currentKey).setValue(new_val.intValue());
+	            	varField.setText(DATAREAD.get(currentKey).getValue().toString());
+	            }
+	        });
+			
+			gridPane.add(varSlider, gridCol + 1, gridRow + 1);
+
+			gridRow += 4;
+		}
+		
+		return gridPane;
 	}
 
 }

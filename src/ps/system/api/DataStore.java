@@ -3,6 +3,7 @@ package ps.system.api;
 import java.util.LinkedHashMap;
 
 import javafx.animation.Timeline;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 
@@ -13,7 +14,7 @@ public class DataStore {
 	 */
 	
 	// (Example: initial velocity, gravity constant, angle theta, etc)
-	private static LinkedHashMap<String, Number> dataRead = new LinkedHashMap<String, Number>();
+	private static LinkedHashMap<String, Property> dataRead = new LinkedHashMap<String, Property>();
 
 	/*
 	 * Data written by the simulation, for use in graphing and displaying.
@@ -35,14 +36,14 @@ public class DataStore {
 	/*
 	 * Read
 	 */
-	public LinkedHashMap<String, Number> getDataRead() {
+	public LinkedHashMap<String, Property> getDataRead() {
 		return dataRead;
 	}
 
 	// Add Read Data
 	public void addReadData(Object[][] sharedData) {
 		for (int i = 0; i < sharedData.length; i++) {
-			dataRead.put((String) sharedData[i][0], (Number) sharedData[i][1]);
+			dataRead.put((String) sharedData[i][0], (Property) sharedData[i][1]);
 		}
 	}
 
@@ -52,7 +53,7 @@ public class DataStore {
 	}
 
 	// Retrieve Data
-	public Number getDataByKey(String key) {
+	public Property getDataByKey(String key) {
 		return dataRead.get(key);
 	}
 	

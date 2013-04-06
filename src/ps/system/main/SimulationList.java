@@ -56,12 +56,12 @@ public class SimulationList {
 		 */
 		simulationList.put("Mechanics_Projectile Motion_TrackWindow", Mechanics_Projectile_Motion);
 		simulationList.put("Mechanics_Bouncing Ball_JoBounceBall", Mechanics_Bouncing_Ball);
-		simulationList.put("Mechanics_Simple Harmonic Motion_JoSHM", Mechanics_SimpleHarmonicMotion);
 		simulationList.put("Mechanics_Projectile Motion_JoProjectileMotion", Mechanics_ProjectileMotion);
 
 		/*
 		 * Waves, Optics and Modern Physics
 		 */
+		simulationList.put("Waves_Simple Harmonic Motion_JoSHM", Mechanics_SimpleHarmonicMotion);
 		simulationList.put("Waves_Double Slit_TrackWindow2", Waves_DoubleSlit);
 		
 		/*

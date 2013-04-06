@@ -3,6 +3,7 @@ package ps.system.main;
 import java.util.LinkedHashMap;
 
 import javafx.animation.Timeline;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 
@@ -61,6 +62,6 @@ public interface SystemConstants {
 	LinkedHashMap<String, SimpleDoubleProperty> DATAWRITE_Swing_independant = PhysicsWindow.sharedData.getDataWriteSwing_independant(); 
 	
 	//->DataRead
-	LinkedHashMap<String, Number> DATAREAD = PhysicsWindow.sharedData.getDataRead();
+	LinkedHashMap<String, Property> DATAREAD = PhysicsWindow.sharedData.getDataRead();
 										
 }

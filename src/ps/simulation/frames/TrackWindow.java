@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import ps.logic.beans.SimVariableBean;
 import ps.logic.beans.TimeBean;
 import ps.system.api.SimulatorInstanceJFX;
 import ps.system.frames.JFXPanes;
@@ -38,13 +39,18 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 	private static Pane marathonersPane;
 	
 	
-	public static int SIM_basetime = 5;
-	public static double SIM_distance = 500;
+	private static SimVariableBean runDistanceBean = new SimVariableBean();
+	private static SimVariableBean speedModBean = new SimVariableBean();
+	private static SimVariableBean baseTimeBean = new SimVariableBean();
 	
 	public TrackWindow() {
 		//BEGIN JAVAFX
 		GenerateMarathonerProperties();
 		Handlers();
+		
+		runDistanceBean.setValue(500);
+		baseTimeBean.setValue(5);
+		speedModBean.setValue(1);
 
 		for (int i = 0; i < Marathoners.length; i++) {
 			System.out.println("TEST: " + Marathoners[i].toString());
@@ -100,7 +106,7 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 				for (int i = 0; i < trackText.length; i++) {
 					String text = "Track " + (i + 1) + ": ";
 
-					if ((Marathoners[i].runnerNode().getTranslateX() == SIM_distance) && !marathonFinished[i]) {
+					if ((Marathoners[i].runnerNode().getTranslateX() == runDistanceBean.getValue()) && !marathonFinished[i]) {
 						int places = 0;
 						int currentTime = (int) runners.getCurrentTime().toMillis();
 
@@ -150,8 +156,8 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 				runners.setCycleCount(1);
 				
 				for (int i = 0; i < Marathoners.length; i++) {
-					double lapTime = SIM_basetime + (double)((randomNumber.nextInt(10)/2) + randomNumber.nextInt(20)/3)/1.5;
-					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), SIM_distance, interpolators[randomNumber.nextInt(interpolators.length - 1)]);
+					double lapTime = (baseTimeBean.getValue() + (double)((randomNumber.nextInt(10)/2) + randomNumber.nextInt(20)/3)/1.5) * speedModBean.getValue();
+					keyValues[i]= new KeyValue(Marathoners[i].runnerNode().translateXProperty(), runDistanceBean.getValue(), interpolators[randomNumber.nextInt(interpolators.length - 1)]);
 					keyFrames[i] = new KeyFrame(Duration.seconds(lapTime), keyValues[i]);
 					runners.getKeyFrames().addAll(keyFrames[i]);
 				}
@@ -234,8 +240,9 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 													   {"m4-1", Marathoners[3].runnerNode()},
 													   {"m5-1", Marathoners[4].runnerNode()}};
 		
-		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
-											 {"SIM_distance", SIM_distance}}; 
+		data_shared_read = new Object[][]  { {"Distance", runDistanceBean.getSimVariableBeanProperty()}, 
+											 {"Base Time", baseTimeBean.getSimVariableBeanProperty()},
+											 {"Speed Modifier", speedModBean.getSimVariableBeanProperty()}}; 
 		// Bind buttons to infopane
 		Handlers();
 

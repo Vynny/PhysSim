@@ -13,39 +13,37 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	 * --------------- VARIABLES ---------------
 	 * 
 	 */
-	
-	int SPACECONSTANT = 10;
 
-	int position = 0;
-	// all variables that affect the simulation are here.
-	double angle = 30;
-	double y = 500;
-	double x = 40;
-	double vinit = -1000;
-	double v = -1100;
-	double frame = 0;
-	double high = 0;
-	double secondsInit = 0;
-	double secondsCurrent = 0;
-	double g = 9.8 * 200;
-	double damping = 90;
-	double xspeed = 6;
-	int framesOnGround;
+	private double angle = 30;
+	private double y = 500;
+	private double x = 40;
+	private double v = -1100;
+	private double vinit = -1000;
+	private double high = 0;
+	private double g = 9.8 * 200;
+	private double damping = 90;
+	private double xspeed = 6;
+	private int framesOnGround;
 	
-	// TESTING
-	public static int SIM_basetime = 5;
-	public static double SIM_distance = 500;
-	
-	SimVariableBean positionBeanX = new SimVariableBean();
-	SimVariableBean positionBeanY = new SimVariableBean();
+	private SimVariableBean positionBeanX = new SimVariableBean();
+	private SimVariableBean positionBeanY = new SimVariableBean();
+	private SimVariableBean angleBean = new SimVariableBean();
 	
 	
 	public JoProjectileMotion() {	
 		positionBeanY.setValue(y);
 		positionBeanX.setValue(x);
+		angleBean.setValue(angle);
 	}
 
+	public void runOnce() {
+		xspeed = -(vinit * Math.cos(Math.toRadians(angleBean.getValue())))/100;
+		v = (vinit * Math.sin(Math.toRadians(angleBean.getValue())));
+	}
+	
 	public void animationLogic() {
+		System.out.println("xbean: " + positionBeanX.getValue());
+		
 		if ((int) (y + high) >= y) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {
@@ -54,7 +52,7 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 		} else {
 			framesOnGround = 0;
 		}
-		positionBeanX.setValue(x + xspeed);
+		positionBeanX.setValue(positionBeanX.getValue() + xspeed);
 
 		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
 		positionBeanY.setValue(y + high);
@@ -63,9 +61,8 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 			v = 0;
 		}
 		if ((int) (y + high) > y && v < 0) {
-			// this resets the time of the system to zero everytime the ball
-			// hits the floor
 			resetLocalTime();
+			
 			if (v < 0) {
 				v = v + damping;
 			}
@@ -79,14 +76,7 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 			}
 
 		} else {
-			// this if/else prevents it from rendering the ball if its below the
-			// floor
 			repaint();
-
-			// repaint() is what acutally handles the drawing and it calls on
-			// update()
-			// automatically to create a double buffer to reduce image flicker
-			// significantly
 		}
 
 	}
@@ -109,13 +99,15 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	}
 
 	public void LoadData() {
-		
+			
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
 		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBeanY.getSimVariableBeanProperty()},
-												       {"Ball X", positionBeanX.getSimVariableBeanProperty()},};
+												       {"Ball X", positionBeanX.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[0][0] ; 
+		data_shared_read = new Object[][]  { {"Angle", angleBean.getSimVariableBeanProperty()},
+											 {"X Position", positionBeanX.getSimVariableBeanProperty()}, 
+				 							 {"Y Position", positionBeanY.getSimVariableBeanProperty()}}; 
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
