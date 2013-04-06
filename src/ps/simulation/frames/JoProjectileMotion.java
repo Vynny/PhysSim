@@ -7,7 +7,7 @@ import ps.logic.beans.SimVariableBean;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
-public class JoBounceBall extends SimulatorInstanceSwing {
+public class JoProjectileMotion extends SimulatorInstanceSwing {
 
 	/*
 	 * --------------- VARIABLES ---------------
@@ -18,34 +18,34 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 
 	int position = 0;
 	// all variables that affect the simulation are here.
+	double angle = 30;
 	double y = 500;
 	double x = 40;
-	double v = -700;
-	double time = 0;
+	double vinit = -1000;
+	double v = -1100;
 	double frame = 0;
 	double high = 0;
 	double secondsInit = 0;
 	double secondsCurrent = 0;
 	double g = 9.8 * 200;
 	double damping = 90;
-	double xspeed = 1;
+	double xspeed = 6;
 	int framesOnGround;
 	
 	// TESTING
 	public static int SIM_basetime = 5;
 	public static double SIM_distance = 500;
 	
-	SimVariableBean positionBean = new SimVariableBean();
+	SimVariableBean positionBeanX = new SimVariableBean();
+	SimVariableBean positionBeanY = new SimVariableBean();
 	
 	
-	public JoBounceBall() {	
-		positionBean.setValue(y);
+	public JoProjectileMotion() {	
+		positionBeanY.setValue(y);
+		positionBeanX.setValue(x);
 	}
 
 	public void animationLogic() {
-
-		System.out.println("y: " + positionBean.getValue());
-		
 		if ((int) (y + high) >= y) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {
@@ -54,21 +54,18 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		} else {
 			framesOnGround = 0;
 		}
-		x = x + xspeed;
-		
+		positionBeanX.setValue(x + xspeed);
+
 		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
-		positionBean.setValue((int) (y + high));
-		
+		positionBeanY.setValue(y + high);
 		if ((v + damping) >= 0) {
-			positionBean.setValue((int) y);
+			positionBeanY.setValue(y);
 			v = 0;
 		}
-		
 		if ((int) (y + high) > y && v < 0) {
-			// This resets the time of the system to zero everytime the ball
+			// this resets the time of the system to zero everytime the ball
 			// hits the floor
 			resetLocalTime();
-			
 			if (v < 0) {
 				v = v + damping;
 			}
@@ -80,15 +77,19 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 			} else {
 				xspeed = 0;
 			}
-			System.out.println("xspeed " + xspeed);
 
 		} else {
+			// this if/else prevents it from rendering the ball if its below the
+			// floor
 			repaint();
-			System.out.println("v " + v);
+
+			// repaint() is what acutally handles the drawing and it calls on
+			// update()
+			// automatically to create a double buffer to reduce image flicker
+			// significantly
 		}
 
 	}
-
 
 	public void paintComponent(Graphics g) {
 
@@ -99,10 +100,11 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		g.setColor(Color.darkGray);
 		g.fillRect(0, 500, 900, 100);
 		g.setColor(Color.white);
-		g.fillOval(200, (int) positionBean.getValue(), 30, 30);
-		g.drawString("yPos: " + positionBean.getValue(), 200, 40);
-		g.drawString("SSS: " + secondsCurrent, 200, 70);
-		g.drawString("Anim Time: " + timeBean.getTime(), 200, 100);
+		g.fillOval((int) positionBeanX.getValue(), (int) positionBeanY.getValue(), 20, 20);
+		g.setColor(Color.red);
+		g.fillRect(0, 450, 50, 50);
+		g.drawString("" + (y - (int) (y + high)), 200, 10);
+		g.drawString("" + timeBeanLocal.getTime(), 200, 40);
 
 	}
 
@@ -110,7 +112,8 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
-		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
+		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBeanY.getSimVariableBeanProperty()},
+												       {"Ball X", positionBeanX.getSimVariableBeanProperty()},};
 	
 		data_shared_read = new Object[0][0] ; 
 

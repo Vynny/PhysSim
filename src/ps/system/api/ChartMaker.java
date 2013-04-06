@@ -56,10 +56,12 @@ public class ChartMaker implements SystemConstants {
 		yAxis = new NumberAxis();
 		
 		if (dataSet.equals((int) 0)) {
+			System.out.println("JFX DATA SET");
 			keys = DATAWRITE_JFX_dependant.keySet().toArray();
 			cbs = new CheckBox[keys.length];
 			
 			JFXtimeline = (Timeline) DATAWRITE_JFX_independant.get("Time");
+			System.out.println("TEST: " + JFXtimeline.toString());
 			
 			//DEBUG: Print all dependant key values
 			for (int i = 0; i < keys.length; i++) {
@@ -70,6 +72,7 @@ public class ChartMaker implements SystemConstants {
 			root.setCenter(initJFXChart("Time", null, "Position", null));
 			
 		} else if (dataSet.equals((int) 1)) {
+			System.out.println("SWING DATA SET");
 			keys = DATAWRITE_Swing_dependant.keySet().toArray();
 			cbs = new CheckBox[keys.length];
 			
@@ -141,7 +144,7 @@ public class ChartMaker implements SystemConstants {
 	 */
 	
 	protected LineChart<Number, Number> initSwingChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+		final NumberAxis yAxis = new NumberAxis(-1000, 1000, 100);
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup

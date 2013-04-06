@@ -3,10 +3,10 @@ package ps.system.main;
 import java.util.LinkedHashMap;
 
 import ps.simulation.frames.JoBounceBall;
+import ps.simulation.frames.JoProjectileMotion;
+import ps.simulation.frames.JoSHM;
 import ps.simulation.frames.TrackWindow;
 import ps.simulation.frames.TrackWindow2;
-import ps.system.api.SimulatorInstanceSwing;
-import ps.system.api.SimulatorInstanceJFX;
 
 public class SimulationList {
 	
@@ -43,6 +43,8 @@ public class SimulationList {
 		//Mechanics
 		TrackWindow Mechanics_Projectile_Motion = null;
 		JoBounceBall Mechanics_Bouncing_Ball = null;
+		JoSHM Mechanics_SimpleHarmonicMotion = null;
+		JoProjectileMotion Mechanics_ProjectileMotion = null;
 		
 		//Waves
 		TrackWindow2 Waves_DoubleSlit = null;
@@ -54,6 +56,8 @@ public class SimulationList {
 		 */
 		simulationList.put("Mechanics_Projectile Motion_TrackWindow", Mechanics_Projectile_Motion);
 		simulationList.put("Mechanics_Bouncing Ball_JoBounceBall", Mechanics_Bouncing_Ball);
+		simulationList.put("Mechanics_Simple Harmonic Motion_JoSHM", Mechanics_SimpleHarmonicMotion);
+		simulationList.put("Mechanics_Projectile Motion_JoProjectileMotion", Mechanics_ProjectileMotion);
 
 		/*
 		 * Waves, Optics and Modern Physics

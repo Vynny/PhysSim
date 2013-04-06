@@ -52,12 +52,8 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 		
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
-
-		//Banner banner = new Banner(title);
-
-		//root.setTop(banner.showBanner());
+		
 		root.setCenter(TrackPane());
-		//root.setBottom(BottomMenu());
 	}
 	
 	private static BorderPane TrackPane() {

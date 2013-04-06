@@ -7,17 +7,13 @@ import ps.logic.beans.SimVariableBean;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
-public class JoBounceBall extends SimulatorInstanceSwing {
+public class JoSHM extends SimulatorInstanceSwing {
 
 	/*
 	 * --------------- VARIABLES ---------------
 	 * 
 	 */
-	
-	int SPACECONSTANT = 10;
 
-	int position = 0;
-	// all variables that affect the simulation are here.
 	double y = 500;
 	double x = 40;
 	double v = -700;
@@ -28,9 +24,17 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	double secondsCurrent = 0;
 	double g = 9.8 * 200;
 	double damping = 90;
-	double xspeed = 1;
-	int framesOnGround;
-	
+	double xspeed = 3;
+	double length = 200;
+	double angle = 0;
+	double angleMax = 45;
+	double subvar = 0;
+	int originx = 0;
+	int originy = 0;
+	int framesstopped;
+	double omega = 2 * Math.PI;
+	double amplitude = 100;
+
 	// TESTING
 	public static int SIM_basetime = 5;
 	public static double SIM_distance = 500;
@@ -38,57 +42,17 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	SimVariableBean positionBean = new SimVariableBean();
 	
 	
-	public JoBounceBall() {	
+	public JoSHM() {	
 		positionBean.setValue(y);
 	}
 
 	public void animationLogic() {
 
-		System.out.println("y: " + positionBean.getValue());
-		
-		if ((int) (y + high) >= y) {
-			framesOnGround++;
-			if (framesOnGround >= 7) {
-				xspeed = 0;
-			}
-		} else {
-			framesOnGround = 0;
-		}
-		x = x + xspeed;
-		
-		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
-		positionBean.setValue((int) (y + high));
-		
-		if ((v + damping) >= 0) {
-			positionBean.setValue((int) y);
-			v = 0;
-		}
-		
-		if ((int) (y + high) > y && v < 0) {
-			// This resets the time of the system to zero everytime the ball
-			// hits the floor
-			resetLocalTime();
-			
-			if (v < 0) {
-				v = v + damping;
-			}
-			if (xspeed > 0) {
-				xspeed -= 0.3;
-				if (xspeed < 0) {
-					xspeed = 0;
-				}
-			} else {
-				xspeed = 0;
-			}
-			System.out.println("xspeed " + xspeed);
+		positionBean.setValue( amplitude * Math.cos(omega * timeBeanLocal.getTime()));
 
-		} else {
-			repaint();
-			System.out.println("v " + v);
-		}
+		repaint();
 
 	}
-
 
 	public void paintComponent(Graphics g) {
 
@@ -99,10 +63,9 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		g.setColor(Color.darkGray);
 		g.fillRect(0, 500, 900, 100);
 		g.setColor(Color.white);
-		g.fillOval(200, (int) positionBean.getValue(), 30, 30);
-		g.drawString("yPos: " + positionBean.getValue(), 200, 40);
-		g.drawString("SSS: " + secondsCurrent, 200, 70);
-		g.drawString("Anim Time: " + timeBean.getTime(), 200, 100);
+		g.fillOval(300, (int) (positionBean.getValue() + 300), 20, 20);
+		g.drawString("" + (y - (int) (y + high)), 200, 10);
+		g.drawString("" + timeBeanLocal.getTime(), 200, 40);
 
 	}
 

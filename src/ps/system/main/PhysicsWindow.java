@@ -2,6 +2,7 @@ package ps.system.main;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,9 @@ import ps.system.api.SimulatorInstanceJFX;
 import ps.system.frames.JFXPanes;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
+	
+	
+	private static JFrame mainFrame;
 	
 	//Enables sharing between JavaFX and Swing components of the
 	//application. Referred to statically.
@@ -66,12 +70,13 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	}
 	
 	public static void InitializeGUI() {
-		JFrame mainFrame = new PhysicsWindow();
+		mainFrame = new PhysicsWindow();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		mainFrame.pack();
 		mainFrame.setTitle(TITLE);
+		mainFrame.pack();
 		mainFrame.setSize(mainWindow_DEFAULTW, mainWindow_DEFAULTH);
 		mainFrame.setVisible(true);
 	}
+	
 }

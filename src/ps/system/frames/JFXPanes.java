@@ -1,6 +1,7 @@
 package ps.system.frames;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -14,8 +15,8 @@ import javax.swing.JSplitPane;
 import ps.logic.beans.SimulationIDBean;
 import ps.system.api.ChartMaker;
 import ps.system.api.InfoPane;
-import ps.system.api.SimulatorInstanceSwing;
 import ps.system.api.SimulatorInstanceJFX;
+import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SimulationList;
 import ps.system.main.SystemConstants;
@@ -88,14 +89,14 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				InitializeJFXSimulationWindows();
+				InitializeSimulationWindows();
 			}
 		});
 
 	}
 
 	// Initialize JavaFX Objects
-	private void InitializeJFXSimulationWindows() {
+	private void InitializeSimulationWindows() {
 		SimulationList simList = new SimulationList();
 
 		if (simulationID.getSimulationID() == null) {
@@ -121,7 +122,13 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 								try {
 									genericSimulation = Class.forName( SIMFRAMEPATH + instanceName).newInstance();
-								} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+								} catch (InstantiationException e) {
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -130,9 +137,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								
 								JFXSimulation = (SimulatorInstanceJFX) genericSimulation;
 								window_Simulation.add(JFXPanel_Simulation, BorderLayout.CENTER);
-								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								JFXSimulation.LoadData();
+								
+								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								// Initialize Chart for content
 								JFXPanes.JFXChart = new ChartMaker(ChartMaker.JFXDATASET);
@@ -143,7 +151,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							} else {
 								SwingSimulation = (SimulatorInstanceSwing) genericSimulation;
 								window_Simulation.add(SwingSimulation, BorderLayout.CENTER);
-								
+
 								SwingSimulation.LoadData();
 								
 								// Initialize Chart for content

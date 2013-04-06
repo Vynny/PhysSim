@@ -10,9 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
+import ps.system.main.SystemConstants;
 
 
-public class InfoPane {
+public class InfoPane implements SystemConstants {
 	
 	
 	private SimulatorInstanceSwing swingInstance;
@@ -47,7 +48,12 @@ public class InfoPane {
 
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
-
+		
+		Object[] test = DATAREAD.keySet().toArray();
+		for (int i = 0; i < test.length; i++) {
+			System.out.println(i + " DATAREAD: " + DATAREAD.get(test[i]));
+		}
+		
 		root.setCenter(Menu());
 	}
 	
