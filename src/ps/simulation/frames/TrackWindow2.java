@@ -234,8 +234,7 @@ public class TrackWindow2 extends SimulatorInstanceJFX implements TrackSimConsta
 													   {"m4-2", Marathoners[3].runnerNode()},
 													   {"m5-2", Marathoners[4].runnerNode()}};
 		
-		data_shared_read = new Object[][]  { {"SIM_basetime", SIM_basetime}, 
-											 {"SIM_distance", SIM_distance}}; 
+		data_shared_read = new Object[0][0]; 
 		// Bind buttons to infopane
 		Handlers();
 

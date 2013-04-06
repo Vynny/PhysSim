@@ -191,6 +191,30 @@ public class InfoPane implements SystemConstants {
 			final TextField varField = new TextField();
 			varField.setAlignment(Pos.CENTER);
 			varField.setText(DATAREAD.get(currentKey).getValue().toString());
+			
+			varField.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				    public void handle(ActionEvent e) {
+					System.out.println("varField Handler");
+				        if ((varField.getText() != null && !varField.getText().isEmpty())) {
+				         
+				        	System.out.println("varField Handler2");
+				        	
+				        	try  {
+				        		double probedValue = Double.parseDouble(varField.getText());
+				        		
+				        		DATAREAD.get(currentKey).setValue(probedValue);
+				        		
+				        	} catch (Exception ex){
+				        		
+				        		varField.setText("Input must be a number");
+				        	}
+				        	
+				        }
+				     }
+				 });
+
 			gridPane.add(varField, gridCol, gridRow + 1);
 
 			//Slider
@@ -205,15 +229,12 @@ public class InfoPane implements SystemConstants {
 			varSlider.setMinorTickCount(5);
 			varSlider.setBlockIncrement(10);
 			
-			
-			System.out.println("VARNAME: " + DATAREAD.get(variableNames[i]).getValue());
-			
 			varSlider.valueProperty().addListener(new ChangeListener<Number>() {
-	            public void changed(ObservableValue<? extends Number> ov,  Number old_val, Number new_val) {
-	            	DATAREAD.get(currentKey).setValue(new_val.intValue());
-	            	varField.setText(DATAREAD.get(currentKey).getValue().toString());
-	            }
-	        });
+				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+					DATAREAD.get(currentKey).setValue(new_val.intValue());
+					varField.setText(DATAREAD.get(currentKey).getValue().toString());
+				}
+			});
 			
 			gridPane.add(varSlider, gridCol + 1, gridRow + 1);
 
