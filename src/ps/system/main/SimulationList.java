@@ -19,18 +19,19 @@ public class SimulationList {
 	 * 
 	 * -->To add a SimulatorInstance object to the simulation list:
 	 *     + Append a line of the form:
-	 *     		simulationList.put(String TITLE, SimulatorInstance(MUST-BE-A-SUBCLASS) Object);
+	 *     	  --> simulationList.put(String TITLE, SimulatorInstance(Swing/JFX) sub-classed Object);
 	 *       to the SimulationList() method.
 	 *       
 	 *     +The TITLE must be in the form "SUBJECT_TOPIC_OBJECTNAME"; For instance to add an option named
-	 *     	"Foo Bar" of a frame object (subclass of JoFrame or Simlator instance ie. JoBounceBall) to the Mechanics menu,
-	 *      the title must be "Mechanics_Foo Bar_JoBounceBall". The object declared after the title will be the object 
-	 *      associated with said title and must be initialized as null on top.   
+	 *     	"Bouncing Ball Simulation" of a frame object ie. JoBounceBall(subclass of SimulatorInstance(Swing/JFX)) 
+	 *      to the Mechanics menu, the title must be "Mechanics_Bouncing Ball Simulation_JoBounceBall". The object 
+	 *      declared after the title will be the object associated with said title and must be initialized as null 
+	 *      on top.   
 	 *      
-	 *     +Allowed Topics:
-	 *       ->Mechanics (ex: Mechanics_Simple Harmonic Motion)
-	 *       ->Waves (ex: Waves_Double Slit)
-	 *       ->EM (ex: EM_Electric Fields) 
+	 *     +Example Declarations:
+	 *       ->Mechanics (ex: Mechanics_Simple Harmonic Motion_ProjectileMotionSimulation)
+	 *       ->Waves (ex: Waves_Double Slit_DoubleSlitSimulation)
+	 *       ->EM (ex: EM_Electric Fields_ElectricFieldSimulation) 
 	 */
 	
 	
@@ -39,34 +40,36 @@ public class SimulationList {
 		/*
 		 * OBJECT PROTOTYPES(MUST BE NULL)
 		 */
+		//----------------------------------------------------------------------------------------------
 		
 		//Mechanics
 		TrackWindow Mechanics_Projectile_Motion = null;
 		JoBounceBall Mechanics_Bouncing_Ball = null;
-		JoSHM Mechanics_SimpleHarmonicMotion = null;
 		JoProjectileMotion Mechanics_ProjectileMotion = null;
 		
 		//Waves
+		JoSHM Mechanics_SimpleHarmonicMotion = null;
 		TrackWindow2 Waves_DoubleSlit = null;
 
 		//Electricity and Magnetism
 		
+		
 		/*
-		 * Mechanics
+		 * HASHMAP ASSOCIATIONS
 		 */
+		//----------------------------------------------------------------------------------------------
+		
+		//Mechanics
 		simulationList.put("Mechanics_Projectile Motion_TrackWindow", Mechanics_Projectile_Motion);
 		simulationList.put("Mechanics_Bouncing Ball_JoBounceBall", Mechanics_Bouncing_Ball);
 		simulationList.put("Mechanics_Projectile Motion_JoProjectileMotion", Mechanics_ProjectileMotion);
 
-		/*
-		 * Waves, Optics and Modern Physics
-		 */
+		//Waves
 		simulationList.put("Waves_Simple Harmonic Motion_JoSHM", Mechanics_SimpleHarmonicMotion);
 		simulationList.put("Waves_Double Slit_TrackWindow2", Waves_DoubleSlit);
 		
-		/*
-		 * Electricity and Magnetism
-		 */
+		//Electricity and Magnetism
+		
 
 	}
 }

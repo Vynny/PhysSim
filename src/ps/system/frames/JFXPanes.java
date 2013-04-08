@@ -55,12 +55,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	private static JFXPanel JFXPanel_Menu = new JFXPanel();
 
 	// Which simulation to display
-	// private String simulationID = null;
 	public SimulationIDBean simulationID = new SimulationIDBean();
 
 	public JFXPanes() {
 
-		// this.simulationID = simulationID;
 		// Create menu panel
 		window_Menu = new JPanel(new BorderLayout());
 		window_Menu.add(JFXPanel_Menu, BorderLayout.CENTER);
@@ -104,8 +102,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 			initJFX_Module(JFXPanel_Menu, JFXMenu.getScene());
 		}
 
-		simulationID.SimulationIDProperty().addListener(
-				new InvalidationListener() {
+		simulationID.SimulationIDProperty().addListener(new InvalidationListener() {
 
 					@Override
 					public void invalidated(Observable arg0) {
@@ -118,7 +115,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							String instanceName = null;
 
 							if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
-								instanceName = (simulationID.getSimulationID()) .split("_")[2];
+								instanceName = (simulationID.getSimulationID()).split("_")[2];
 
 								try {
 									genericSimulation = Class.forName( SIMFRAMEPATH + instanceName).newInstance();

@@ -70,11 +70,12 @@ public class MainMenu implements SystemConstants {
 
 	private VBox GenerateMenu(String s) {
 		VBox box = new VBox();
+		
 		ArrayList<String> topics = new ArrayList<String>();
 		final String topicMap[] = SimulationList.simulationList.keySet().toArray(new String[0]);
 		
 		final Button buttons[]; 
-		String topicButtons[];
+		String buttonTopics[];
 		
 		int startIndex = -1;
 		
@@ -91,12 +92,12 @@ public class MainMenu implements SystemConstants {
 			}
 		}
 		
-		topicButtons = topics.toArray(new String[topics.size()]);
-		buttons = new Button[topicButtons.length];
+		buttonTopics = topics.toArray(new String[topics.size()]);
+		buttons = new Button[buttonTopics.length];
 
 		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new Button(topicButtons[i]);
-			System.out.println(i + " ButtonTopic " + topicButtons[i]);
+			buttons[i] = new Button(buttonTopics[i]);
+			System.out.println(i + " ButtonTopic " + buttonTopics[i]);
 
 			final int topicMapIndex = startIndex + i;
 			

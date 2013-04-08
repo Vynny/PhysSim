@@ -186,6 +186,7 @@ public class InfoPane implements SystemConstants {
 			Label varLabel = new Label(currentKey + ":");
 			varLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 			gridPane.add(varLabel, gridCol, gridRow);
+			gridPane.setAlignment(Pos.CENTER_LEFT);
 
 			// Textfield for Editing
 			final TextField varField = new TextField();
@@ -238,7 +239,9 @@ public class InfoPane implements SystemConstants {
 			
 			gridPane.add(varSlider, gridCol + 1, gridRow + 1);
 
-			gridRow += 4;
+			//Set offset for next variable modifier
+			//gridRow += 4; <--Stacked
+			gridCol += 4; //<--Lined up
 		}
 		
 		return gridPane;

@@ -13,27 +13,17 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	 * --------------- VARIABLES ---------------
 	 * 
 	 */
-	
-	int SPACECONSTANT = 10;
 
 	int position = 0;
-	// all variables that affect the simulation are here.
 	double y = 500;
 	double x = 40;
 	double v = -700;
-	double time = 0;
-	double frame = 0;
 	double high = 0;
-	double secondsInit = 0;
-	double secondsCurrent = 0;
 	double g = 9.8 * 200;
 	double damping = 90;
 	double xspeed = 1;
 	int framesOnGround;
 	
-	// TESTING
-	public static int SIM_basetime = 5;
-	public static double SIM_distance = 500;
 	
 	SimVariableBean positionBean = new SimVariableBean();
 	
@@ -65,8 +55,6 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		}
 		
 		if ((int) (y + high) > y && v < 0) {
-			// This resets the time of the system to zero everytime the ball
-			// hits the floor
 			resetLocalTime();
 			
 			if (v < 0) {
@@ -112,7 +100,7 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		
 		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[0][0] ; 
+		data_shared_read = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

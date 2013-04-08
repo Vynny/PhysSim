@@ -84,7 +84,6 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		// Put anything here and it will render on screen (this includes images)
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 600);
 		g.setColor(Color.darkGray);
