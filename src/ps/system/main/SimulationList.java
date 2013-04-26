@@ -8,7 +8,7 @@ import ps.simulation.frames.JoSHM;
 import ps.simulation.frames.TrackWindow;
 import ps.simulation.frames.TrackWindow2;
 
-public class SimulationList {
+public class SimulationList implements SystemConstants {
 	
 	// Simulation list
 	public static LinkedHashMap<String, Object> simulationList = new LinkedHashMap<String, Object>();
@@ -60,13 +60,13 @@ public class SimulationList {
 		//----------------------------------------------------------------------------------------------
 		
 		//Mechanics
-		simulationList.put("Mechanics_Projectile Motion_TrackWindow", Mechanics_Projectile_Motion);
-		simulationList.put("Mechanics_Bouncing Ball_JoBounceBall", Mechanics_Bouncing_Ball);
-		simulationList.put("Mechanics_Projectile Motion_JoProjectileMotion", Mechanics_ProjectileMotion);
+		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_projectilemotion") + "_TrackWindow", Mechanics_Projectile_Motion);
+		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_bouncingball") + "_JoBounceBall", Mechanics_Bouncing_Ball);
+		simulationList.put("Mechanics_JFXTEST1_JoProjectileMotion", Mechanics_ProjectileMotion);
 
 		//Waves
-		simulationList.put("Waves_Simple Harmonic Motion_JoSHM", Mechanics_SimpleHarmonicMotion);
-		simulationList.put("Waves_Double Slit_TrackWindow2", Waves_DoubleSlit);
+		simulationList.put("Waves_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_shm") + "_JoSHM", Mechanics_SimpleHarmonicMotion);
+		simulationList.put("Waves_JFXTEST2_TrackWindow2", Waves_DoubleSlit);
 		
 		//Electricity and Magnetism
 		

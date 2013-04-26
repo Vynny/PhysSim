@@ -1,13 +1,19 @@
 package ps.system.frames;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -33,14 +39,40 @@ public class MainMenu implements SystemConstants {
 	public MainMenu() {
 		BorderPane root = new BorderPane();
 
-		Banner banner = new Banner("PhysSim Main Menu");
+		Banner banner = new Banner(SystemLanguage.getLanguageBundle().getString("Menu_title"));
 
 		root.setTop(banner.showBanner());
 		root.setCenter(AccordionMenu());
-
+		root.setLeft(LanguageMenu());
+		
 		scene = new Scene(root);
 	}
 
+	@SuppressWarnings("unchecked")
+	private HBox LanguageMenu() {
+		HBox box = new HBox();
+		
+		ObservableList<String> options = FXCollections.observableArrayList(
+				"English", "French");
+		
+		final ComboBox comboBox = new ComboBox(options);
+		
+		comboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println(newValue);
+				SystemLanguage.loadLocale(SystemLanguage.getLanguagesSupported()[newValue.intValue()]);
+			}
+			
+		});
+		
+
+		
+		box.getChildren().addAll(comboBox);
+
+		return box;
+	}
 	private HBox AccordionMenu() {
 		HBox box = new HBox();
 
@@ -49,14 +81,12 @@ public class MainMenu implements SystemConstants {
 		TitledPane EMPane = null;
 		
 		if (!(SimulationList.simulationList.isEmpty())) {
-			MechanicsPane = new TitledPane("Mechanics", GenerateMenu("Mechanics"));
-			WavesPane = new TitledPane("Waves, Optics, and Modern Physics", GenerateMenu("Waves"));
-			EMPane = new TitledPane("Electricity and Magnetism", GenerateMenu("EM"));
+			MechanicsPane = new TitledPane(SystemLanguage.getLanguageBundle().getString("Categories_mechanics"), GenerateMenu("Mechanics"));
+			WavesPane = new TitledPane(SystemLanguage.getLanguageBundle().getString("Categories_waves"), GenerateMenu("Waves"));
+			EMPane = new TitledPane(SystemLanguage.getLanguageBundle().getString("Categories_em"), GenerateMenu("EM"));
 		} else {
 			System.err.println("ERROR: NO TOPICS FOUND, CONSULT SIMULATIONLIST.JAVA CLASS");
 		}
-
-	
 
 		Accordion accordionMenu = new Accordion();
 		accordionMenu.getPanes().add(MechanicsPane);

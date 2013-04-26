@@ -2,6 +2,8 @@ package ps.system.main;
 
 import java.util.LinkedHashMap;
 
+import ps.system.internationalization.Language;
+
 import javafx.animation.Timeline;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -14,8 +16,11 @@ public interface SystemConstants {
 	 * 
 	 */
 	
+	//Application wide internationalization
+	Language SystemLanguage = PhysicsWindow.SystemLanguage;
+	
 	//Main Window Title
-	String TITLE = "Physics Sim v0.2 pre-alpha";
+	String TITLE = "Physics Sim v0.8 BETA";
 
 	//Main Window Size
 	int mainWindow_DEFAULTW = 1500;

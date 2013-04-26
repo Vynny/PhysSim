@@ -33,20 +33,20 @@ public class InfoPane implements SystemConstants {
 	}
 	
 	
-	private static Button startButton = new Button("Start");
+	private static Button startButton = new Button(SystemLanguage.getLanguageBundle().getString("InfoPane_start"));
 	
 	public Button getStartButton() {
 		return startButton;
 	}
 
-	private static Button resetButton = new Button("Reset");
+	private static Button resetButton = new Button(SystemLanguage.getLanguageBundle().getString("InfoPane_reset"));
 
 	public Button getResetButton() {
 		return resetButton;
 	}
 
 
-	private static Button backButton = new Button("Back");
+	private static Button backButton = new Button(SystemLanguage.getLanguageBundle().getString("InfoPane_back"));
 
 	public Button getBackButton() {
 		return backButton;
@@ -54,7 +54,6 @@ public class InfoPane implements SystemConstants {
 
 	
 	public InfoPane() {
-
 		BorderPane root = new BorderPane();
 		scene = new Scene(root);
 		

@@ -2,7 +2,8 @@ package ps.system.main;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Window;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import javax.swing.JSplitPane;
 import ps.system.api.DataStore;
 import ps.system.api.SimulatorInstanceJFX;
 import ps.system.frames.JFXPanes;
+import ps.system.internationalization.Language;
 
 public class PhysicsWindow extends JFrame implements SystemConstants {
 	
@@ -20,6 +22,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	//Enables sharing between JavaFX and Swing components of the
 	//application. Referred to statically.
 	public static DataStore sharedData;
+	public static Language SystemLanguage;
 	
 	public static JFXPanes JFXPanes; 
 	public SimulatorInstanceJFX simulationDisplay;
@@ -30,6 +33,9 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 	
 	public PhysicsWindow() {
+
+		//Language Setup
+		SystemLanguage = new Language();
 
 		//Initialize global data storage hash map container
 		sharedData = new DataStore();

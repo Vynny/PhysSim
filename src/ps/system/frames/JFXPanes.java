@@ -145,7 +145,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								// Initialize InfoPane for content
 								JFXPanes.JFXInput = new InfoPane();
 								
-							} else {
+							} else if (genericSimulation instanceof SimulatorInstanceSwing){
 								SwingSimulation = (SimulatorInstanceSwing) genericSimulation;
 								window_Simulation.add(SwingSimulation, BorderLayout.CENTER);
 
