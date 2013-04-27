@@ -29,24 +29,27 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	private static JPanel menuPane;
 
 	//Generic components
-	private Object genericSimulation = null;
+	public static Object genericSimulation = null;
 	
-	// Swing components
-	private SimulatorInstanceSwing SwingSimulation;
+	// Swing simulation object components
+	public static SimulatorInstanceSwing SwingSimulation;
 	
-	// JavaFX components
-	private SimulatorInstanceJFX JFXSimulation;
+	// JavaFX simulation object components
+	public static SimulatorInstanceJFX JFXSimulation;
 	private MainMenu JFXMenu;
-	private static ChartMaker JFXChart;
-	public static InfoPane JFXInput;
+	
+	//Simulation analysis components
+	private static ChartMaker Graph;
+	public static InfoPane Input;
 
+	/*
+	 * Containers for Swing and JavaFX integration
+	 */
+	
+	//Swing
 	private JPanel window_Menu;
 	private JPanel window_Simulation;
 	private JPanel window_Graph;
-	
-	/*
-	 * Containers for swing and JavaFX integration
-	 */
 	
 	//JavaFX
 	private static JFXPanel JFXPanel_Simulation = new JFXPanel();
@@ -140,10 +143,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								// Initialize Chart for content
-								JFXPanes.JFXChart = new ChartMaker(ChartMaker.JFXDATASET);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.JFXDATASET);
 
 								// Initialize InfoPane for content
-								JFXPanes.JFXInput = new InfoPane();
+								JFXPanes.Input = new InfoPane();
 								
 							} else if (genericSimulation instanceof SimulatorInstanceSwing){
 								SwingSimulation = (SimulatorInstanceSwing) genericSimulation;
@@ -152,35 +155,39 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								SwingSimulation.LoadData();
 								
 								// Initialize Chart for content
-								JFXPanes.JFXChart = new ChartMaker(ChartMaker.SWINGDATASET);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.SWINGDATASET);
 
 								// Initialize InfoPane for content
-								JFXPanes.JFXInput = new InfoPane(SwingSimulation);
+								JFXPanes.Input = new InfoPane(SwingSimulation);
 							}
 
 
-							initJFX_Module(JFXPanel_Graph, JFXChart.getScene());
-							initJFX_Module(JFXPanel_Input, JFXInput.getScene());
+							initJFX_Module(JFXPanel_Graph, Graph.getScene());
+							initJFX_Module(JFXPanel_Input, Input.getScene());
 						} else {
 							/*
 							 * TO DO:
 							 * 	-> Fix data unloading to properly load according chart 
 							 */
 							if (genericSimulation instanceof SimulatorInstanceJFX) {
+								
+								JFXPanes.Graph = null;
+								JFXPanes.Input =  null;
+								
 								JFXSimulation.UnLoadData();
 								JFXSimulation = null;
+								
 								window_Simulation.removeAll();
 								
-								JFXPanes.JFXChart = null;
-								JFXPanes.JFXInput =  null;
+							} else if (genericSimulation instanceof SimulatorInstanceSwing) {
 								
-							} else if (genericSimulation instanceof SimulatorInstanceSwing){
+								JFXPanes.Graph = null;
+								JFXPanes.Input = null;
+								
 								SwingSimulation.UnLoadData();
 								SwingSimulation = null;
-								window_Simulation.removeAll();
 								
-								JFXPanes.JFXChart = null;
-								JFXPanes.JFXInput =  null;
+								window_Simulation.removeAll();
 							}
 							
 							PhysicsWindow.changeWindow("Menu");
@@ -191,8 +198,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	}
 
-	public static ChartMaker getJFXChart() {
-		return JFXChart;
+	public static ChartMaker getGraphComponent() {
+		return Graph;
 	}
 
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {

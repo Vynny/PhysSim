@@ -21,6 +21,8 @@ import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
 
+import com.sun.javafx.css.converters.StringConverter;
+
 
 public class InfoPane implements SystemConstants {
 	
@@ -92,7 +94,7 @@ public class InfoPane implements SystemConstants {
 			@Override
 			public void handle(ActionEvent arg0) {
 				swingInstance.stop();
-				JFXPanes.getJFXChart().clearData();
+				JFXPanes.getGraphComponent().clearData();
 			}
 
 		});
@@ -117,7 +119,7 @@ public class InfoPane implements SystemConstants {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				swingInstance.start();
+				
 			}
 		});
 
@@ -125,8 +127,7 @@ public class InfoPane implements SystemConstants {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				swingInstance.stop();
-				JFXPanes.getJFXChart().clearData();
+				JFXPanes.getGraphComponent().clearData();
 			}
 
 		});
@@ -135,9 +136,7 @@ public class InfoPane implements SystemConstants {
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent arg0) {
-				swingInstance.stop();
-				
+			public void handle(ActionEvent arg0) {			
 				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
 				PhysicsWindow.changeWindow("Menu");
 			}
@@ -186,7 +185,7 @@ public class InfoPane implements SystemConstants {
 			varLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 			gridPane.add(varLabel, gridCol, gridRow);
 			gridPane.setAlignment(Pos.CENTER_LEFT);
-
+			
 			// Textfield for Editing
 			final TextField varField = new TextField();
 			varField.setAlignment(Pos.CENTER);
@@ -195,25 +194,22 @@ public class InfoPane implements SystemConstants {
 			varField.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
-				    public void handle(ActionEvent e) {
-					System.out.println("varField Handler");
-				        if ((varField.getText() != null && !varField.getText().isEmpty())) {
-				         
-				        	System.out.println("varField Handler2");
-				        	
-				        	try  {
-				        		double probedValue = Double.parseDouble(varField.getText());
-				        		
-				        		DATAREAD.get(currentKey).setValue(probedValue);
-				        		
-				        	} catch (Exception ex){
-				        		
-				        		varField.setText("Input must be a number");
-				        	}
-				        	
-				        }
-				     }
-				 });
+				public void handle(ActionEvent e) {
+
+					if ((varField.getText() != null && !varField.getText().isEmpty())) {
+
+						try {
+
+							double probedValue = Double.parseDouble(varField.getText());
+							DATAREAD.get(currentKey).setValue(probedValue);
+							
+						} catch (Exception ex) {
+							varField.setText("Input must be a number");
+						}
+
+					}
+				}
+			});
 
 			gridPane.add(varField, gridCol, gridRow + 1);
 
@@ -233,6 +229,12 @@ public class InfoPane implements SystemConstants {
 				public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 					DATAREAD.get(currentKey).setValue(new_val.intValue());
 					varField.setText(DATAREAD.get(currentKey).getValue().toString());
+					
+					//This check is not necessary for javaFX instances since it redraws automatically when a bean
+					//bound to the position of an object is updated
+					if (JFXPanes.genericSimulation instanceof SimulatorInstanceSwing) {
+						JFXPanes.SwingSimulation.repaint();
+					}
 				}
 			});
 			

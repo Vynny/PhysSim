@@ -178,7 +178,7 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 			@Override
 			public void handle(ActionEvent arg0) {
 				ResetTrack();
-				JFXPanes.getJFXChart().clearData();
+				JFXPanes.getGraphComponent().clearData();
 			}
 			
 		});
@@ -187,6 +187,7 @@ public class TrackWindow extends SimulatorInstanceJFX implements TrackSimConstan
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				ResetTrack();
 				PhysicsWindow.JFXPanes.simulationID.setSimulationID(" ");
 			}
 			

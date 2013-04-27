@@ -30,7 +30,7 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	private SimVariableBean angleBean = new SimVariableBean();
 	
 	
-	public JoProjectileMotion() {	
+	public JoProjectileMotion() {
 		positionBeanY.setValue(y);
 		positionBeanX.setValue(x);
 		angleBean.setValue(angle);
@@ -42,9 +42,8 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	}
 	
 	public void animationLogic() {
-		System.out.println("xbean: " + positionBeanX.getValue());
 		
-		if ((int) (y + high) >= y) {
+		if ((int) (positionBeanY.getValue() + high) >= positionBeanY.getValue()) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {
 				xspeed = 0;
@@ -60,7 +59,7 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 			positionBeanY.setValue(y);
 			v = 0;
 		}
-		if ((int) (y + high) > y && v < 0) {
+		if ((int) (positionBeanY.getValue() + high) > positionBeanY.getValue() && v < 0) {
 			resetLocalTime();
 			
 			if (v < 0) {

@@ -60,9 +60,9 @@ public class SimulationList implements SystemConstants {
 		//----------------------------------------------------------------------------------------------
 		
 		//Mechanics
-		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_projectilemotion") + "_TrackWindow", Mechanics_Projectile_Motion);
+		simulationList.put("Mechanics_JFXTEST1_TrackWindow", Mechanics_Projectile_Motion);
+		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_projectilemotion") + "_JoProjectileMotion", Mechanics_ProjectileMotion);
 		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_bouncingball") + "_JoBounceBall", Mechanics_Bouncing_Ball);
-		simulationList.put("Mechanics_JFXTEST1_JoProjectileMotion", Mechanics_ProjectileMotion);
 
 		//Waves
 		simulationList.put("Waves_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_shm") + "_JoSHM", Mechanics_SimpleHarmonicMotion);

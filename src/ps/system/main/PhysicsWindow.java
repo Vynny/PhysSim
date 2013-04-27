@@ -42,17 +42,16 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		
 		//Create JFX pane container object
 		//Contains: JSplitPane of two javaFX scenes (R: Simulation, L: Graph)
-		//JFXPanes = new JFXPanes("Mechanics_Track Window");
 		JFXPanes = new JFXPanes();
+		
+		// Create top simulation pane and chart pant
 		JSplitPane topPanes = JFXPanes.getSeperatedPanes();
-
 		// Create bottom info pane(contains buttons and configuration)
 		JPanel bottomPane = JFXPanes.getBottomPane();
 
-		// Create nested split container containing horizontally layed out jfxpanes setup
+		// Create nested split container containing horizontally laid out jfxpanes setup
 		// vertically with bottom pane
 		JSplitPane windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanes, bottomPane);
-		
 		windowPanes.setResizeWeight(MainSplitPanes_RESIZEWEIGHT);
 		windowPanes.setContinuousLayout(MainSplitPanes_CONTINUOUSLAYOUT);
 

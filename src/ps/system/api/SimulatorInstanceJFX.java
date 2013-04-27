@@ -48,7 +48,7 @@ public abstract class SimulatorInstanceJFX implements SystemConstants {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				JFXPanes.getJFXChart().clearData();
+				JFXPanes.getGraphComponent().clearData();
 			}
 
 		});

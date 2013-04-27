@@ -53,7 +53,8 @@ public class ChartMaker implements SystemConstants {
 		BorderPane root = new BorderPane();
 		
 		xAxis = new NumberAxis();
-		yAxis = new NumberAxis();
+		
+		xAxis.setAutoRanging(true);
 		
 		if (dataSet.equals((int) 0)) {
 			System.out.println("JFX DATA SET");
@@ -67,6 +68,7 @@ public class ChartMaker implements SystemConstants {
 			for (int i = 0; i < keys.length; i++) {
 				System.out.println("Key #" + i + " is: " + keys[i]);
 				cbs[i] = new CheckBox((String)keys[i]);
+				cbs[i].setSelected(true);
 			}
 			
 			root.setCenter(initJFXChart("Time", null, "Position", null));
@@ -82,6 +84,7 @@ public class ChartMaker implements SystemConstants {
 			for (int i = 0; i < keys.length; i++) {
 				System.out.println("Key #" + i + " is: " + keys[i]);
 				cbs[i] = new CheckBox((String)keys[i]);
+				cbs[i].setSelected(true);
 			}
 	
 			root.setCenter(initSwingChart("Time", null, "Position", null));
@@ -99,6 +102,7 @@ public class ChartMaker implements SystemConstants {
 	 */
 	protected LineChart<Number, Number> initJFXChart(String xLabel, String xUnit, String yLabel, String yUnit) {
 		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+		
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup
@@ -129,13 +133,12 @@ public class ChartMaker implements SystemConstants {
 				Number CurTime = JFXtimeline.currentTimeProperty().getValue().toSeconds();
 
 				for (int i = 0; i < keys.length; i++) {
-					if (cbs[i].selectedProperty().getValue().equals(true)) {
-					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_JFX_dependant.get(keys[i]).getTranslateX()));
-					}
+					if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_JFX_dependant.get(keys[i]) != null)) {
+						Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_JFX_dependant.get(keys[i]).getTranslateX()));
+					}	
 				}
 			}
-
-		});// LISTENER END
+		});
 	}
 	
 	
@@ -145,6 +148,7 @@ public class ChartMaker implements SystemConstants {
 	
 	protected LineChart<Number, Number> initSwingChart(String xLabel, String xUnit, String yLabel, String yUnit) {
 		final NumberAxis yAxis = new NumberAxis(-500, 500, 100);
+		
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup
@@ -175,8 +179,8 @@ public class ChartMaker implements SystemConstants {
 				Number CurTime = SwingTime.getValue().doubleValue();
 
 				for (int i = 0; i < keys.length; i++) {
-					if (cbs[i].selectedProperty().getValue().equals(true)) {
-					Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
+					if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null)) {
+						Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
 					}
 				}
 			}
