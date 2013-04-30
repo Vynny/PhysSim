@@ -32,28 +32,30 @@ public class ChartMaker implements SystemConstants {
 	//the data_shared_write_dependant object array in the simulator plugin. 
 	private ObservableList<XYChart.Series<Number, Number>> Data;
 
-	//
+	//Chart Legend Objects
 	private static Object[] keys = DATAWRITE_JFX_dependant.keySet().toArray();
     private static CheckBox[] cbs = new CheckBox[keys.length];
-    //
-	
+    
+	//Chart Objects
 	private NumberAxis xAxis;
 	private NumberAxis yAxis;
 	private LineChart<Number, Number> chart;
+	private String title;
 	
+	//Dataset Ientifiers
 	public final static Object JFXDATASET = 0;
 	public final static Object SWINGDATASET = 1;
 	
-	//TEST
+	//Independant Trackers
 	private Timeline JFXtimeline;
 	private SimpleDoubleProperty SwingTime;
 
-	public ChartMaker(Object dataSet) {
+	public ChartMaker(Object dataSet, String title) {
+		this.title = title;
 		
 		BorderPane root = new BorderPane();
 		
-		xAxis = new NumberAxis();
-		
+		xAxis = new NumberAxis();	
 		xAxis.setAutoRanging(true);
 		
 		if (dataSet.equals((int) 0)) {
@@ -106,7 +108,7 @@ public class ChartMaker implements SystemConstants {
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup
-		chart.setTitle(xLabel + " vs " + yLabel);
+	    chart.setTitle(title);
 		chart.setCreateSymbols(false);
 		chart.setAnimated(false);
 		chart.setLegendVisible(true);
@@ -152,15 +154,15 @@ public class ChartMaker implements SystemConstants {
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
 		//Chart Var Setup
-		chart.setTitle(xLabel + " vs " + yLabel);
+	    chart.setTitle(title);
 		chart.setCreateSymbols(false);
 		chart.setAnimated(false);
 		chart.setLegendVisible(true);
 		
 		//Axes Setup
-		xAxis.setLabel(xLabel);
+		//xAxis.setLabel(xLabel);
 		xAxis.setForceZeroInRange(false);
-		yAxis.setLabel(yLabel);
+		//yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
 		dataInit();

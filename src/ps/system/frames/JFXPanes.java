@@ -1,7 +1,6 @@
 package ps.system.frames;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -20,6 +19,7 @@ import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SimulationList;
 import ps.system.main.SystemConstants;
+import ps.system.menu.Menu;
 
 public class JFXPanes extends JPanel implements SystemConstants {
 
@@ -36,7 +36,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	
 	// JavaFX simulation object components
 	public static SimulatorInstanceJFX JFXSimulation;
-	private MainMenu JFXMenu;
+	private Menu JFXMenu;
 	
 	//Simulation analysis components
 	private static ChartMaker Graph;
@@ -101,7 +101,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		SimulationList simList = new SimulationList();
 
 		if (simulationID.getSimulationID() == null) {
-			JFXMenu = new MainMenu();
+			JFXMenu = new Menu();
 			initJFX_Module(JFXPanel_Menu, JFXMenu.getScene());
 		}
 
@@ -143,7 +143,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								// Initialize Chart for content
-								JFXPanes.Graph = new ChartMaker(ChartMaker.JFXDATASET);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.JFXDATASET, simulationID.getSimulationID().split("_")[1]);
 
 								// Initialize InfoPane for content
 								JFXPanes.Input = new InfoPane();
@@ -155,7 +155,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								SwingSimulation.LoadData();
 								
 								// Initialize Chart for content
-								JFXPanes.Graph = new ChartMaker(ChartMaker.SWINGDATASET);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.SWINGDATASET, simulationID.getSimulationID().split("_")[1]);
 
 								// Initialize InfoPane for content
 								JFXPanes.Input = new InfoPane(SwingSimulation);

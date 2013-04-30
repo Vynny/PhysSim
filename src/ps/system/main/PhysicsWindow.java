@@ -20,7 +20,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	private static JFrame mainFrame;
 	
 	//Enables sharing between JavaFX and Swing components of the
-	//application. Referred to statically.
+	//application. 
 	public static DataStore sharedData;
 	public static Language SystemLanguage;
 	

@@ -203,6 +203,10 @@ public class InfoPane implements SystemConstants {
 							double probedValue = Double.parseDouble(varField.getText());
 							DATAREAD.get(currentKey).setValue(probedValue);
 							
+							if (JFXPanes.genericSimulation instanceof SimulatorInstanceSwing) {
+								JFXPanes.SwingSimulation.repaint();
+							}
+							
 						} catch (Exception ex) {
 							varField.setText("Input must be a number");
 						}
@@ -215,13 +219,13 @@ public class InfoPane implements SystemConstants {
 
 			//Slider
 			double minSliderValue = 0;
-			double maxSliderValue = (double)DATAREAD.get(currentKey).getValue() * 4;
-			double curSliderValue = (double)DATAREAD.get(currentKey).getValue();
+			double maxSliderValue = (Double)DATAREAD.get(currentKey).getValue() * 4;
+			double curSliderValue = (Double)DATAREAD.get(currentKey).getValue();
 			
 			Slider varSlider = new Slider((int)minSliderValue, (int)maxSliderValue, (int)curSliderValue);
 			varSlider.setShowTickLabels(true);
 			varSlider.setShowTickMarks(true);
-			varSlider.setMajorTickUnit((double)DATAREAD.get(currentKey).getValue() * 2);
+			varSlider.setMajorTickUnit((Double)DATAREAD.get(currentKey).getValue() * 2);
 			varSlider.setMinorTickCount(5);
 			varSlider.setBlockIncrement(10);
 			

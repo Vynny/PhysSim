@@ -33,7 +33,7 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	}
 
 	public void animationLogic() {
-
+		
 		System.out.println("y: " + positionBean.getValue());
 		
 		if ((int) (y + high) >= y) {
