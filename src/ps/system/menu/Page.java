@@ -23,15 +23,14 @@ public class Page implements MenuInterface {
 			final Stage primaryStage, String name, String file) {
 
 		final BorderPane root = new BorderPane();
-		final Scene page = new Scene(root, actualWidth, actualHeight,
-				Color.BLACK);
+		final Scene page = new Scene(root, actualWidth, actualHeight, Color.BLACK);
 		primaryStage.setScene(page);
 		// -----------------------------------------LOAD CLASS
 
 		// Create a File object on the root of the directory containing the
 		// class file
 		File directory = new File(
-				"C:/Users/TheOrangeCode/javaworkspace/opener/animations/");
+				"C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/");
 
 		VBox box = new VBox();
 

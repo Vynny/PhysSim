@@ -9,20 +9,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import ps.system.main.PhysicsWindow;
-import ps.system.main.SimulationList;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -33,7 +28,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Sub implements MenuInterface {
+import ps.system.main.PhysicsWindow;
+import ps.system.main.SystemConstants;;
+
+
+public class Sub implements MenuInterface, SystemConstants {
 
 	private static BorderPane root;
 	
@@ -61,27 +60,31 @@ public class Sub implements MenuInterface {
 				Element eElement = (Element) nNode;
 				String idtype = (String) eElement.getAttribute("id");
 				if (idtype.equals(identifier)) {
-					NodeList checkChildren = ((Element) nNode)
-							.getElementsByTagName("animation");
+					NodeList checkChildren = ((Element) nNode).getElementsByTagName("animation");
 					animationCount = checkChildren.getLength();
+					
 					specific = new String[2][animationCount];
 					
 					for(int sub = 0; sub < animationCount; sub++){
 						Node subNode = checkChildren.item(sub);
 						if(subNode.getNodeType() == Node.ELEMENT_NODE){
 							Element subElement = (Element) subNode;
-							specific[0][sub] = subElement.getElementsByTagName("name").item(0)
-									.getTextContent();
-							specific[1][sub] = subElement.getElementsByTagName("file").item(0)
-									.getTextContent();
+					
+							if (subElement.getElementsByTagName("name").item(0).getTextContent().split("LANGUAGE:").length > 1) {
+								specific[0][sub] = SystemLanguage.getLanguageBundle().getString(subElement.getElementsByTagName("name").item(0).getTextContent().split("LANGUAGE:")[1]);	
+							} else {
+								specific[0][sub] = subElement.getElementsByTagName("name").item(0).getTextContent();
+							}
+						
+							specific[1][sub] = subElement.getElementsByTagName("file").item(0).getTextContent();
 						}
 					}
-					
+
 				}
 			}
 
 		}
-		
+
 		//------------------------------------------ANIMATIONS
 		
 		Background makeback = new Background();
@@ -116,11 +119,9 @@ public class Sub implements MenuInterface {
 			vbox.getChildren().add(elements[i]);
 			elements[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
-					//Page page = new Page();
-					
-					/*
-					 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!REDO!!!!!!!!!!!!!!!!!!!!!!!!
-					 */
+			
+					PhysicsWindow.JFXPanes.simulationID.setSimulationID(specific[1][x] + "_" + specific[0][x]);
+
 				}
 			});
 		}
@@ -186,55 +187,6 @@ public class Sub implements MenuInterface {
 		root.setLeft(leftSide);
 		root.setRight(rightSide);
 
-	}
-	
-	private VBox GenerateMenuOptions(String s) {
-		VBox box = new VBox();
-		
-		ArrayList<String> topics = new ArrayList<String>();
-		final String topicMap[] = SimulationList.simulationList.keySet().toArray(new String[0]);
-		
-		final Button buttons[]; 
-		String buttonTopics[];
-		
-		int startIndex = -1;
-		
-		box.setSpacing(20);
-		box.setPadding(new Insets(20,20,20,20));
-		
-		for (int i = 0; i < topicMap.length; i++) {
-			String element[] = topicMap[i].split("_");
-			if (element[0].equals(s)) {
-				topics.add(element[1]);
-				if (startIndex == -1) {
-					startIndex = i;
-				}
-			}
-		}
-		
-		buttonTopics = topics.toArray(new String[topics.size()]);
-		buttons = new Button[buttonTopics.length];
-
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new Button(buttonTopics[i]);
-			System.out.println(i + " ButtonTopic " + buttonTopics[i]);
-
-			final int topicMapIndex = startIndex + i;
-			
-			buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					PhysicsWindow.JFXPanes.simulationID.setSimulationID(topicMap[topicMapIndex]);
-					PhysicsWindow.changeWindow("Simulation");
-				}
-
-			});
-
-			box.getChildren().addAll(buttons[i]);
-		}
-
-		return box;
 	}
 
 }

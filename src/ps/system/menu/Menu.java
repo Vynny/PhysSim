@@ -13,6 +13,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
+import ps.system.main.SystemConstants;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -32,7 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Menu implements MenuInterface {
+public class Menu implements MenuInterface, SystemConstants {
 	
 	private static Scene mainMenu;
 
@@ -66,7 +68,7 @@ public class Menu implements MenuInterface {
 		mainMenu = new Scene(root, width, height, backgroundcolor);
 
 		try {
-			File fXMLfile = new File("C:/Users/Sylvain/Desktop/Menu 1.1/animations/manifest.xml");
+			File fXMLfile = new File("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/manifest.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXMLfile);
@@ -81,9 +83,18 @@ public class Menu implements MenuInterface {
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
 					names[1][temp] = (String) eElement.getAttribute("id");
-					names[0][temp] = (String) eElement
-							.getElementsByTagName("coursetitle").item(0)
-							.getTextContent();
+					names[0][temp] = (String) eElement.getElementsByTagName("coursetitle").item(0).getTextContent();
+					
+					System.out.println("TITLE " + temp + ": " + names[0][temp] );
+					
+					if (eElement.getElementsByTagName("coursetitle").item(0).getTextContent().split("LANGUAGE:").length > 1) {
+
+						names[0][temp] = SystemLanguage.getLanguageBundle().getString((String)eElement.getElementsByTagName("coursetitle").item(0).getTextContent().split("LANGUAGE:")[1]);
+
+					} else {
+						names[0][temp] = (String) eElement.getElementsByTagName("coursetitle").item(0).getTextContent();
+					}
+				
 
 				}
 			}
@@ -106,8 +117,6 @@ public class Menu implements MenuInterface {
 						@SuppressWarnings("unused")
 						Sub submenu = new Sub(0, 0, getScene(), names[1][x]);
 						getScene().setRoot(submenu.getRoot());
-						
-						System.out.println("TEST 2");
 
 					}
 				});
@@ -153,20 +162,26 @@ public class Menu implements MenuInterface {
 				options[i] = o_creator.optionElement(o_names[i]);
 				o_vbox.getChildren().add(options[i]);
 			}
-			// LANGUAGES BUTTON EVENT
+			// LANGUAGE BUTTON EVENT
 			options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 					System.exit(0);
 				}
 			});
-			// HELP BUTTON EVENT
+			// ABOUT BUTTON EVENT
 			options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 					System.exit(0);
 				}
 			});
-			// EXIT BUTTON EVENT
+			// HELP BUTTON EVENT
 			options[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent me) {
+					System.exit(0);
+				}
+			});
+			// EXIT BUTTON EVENT
+			options[3].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 					System.exit(0);
 				}
@@ -180,11 +195,6 @@ public class Menu implements MenuInterface {
 			root.setTop(programName);
 
 			// -----------------------------------------Positioning
-			/*AnchorPane leftSide = new AnchorPane();
-			leftSide.getChildren().add(vbox);
-			AnchorPane.setTopAnchor(vbox, (double) upBorderDistance);
-			AnchorPane.setLeftAnchor(vbox, (double) borderDistance);*/
-			
 			AnchorPane leftSide = new AnchorPane();
 			leftSide.getChildren().add(scroll);
 			AnchorPane.setTopAnchor(scroll, (double) upBorderDistance);
@@ -209,16 +219,5 @@ public class Menu implements MenuInterface {
 	public static void resetRoot() {
 		getScene().setRoot(root);
 	}
-
-	/*public void start(Stage primaryStage) throws Exception {
-		init(primaryStage);
-		primaryStage.show();
-		primaryStage.setFullScreen(false);
-		play();
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}*/
 
 }

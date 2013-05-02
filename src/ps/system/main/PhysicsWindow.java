@@ -36,6 +36,7 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 
 		//Language Setup
 		SystemLanguage = new Language();
+		//SystemLanguage.loadLocale(Locale.FRENCH);
 
 		//Initialize global data storage hash map container
 		sharedData = new DataStore();

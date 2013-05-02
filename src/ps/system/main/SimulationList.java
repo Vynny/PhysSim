@@ -3,7 +3,6 @@ package ps.system.main;
 import java.util.LinkedHashMap;
 
 import ps.simulation.frames.JoBounceBall;
-import ps.simulation.frames.JoProjectileMotion;
 import ps.simulation.frames.JoSHM;
 import ps.simulation.frames.TrackWindow;
 import ps.simulation.frames.TrackWindow2;
@@ -45,7 +44,7 @@ public class SimulationList implements SystemConstants {
 		//Mechanics
 		TrackWindow Mechanics_Projectile_Motion = null;
 		JoBounceBall Mechanics_Bouncing_Ball = null;
-		JoProjectileMotion Mechanics_ProjectileMotion = null;
+		//JoProjectileMotion Mechanics_ProjectileMotion = null;
 		
 		//Waves
 		JoSHM Mechanics_SimpleHarmonicMotion = null;
@@ -61,7 +60,7 @@ public class SimulationList implements SystemConstants {
 		
 		//Mechanics
 		simulationList.put("Mechanics_JFXTEST1_TrackWindow", Mechanics_Projectile_Motion);
-		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_projectilemotion") + "_JoProjectileMotion", Mechanics_ProjectileMotion);
+		//simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_projectilemotion") + "_JoProjectileMotion", Mechanics_ProjectileMotion);
 		simulationList.put("Mechanics_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_bouncingball") + "_JoBounceBall", Mechanics_Bouncing_Ball);
 
 		//Waves

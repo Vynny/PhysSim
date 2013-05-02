@@ -14,6 +14,7 @@ import javax.swing.JSplitPane;
 import ps.logic.beans.SimulationIDBean;
 import ps.system.api.ChartMaker;
 import ps.system.api.InfoPane;
+import ps.system.api.SimClassLoader;
 import ps.system.api.SimulatorInstanceJFX;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
@@ -98,7 +99,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	// Initialize JavaFX Objects
 	private void InitializeSimulationWindows() {
-		SimulationList simList = new SimulationList();
+		//SimulationList simList = new SimulationList();
 
 		if (simulationID.getSimulationID() == null) {
 			JFXMenu = new Menu();
@@ -109,15 +110,23 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 					@Override
 					public void invalidated(Observable arg0) {
-						System.out.println(simulationID.getSimulationID());
 
 						if (!(simulationID.getSimulationID().equals(" "))) {
+							String simClass = simulationID.getSimulationID().split("_")[0];
+							String simTitle = simulationID.getSimulationID().split("_")[1];
 							
 							// Initialize Simulation Content
-							genericSimulation = SimulationList.simulationList.get(simulationID.getSimulationID());
-							String instanceName = null;
-
-							if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
+							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/", simClass);
+							
+							classLoader.loadClassInstance();
+							genericSimulation = classLoader.getClassInstance();
+							
+							/*
+							 * CODE FROM OLD HASHMAP BASED LOADING SYSTEM
+							 * KEPT FOR GOOD MEASURE
+							 */
+							//String instanceName = null;
+							/*if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
 								instanceName = (simulationID.getSimulationID()).split("_")[2];
 
 								try {
@@ -131,7 +140,10 @@ public class JFXPanes extends JPanel implements SystemConstants {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-							}
+							}*/
+							/*
+							 * 
+							 */
 							
 							if (genericSimulation instanceof SimulatorInstanceJFX) {
 								
@@ -143,7 +155,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								initJFX_Module(JFXPanel_Simulation, ((SimulatorInstanceJFX) JFXSimulation).getScene());
 								
 								// Initialize Chart for content
-								JFXPanes.Graph = new ChartMaker(ChartMaker.JFXDATASET, simulationID.getSimulationID().split("_")[1]);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.JFXDATASET, simTitle);
 
 								// Initialize InfoPane for content
 								JFXPanes.Input = new InfoPane();
@@ -155,20 +167,18 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								SwingSimulation.LoadData();
 								
 								// Initialize Chart for content
-								JFXPanes.Graph = new ChartMaker(ChartMaker.SWINGDATASET, simulationID.getSimulationID().split("_")[1]);
+								JFXPanes.Graph = new ChartMaker(ChartMaker.SWINGDATASET, simTitle);
 
 								// Initialize InfoPane for content
 								JFXPanes.Input = new InfoPane(SwingSimulation);
 							}
 
-
 							initJFX_Module(JFXPanel_Graph, Graph.getScene());
 							initJFX_Module(JFXPanel_Input, Input.getScene());
+							
+							PhysicsWindow.changeWindow("Simulation");
 						} else {
-							/*
-							 * TO DO:
-							 * 	-> Fix data unloading to properly load according chart 
-							 */
+							
 							if (genericSimulation instanceof SimulatorInstanceJFX) {
 								
 								JFXPanes.Graph = null;
@@ -198,12 +208,12 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	}
 
-	public static ChartMaker getGraphComponent() {
-		return Graph;
-	}
-
 	private static void initJFX_Module(JFXPanel panel, Scene scene) {
 		panel.setScene(scene);
+	}
+
+	public static ChartMaker getGraphComponent() {
+		return Graph;
 	}
 
 	public JSplitPane getSeperatedPanes() {
