@@ -91,17 +91,17 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	
 		while (RUNNING) {
 			
-			if (iterationCount == 0) 
+			if (iterationCount == 0) {
 				runOnce();
+				iterationCount++;
+			}
 
 			if (timeRUNNING && timeLocalRUNNING) {
 				secondsCurrent = System.currentTimeMillis() - secondsInit;
 				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
 			} else if (!timeRUNNING) {
-
 				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
 			} else if (!timeLocalRUNNING) {
-
 				secondsCurrent = System.currentTimeMillis() - secondsInit;
 			}
 
@@ -110,9 +110,9 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 			timeBeanLocal.setTime(secondsCurrentLocal / 1000); 
 			System.out.println("TimeCurLoc: " + timeBeanLocal.getTime());
 
+			//Perform simulation specific logic at each thread iteration
 			animationLogic();
-
-			//17 milliseconds of sleep between frames which is 60fps
+			
 			try {
 				Thread.sleep(17);
 			} catch (InterruptedException e) {

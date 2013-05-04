@@ -42,7 +42,7 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	}
 	
 	public void animationLogic() {
-		
+		System.out.println("V: " + v);
 		if ((int) (positionBeanY.getValue() + high) >= positionBeanY.getValue()) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {

@@ -24,17 +24,18 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	double xspeed = 1;
 	int framesOnGround;
 	
-	
+	//READ
 	SimVariableBean positionBean = new SimVariableBean();
 	
+	//WRITTEN
+	SimVariableBean velocityBean = new SimVariableBean();
 	
 	public JoBounceBall() {	
 		positionBean.setValue(y);
+		velocityBean.setValue(v);
 	}
 
 	public void animationLogic() {
-		
-		System.out.println("y: " + positionBean.getValue());
 		
 		if ((int) (y + high) >= y) {
 			framesOnGround++;
@@ -46,19 +47,19 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		}
 		x = x + xspeed;
 		
-		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
+		high = (velocityBean.getValue() * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
 		positionBean.setValue((int) (y + high));
 		
-		if ((v + damping) >= 0) {
+		if ((velocityBean.getValue() + damping) >= 0) {
 			positionBean.setValue((int) y);
-			v = 0;
+			velocityBean.setValue(0);
 		}
 		
-		if ((int) (y + high) > y && v < 0) {
+		if ((int) (y + high) > y && velocityBean.getValue() < 0) {
 			resetLocalTime();
 			
-			if (v < 0) {
-				v = v + damping;
+			if (velocityBean.getValue() < 0) {
+				velocityBean.setValue(velocityBean.getValue() + damping);
 			}
 			if (xspeed > 0) {
 				xspeed -= 0.3;
@@ -68,11 +69,8 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 			} else {
 				xspeed = 0;
 			}
-			System.out.println("xspeed " + xspeed);
-
 		} else {
 			repaint();
-			System.out.println("v " + v);
 		}
 
 	}
@@ -100,7 +98,7 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		
 		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
+		data_shared_read = new Object[][] { {"Launch Velocity", velocityBean.getSimVariableBeanProperty()}};
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

@@ -19,7 +19,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,7 +30,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Menu implements MenuInterface, SystemConstants {
@@ -150,7 +148,7 @@ public class Menu implements MenuInterface, SystemConstants {
 	        animation.setAutoReverse(true);
 	        animation.setCycleCount(Animation.INDEFINITE);
 	        
-	        animation.play();
+	       // animation.play();
 
 			// -----------------------------------------Creating the Options
 			OptionElement o_creator = new OptionElement();

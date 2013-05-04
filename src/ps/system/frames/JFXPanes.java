@@ -18,7 +18,6 @@ import ps.system.api.SimClassLoader;
 import ps.system.api.SimulatorInstanceJFX;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
-import ps.system.main.SimulationList;
 import ps.system.main.SystemConstants;
 import ps.system.menu.Menu;
 
@@ -116,7 +115,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							String simTitle = simulationID.getSimulationID().split("_")[1];
 							
 							// Initialize Simulation Content
-							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/", simClass);
+							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations", simClass);
 							
 							classLoader.loadClassInstance();
 							genericSimulation = classLoader.getClassInstance();

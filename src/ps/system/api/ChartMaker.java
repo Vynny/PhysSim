@@ -103,7 +103,7 @@ public class ChartMaker implements SystemConstants {
 	 * JFX METHODS
 	 */
 	protected LineChart<Number, Number> initJFXChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+		NumberAxis yAxis = new NumberAxis(0, 1000, 100);
 		
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
@@ -149,7 +149,7 @@ public class ChartMaker implements SystemConstants {
 	 */
 	
 	protected LineChart<Number, Number> initSwingChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-		final NumberAxis yAxis = new NumberAxis(-500, 500, 100);
+	    NumberAxis yAxis = new NumberAxis(-500, 500, 100);
 		
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		

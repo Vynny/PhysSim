@@ -2,7 +2,6 @@ package ps.system.menu;
 
 import static java.lang.Math.random;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
@@ -24,8 +23,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import ps.system.main.PhysicsWindow;
@@ -107,7 +104,7 @@ public class Sub implements MenuInterface, SystemConstants {
         animation.setAutoReverse(true);
         animation.setCycleCount(Animation.INDEFINITE);
 
-        animation.play();
+       // animation.play();
 
 		// -----------------------------------------Creating the Menu Elements
     	MenuElement creator = new MenuElement();
