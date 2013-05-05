@@ -79,7 +79,6 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		// Put anything here and it will render on screen (this includes images)
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 600);
 		g.setColor(Color.darkGray);
@@ -98,7 +97,7 @@ public class JoBounceBall extends SimulatorInstanceSwing {
 		
 		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[][] { {"Launch Velocity", velocityBean.getSimVariableBeanProperty()}};
+		data_shared_read = new Object[][] { {"Launch Velocity_0:-2000", velocityBean.getSimVariableBeanProperty()}};
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

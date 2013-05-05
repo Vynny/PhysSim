@@ -32,16 +32,25 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	
 	protected double secondsInitLocal = 0;
 	protected double secondsCurrentLocal = 0;
+	
+	protected double timeAtPause = 0;
 
 	// Main Animation Thread
 	protected Thread anim;
 	protected boolean RUNNING = false;
+	public boolean isRUNNING() {
+		return RUNNING;
+	}
 	protected int iterationCount = 0;
+	protected int pauseCount = 0;
 
 	// Data to load DataStore hashmaps with (for io between program components)
 	public Object[][] data_shared_read;
 	public Object[][] data_shared_write_independant;
 	public Object[][] data_shared_write_dependant;
+	
+	//DEBUG BOOLEANS
+	boolean TIMEDEBUG = false;
 	
 
 	/*---------------------------------------------------------------------
@@ -65,15 +74,35 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 
 	// Standard thread start
 	public void start() {
-		if (anim == null) {
+		if (anim == null && pauseCount == 0) {
+			System.out.println("FIRST START");
 			RUNNING = true;
 			anim = new Thread(this);
 			anim.start();
+		} else if (anim == null && pauseCount > 0) {
+			System.out.println("PAUSE START");
+			RUNNING = true;
+			anim = new Thread(this);
+			secondsInit = (System.currentTimeMillis() - timeAtPause) + secondsInit;
+			secondsInitLocal = (System.currentTimeMillis() - timeAtPause) + secondsInitLocal;
+			anim.start();
+		}
+	}
+	
+	//Standard thread pause
+	public void pause() {
+		System.out.println("ANIMATION PAUSED");
+		if (anim != null) {
+			timeAtPause = System.currentTimeMillis();
+			RUNNING = false;
+			anim = null;
+			pauseCount++;
 		}
 	}
 
 	// Standard thread stop
 	public void stop() {
+		System.out.println("ANIMATION STOPPED");
 		if (anim != null) {
 			RUNNING = false;
 			anim = null;
@@ -99,16 +128,21 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 			if (timeRUNNING && timeLocalRUNNING) {
 				secondsCurrent = System.currentTimeMillis() - secondsInit;
 				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
+				
+				timeBean.setTime(secondsCurrent / 1000); 
+				timeBeanLocal.setTime(secondsCurrentLocal / 1000);
 			} else if (!timeRUNNING) {
 				secondsCurrentLocal = System.currentTimeMillis() - secondsInitLocal;
+				timeBeanLocal.setTime(secondsCurrentLocal / 1000);
 			} else if (!timeLocalRUNNING) {
 				secondsCurrent = System.currentTimeMillis() - secondsInit;
+				timeBean.setTime(secondsCurrent / 1000); 
 			}
-
-			timeBean.setTime(secondsCurrent / 1000); 
-			System.out.println("TimeCur: " + timeBean.getTime());
-			timeBeanLocal.setTime(secondsCurrentLocal / 1000); 
-			System.out.println("TimeCurLoc: " + timeBeanLocal.getTime());
+			
+			if (TIMEDEBUG) {
+				System.out.println("TimeCur: " + timeBean.getTime());
+				System.out.println("TimeCurLoc: " + timeBeanLocal.getTime());
+			}
 
 			//Perform simulation specific logic at each thread iteration
 			animationLogic();

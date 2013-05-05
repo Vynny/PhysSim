@@ -104,7 +104,7 @@ public class Sub implements MenuInterface, SystemConstants {
         animation.setAutoReverse(true);
         animation.setCycleCount(Animation.INDEFINITE);
 
-       // animation.play();
+        //animation.play();
 
 		// -----------------------------------------Creating the Menu Elements
     	MenuElement creator = new MenuElement();

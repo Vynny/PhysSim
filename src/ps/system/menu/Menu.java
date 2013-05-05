@@ -112,10 +112,10 @@ public class Menu implements MenuInterface, SystemConstants {
 					public void handle(MouseEvent me) {
 						
 						root.getChildren().removeAll();
+						animation.stop();
 						@SuppressWarnings("unused")
 						Sub submenu = new Sub(0, 0, getScene(), names[1][x]);
 						getScene().setRoot(submenu.getRoot());
-
 					}
 				});
 			}
@@ -148,7 +148,7 @@ public class Menu implements MenuInterface, SystemConstants {
 	        animation.setAutoReverse(true);
 	        animation.setCycleCount(Animation.INDEFINITE);
 	        
-	       // animation.play();
+	        animation.play();
 
 			// -----------------------------------------Creating the Options
 			OptionElement o_creator = new OptionElement();

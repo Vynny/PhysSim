@@ -59,6 +59,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 
 	// Which simulation to display
 	public SimulationIDBean simulationID = new SimulationIDBean();
+	public String lastID = null;
 
 	public JFXPanes() {
 
@@ -110,39 +111,20 @@ public class JFXPanes extends JPanel implements SystemConstants {
 					@Override
 					public void invalidated(Observable arg0) {
 
-						if (!(simulationID.getSimulationID().equals(" "))) {
-							String simClass = simulationID.getSimulationID().split("_")[0];
-							String simTitle = simulationID.getSimulationID().split("_")[1];
+						if (!(simulationID.getSimulationID().equals(" ")) && !(simulationID.getSimulationID().equals("RESET"))) {
+
+							/*
+							 * ON START
+							 */
+							lastID = simulationID.getSimulationID();
+							System.out.println("CUR ID: " + lastID);
+							String simClass = lastID.split("_")[0];
+							String simTitle = lastID.split("_")[1];
 							
 							// Initialize Simulation Content
 							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations", simClass);
-							
 							classLoader.loadClassInstance();
 							genericSimulation = classLoader.getClassInstance();
-							
-							/*
-							 * CODE FROM OLD HASHMAP BASED LOADING SYSTEM
-							 * KEPT FOR GOOD MEASURE
-							 */
-							//String instanceName = null;
-							/*if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
-								instanceName = (simulationID.getSimulationID()).split("_")[2];
-
-								try {
-									genericSimulation = Class.forName( SIMFRAMEPATH + instanceName).newInstance();
-								} catch (InstantiationException e) {
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}*/
-							/*
-							 * 
-							 */
 							
 							if (genericSimulation instanceof SimulatorInstanceJFX) {
 								
@@ -160,6 +142,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								JFXPanes.Input = new InfoPane();
 								
 							} else if (genericSimulation instanceof SimulatorInstanceSwing){
+								
 								SwingSimulation = (SimulatorInstanceSwing) genericSimulation;
 								window_Simulation.add(SwingSimulation, BorderLayout.CENTER);
 
@@ -176,8 +159,11 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							initJFX_Module(JFXPanel_Input, Input.getScene());
 							
 							PhysicsWindow.changeWindow("Simulation");
-						} else {
 							
+						}  else if (simulationID.getSimulationID().equals(" ") || simulationID.getSimulationID().equals("RESET")){
+							/*
+							 * ON BACK OR RESET
+							 */
 							if (genericSimulation instanceof SimulatorInstanceJFX) {
 								
 								JFXPanes.Graph = null;
@@ -199,8 +185,15 @@ public class JFXPanes extends JPanel implements SystemConstants {
 								window_Simulation.removeAll();
 							}
 							
-							PhysicsWindow.changeWindow("Menu");
+							//IF BACK, RETURN TO MENU
+							//IF RESET, REINIT SAVED GENERIC OBJECT & ENGINE COMPONENTS
+							if (simulationID.getSimulationID().equals("RESET")) {
+								simulationID.setSimulationID(lastID);
+							} else {
+								PhysicsWindow.changeWindow("Menu");
+							}
 						}
+
 					}
 
 				});
@@ -227,4 +220,29 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		return menuPane;
 	}
 
+	
+	/*
+	 * CODE FROM OLD HASHMAP BASED LOADING SYSTEM
+	 * KEPT FOR GOOD MEASURE
+	 */
+	//String instanceName = null;
+	/*if (!((simulationID.getSimulationID()).split("_")[2].equals(null))) {
+		instanceName = (simulationID.getSimulationID()).split("_")[2];
+
+		try {
+			genericSimulation = Class.forName( SIMFRAMEPATH + instanceName).newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	/*
+	 * 
+	 */
+	
 }

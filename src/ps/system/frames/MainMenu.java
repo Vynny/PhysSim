@@ -52,8 +52,7 @@ public class MainMenu implements SystemConstants {
 	private HBox LanguageMenu() {
 		HBox box = new HBox();
 		
-		ObservableList<String> options = FXCollections.observableArrayList(
-				"English", "French");
+		ObservableList<String> options = FXCollections.observableArrayList("English", "French");
 		
 		final ComboBox comboBox = new ComboBox(options);
 		

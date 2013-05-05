@@ -17,7 +17,6 @@ public class JoSHM extends SimulatorInstanceSwing {
 	double y = 500;
 	double x = 40;
 	double v = -700;
-	double time = 0;
 	double frame = 0;
 	double high = 0;
 	double secondsInit = 0;
@@ -40,15 +39,16 @@ public class JoSHM extends SimulatorInstanceSwing {
 	public static double SIM_distance = 500;
 	
 	SimVariableBean positionBean = new SimVariableBean();
-	
+	SimVariableBean amplitudeBean = new SimVariableBean();
 	
 	public JoSHM() {	
 		positionBean.setValue(y);
+		amplitudeBean.setValue(amplitude);
 	}
 
 	public void animationLogic() {
 
-		positionBean.setValue( amplitude * Math.cos(omega * timeBeanLocal.getTime()));
+		positionBean.setValue( amplitudeBean.getValue() * Math.cos(omega * timeBeanLocal.getTime()));
 
 		repaint();
 
@@ -57,7 +57,6 @@ public class JoSHM extends SimulatorInstanceSwing {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		// Put anything here and it will render on screen (this includes images)
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 600);
 		g.setColor(Color.darkGray);
@@ -73,7 +72,7 @@ public class JoSHM extends SimulatorInstanceSwing {
 		
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
-		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBean.getSimVariableBeanProperty()}};
+		data_shared_write_dependant = new Object[][] { {"Amplitude", amplitudeBean.getSimVariableBeanProperty()}};
 	
 		data_shared_read = new Object[0][0] ; 
 

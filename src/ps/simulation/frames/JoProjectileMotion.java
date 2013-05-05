@@ -29,20 +29,24 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	private SimVariableBean positionBeanY = new SimVariableBean();
 	private SimVariableBean angleBean = new SimVariableBean();
 	
+	private SimVariableBean vinitBean = new SimVariableBean();
+
+	
 	
 	public JoProjectileMotion() {
 		positionBeanY.setValue(y);
 		positionBeanX.setValue(x);
 		angleBean.setValue(angle);
+		vinitBean.setValue(vinit);
 	}
 
 	public void runOnce() {
-		xspeed = -(vinit * Math.cos(Math.toRadians(angleBean.getValue())))/100;
-		v = (vinit * Math.sin(Math.toRadians(angleBean.getValue())));
+		xspeed = -(vinitBean.getValue() * Math.cos(Math.toRadians(angleBean.getValue())))/100;
+		v = (vinitBean.getValue() * Math.sin(Math.toRadians(angleBean.getValue())));
 	}
 	
 	public void animationLogic() {
-		System.out.println("V: " + v);
+		
 		if ((int) (positionBeanY.getValue() + high) >= positionBeanY.getValue()) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {
@@ -52,13 +56,15 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 			framesOnGround = 0;
 		}
 		positionBeanX.setValue(positionBeanX.getValue() + xspeed);
-
+		
 		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
 		positionBeanY.setValue(y + high);
+		
 		if ((v + damping) >= 0) {
 			positionBeanY.setValue(y);
 			v = 0;
 		}
+		
 		if ((int) (positionBeanY.getValue() + high) > positionBeanY.getValue() && v < 0) {
 			resetLocalTime();
 			
@@ -100,12 +106,11 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 			
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
-		data_shared_write_dependant = new Object[][] { {"Ball Y", positionBeanY.getSimVariableBeanProperty()},
-												       {"Ball X", positionBeanX.getSimVariableBeanProperty()}};
+		data_shared_write_dependant = new Object[][] { {"Ball X", positionBeanX.getSimVariableBeanProperty()},
+												       {"Ball Y", positionBeanY.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[][]  { {"Angle", angleBean.getSimVariableBeanProperty()},
-											 {"X Position", positionBeanX.getSimVariableBeanProperty()}, 
-				 							 {"Y Position", positionBeanY.getSimVariableBeanProperty()}}; 
+		data_shared_read = new Object[][]  { {"Angle_1:90", angleBean.getSimVariableBeanProperty()},
+											 {"Initial Velocity_0:-5000", vinitBean.getSimVariableBeanProperty()}}; 
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);
