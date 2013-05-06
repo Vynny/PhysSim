@@ -1,9 +1,11 @@
 package ps.system.api;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,6 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import ps.logic.beans.TimeBean;
 import ps.system.main.SystemConstants;
 
 public class ChartMaker implements SystemConstants {
@@ -33,12 +34,11 @@ public class ChartMaker implements SystemConstants {
 	private ObservableList<XYChart.Series<Number, Number>> Data;
 
 	//Chart Legend Objects
-	private static Object[] keys = DATAWRITE_JFX_dependant.keySet().toArray();
-    private static CheckBox[] cbs = new CheckBox[keys.length];
+	private Object[] keys;
+    private static CheckBox[] cbs;
     
 	//Chart Objects
-	private NumberAxis xAxis;
-	private NumberAxis yAxis;
+	private final NumberAxis xAxis;
 	private LineChart<Number, Number> chart;
 	private String title;
 	
@@ -51,12 +51,9 @@ public class ChartMaker implements SystemConstants {
 	private SimpleDoubleProperty SwingTime;
 
 	public ChartMaker(Object dataSet, String title) {
-		this.title = title;
-		
 		BorderPane root = new BorderPane();
-		
+		this.title = title;
 		xAxis = new NumberAxis();	
-		xAxis.setAutoRanging(true);
 		
 		if (dataSet.equals((int) 0)) {
 			System.out.println("JFX DATA SET");
@@ -89,10 +86,9 @@ public class ChartMaker implements SystemConstants {
 				cbs[i].setSelected(true);
 			}
 	
-			root.setCenter(initSwingChart("Time", null, "Position", null));
+			root.setCenter(initSwingChart("Time", null, "", null));
 		}
 		
-
 		root.setBottom(BottomMenu());
 		
 		scene = new Scene(root);
@@ -103,7 +99,7 @@ public class ChartMaker implements SystemConstants {
 	 * JFX METHODS
 	 */
 	protected LineChart<Number, Number> initJFXChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-		NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+		final NumberAxis yAxis = new NumberAxis(0, 1000, 100);
 		
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
 		
@@ -149,19 +145,24 @@ public class ChartMaker implements SystemConstants {
 	 */
 	
 	protected LineChart<Number, Number> initSwingChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-	    NumberAxis yAxis = new NumberAxis(-500, 500, 100);
-		
+	    final NumberAxis yAxis = new NumberAxis(-500, 500, 100);
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
-		
+	
 		//Chart Var Setup
+	    
+	    //->BUG: Auto-ranging causes concurrency issues for both axes.
 	    chart.setTitle(title);
 		chart.setCreateSymbols(false);
 		chart.setAnimated(false);
 		chart.setLegendVisible(true);
 		
 		//Axes Setup
+		
 		//xAxis.setLabel(xLabel);
 		xAxis.setForceZeroInRange(false);
+		//->BUG: Auto-ranging causes concurrency issues for both axes.
+		xAxis.setAutoRanging(false);
+	    //yAxis.setAutoRanging(true);
 		//yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
@@ -173,21 +174,30 @@ public class ChartMaker implements SystemConstants {
 	}
 	
 	private void plotSwingData() {
-
+		
+		xAxis.setUpperBound(SwingTime.getValue().doubleValue() + 10);
+		xAxis.setLowerBound(SwingTime.getValue().doubleValue());
+		xAxis.setTickUnit(1);
+		
 		SwingTime.addListener(new InvalidationListener() {
 
 			@Override
 			public void invalidated(Observable arg0) {
-				Number CurTime = SwingTime.getValue().doubleValue();
-
-				for (int i = 0; i < keys.length; i++) {
-					if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null)) {
-						Data.get(i).getData().add(new XYChart.Data<Number, Number>(CurTime, DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
+				NumberAxis xAxis = (NumberAxis) chart.getXAxis();
+				if (SwingTime.getValue().doubleValue() > xAxis.getUpperBound()) {
+					xAxis.setUpperBound(xAxis.getUpperBound() + 2);
+					xAxis.setLowerBound(xAxis.getLowerBound() + 2);
+				}
+				
+					for (int i = 0; i < keys.length; i++) {
+						if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null) && (SwingTime.getValue().doubleValue() >= 1)) {
+							Data.get(i).getData().add(new XYChart.Data<Number, Number>(SwingTime.getValue().doubleValue(), DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
 					}
 				}
 			}
 
 		});// LISTENER END
+
 	}
 	
 	private void dataInit() {
