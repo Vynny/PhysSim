@@ -208,7 +208,7 @@ public class InfoPane implements SystemConstants {
 			if ((Double)DATAREAD.get(currentKey).getValue() > 0) {
 				valueText = DATAREAD.get(currentKey).getValue().toString();
 			} else {
-				valueText = Double.toString(Math.abs((double)DATAREAD.get(currentKey).getValue()));
+				valueText = Double.toString(Math.abs((Double)DATAREAD.get(currentKey).getValue()));
 			}
 			
 			varField.setText(valueText);
@@ -280,7 +280,7 @@ public class InfoPane implements SystemConstants {
 					if (currentKey.split("_").length > 1) {
 						if (Double.parseDouble(currentKey.split("_")[1].split(":")[1]) < 0) {
 							DATAREAD.get(currentKey).setValue(-1 * new_val.intValue());
-							textLabel = Double.toString(Math.abs((double)DATAREAD.get(currentKey).getValue()));
+							textLabel = Double.toString(Math.abs((Double)DATAREAD.get(currentKey).getValue()));
 						} else {
 							DATAREAD.get(currentKey).setValue(new_val.intValue());
 							textLabel = DATAREAD.get(currentKey).getValue().toString();

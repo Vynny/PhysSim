@@ -1,8 +1,5 @@
 package ps.system.api;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -187,11 +184,18 @@ public class ChartMaker implements SystemConstants {
 				if (SwingTime.getValue().doubleValue() > xAxis.getUpperBound()) {
 					xAxis.setUpperBound(xAxis.getUpperBound() + 2);
 					xAxis.setLowerBound(xAxis.getLowerBound() + 2);
-				}
+				} 
 				
 					for (int i = 0; i < keys.length; i++) {
-						if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null) && (SwingTime.getValue().doubleValue() >= 1)) {
+						if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null)) {
 							Data.get(i).getData().add(new XYChart.Data<Number, Number>(SwingTime.getValue().doubleValue(), DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
+							
+							NumberAxis yAxis = (NumberAxis) chart.getYAxis();
+							if (DATAWRITE_Swing_dependant.get(keys[i]).getValue() > yAxis.getUpperBound()) {
+								yAxis.setUpperBound(yAxis.getUpperBound() + 5);
+							} else if (DATAWRITE_Swing_dependant.get(keys[i]).getValue() < yAxis.getLowerBound()) {
+								yAxis.setLowerBound(yAxis.getLowerBound() + 5);
+							} 
 					}
 				}
 			}

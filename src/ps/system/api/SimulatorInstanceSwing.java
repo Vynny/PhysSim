@@ -67,15 +67,21 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 
 	public void init() {
 		// Initialize start time of animation
-		secondsInit = secondsInitLocal = System.currentTimeMillis(); 
-		startTime();
-		startLocalTime();
+		
 	}
 
 	// Standard thread start
 	public void start() {
 		if (anim == null && pauseCount == 0) {
 			System.out.println("FIRST START");
+			
+			//Time init
+			resetTime();
+			startTime();
+			resetLocalTime();
+			startLocalTime();
+			
+			//Thread stuff
 			RUNNING = true;
 			anim = new Thread(this);
 			anim.start();

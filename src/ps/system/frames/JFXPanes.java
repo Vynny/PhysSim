@@ -122,7 +122,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 							String simTitle = lastID.split("_")[1];
 							
 							// Initialize Simulation Content
-							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations", simClass);
+							SimClassLoader classLoader = new SimClassLoader("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/", simClass);
 							classLoader.loadClassInstance();
 							genericSimulation = classLoader.getClassInstance();
 							

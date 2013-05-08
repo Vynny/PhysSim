@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import ps.logic.beans.SimVariableBean;
+import ps.simulation.formulae.FConvert;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
@@ -17,10 +18,7 @@ public class JoSHM extends SimulatorInstanceSwing {
 	double y = 500;
 	double x = 40;
 	double v = -700;
-	double frame = 0;
 	double high = 0;
-	double secondsInit = 0;
-	double secondsCurrent = 0;
 	double g = 9.8 * 200;
 	double damping = 90;
 	double xspeed = 3;
@@ -42,13 +40,14 @@ public class JoSHM extends SimulatorInstanceSwing {
 	SimVariableBean amplitudeBean = new SimVariableBean();
 	
 	public JoSHM() {	
-		positionBean.setValue(y);
 		amplitudeBean.setValue(amplitude);
 	}
 
 	public void animationLogic() {
-
-		positionBean.setValue( amplitudeBean.getValue() * Math.cos(omega * timeBeanLocal.getTime()));
+	    
+		y = amplitudeBean.getValue() * Math.cos(omega * timeBeanLocal.getTime());
+		positionBean.setValue(FConvert.coord(500, y));
+       
 
 		repaint();
 
@@ -62,7 +61,7 @@ public class JoSHM extends SimulatorInstanceSwing {
 		g.setColor(Color.darkGray);
 		g.fillRect(0, 500, 900, 100);
 		g.setColor(Color.white);
-		g.fillOval(300, (int) (positionBean.getValue() + 300), 20, 20);
+		g.fillOval(300, (int) (y + 300), 20, 20);
 		g.drawString("" + (y - (int) (y + high)), 200, 10);
 		g.drawString("" + timeBeanLocal.getTime(), 200, 40);
 
