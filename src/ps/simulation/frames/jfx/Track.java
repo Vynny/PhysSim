@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.jfx;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

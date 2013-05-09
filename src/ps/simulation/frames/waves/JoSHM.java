@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.waves;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -47,7 +47,6 @@ public class JoSHM extends SimulatorInstanceSwing {
 	    
 		y = amplitudeBean.getValue() * Math.cos(omega * timeBeanLocal.getTime());
 		positionBean.setValue(FConvert.coord(500, y));
-       
 
 		repaint();
 
@@ -57,9 +56,9 @@ public class JoSHM extends SimulatorInstanceSwing {
 
 		super.paintComponent(g);
 		g.setColor(Color.black);
-		g.fillRect(0, 0, 900, 600);
+		g.fillRect(0, 0, PhysicsWindow.getTopSlidePosition() , 600);
 		g.setColor(Color.darkGray);
-		g.fillRect(0, 500, 900, 100);
+		g.fillRect(0, 500, PhysicsWindow.getTopSlidePosition() , -(500 - PhysicsWindow.getBottomSlidePosition()) );
 		g.setColor(Color.white);
 		g.fillOval(300, (int) (y + 300), 20, 20);
 		g.drawString("" + (y - (int) (y + high)), 200, 10);
@@ -71,9 +70,9 @@ public class JoSHM extends SimulatorInstanceSwing {
 		
 		data_shared_write_independant = new Object[][] { {"Time", timeBean.getTimeProperty()} };
 		
-		data_shared_write_dependant = new Object[][] { {"Amplitude", amplitudeBean.getSimVariableBeanProperty()}};
+		data_shared_write_dependant = new Object[][] { {"Y Position", positionBean.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[0][0] ; 
+		data_shared_read = new Object[][] {{"Amplitude_0:300", amplitudeBean.getSimVariableBeanProperty()}} ; 
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

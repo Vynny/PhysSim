@@ -1,9 +1,10 @@
-package ps.simulation.frames;
+package ps.simulation.frames.mechanics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import ps.logic.beans.SimVariableBean;
+import ps.simulation.formulae.FConvert;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
@@ -15,8 +16,9 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	 */
 
 	private double angle = 30;
-	private double y = 500;
-	private double x = 40;
+	private double yMax = 500;
+	private double yPosition = yMax;
+	private double xPosition = 40;
 	private double v = -1100;
 	private double vinit = -1000;
 	private double high = 0;
@@ -34,8 +36,8 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	
 	
 	public JoProjectileMotion() {
-		positionBeanY.setValue(y);
-		positionBeanX.setValue(x);
+		positionBeanY.setValue(yMax);
+		positionBeanX.setValue(xPosition);
 		angleBean.setValue(angle);
 		vinitBean.setValue(vinit);
 	}
@@ -47,25 +49,30 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	
 	public void animationLogic() {
 		
-		if ((int) (positionBeanY.getValue() + high) >= positionBeanY.getValue()) {
+		if ((int) (yMax + high) >= yMax) {
 			framesOnGround++;
 			if (framesOnGround >= 7) {
 				xspeed = 0;
+				stop();
 			}
 		} else {
 			framesOnGround = 0;
 		}
-		positionBeanX.setValue(positionBeanX.getValue() + xspeed);
+		xPosition  = xPosition + xspeed;
+		positionBeanX.setValue(xPosition);
 		
 		high = (v * timeBeanLocal.getTime() + (0.5 * g * (timeBeanLocal.getTime() * timeBeanLocal.getTime())));
-		positionBeanY.setValue(y + high);
+		yPosition = (int)(yMax+high);
+		positionBeanY.setValue(FConvert.coord(yMax, yPosition));
 		
 		if ((v + damping) >= 0) {
-			positionBeanY.setValue(y);
+			yPosition = yMax;
 			v = 0;
+			stop();
 		}
 		
-		if ((int) (positionBeanY.getValue() + high) > positionBeanY.getValue() && v < 0) {
+		if ((int) (yMax + high) > yMax && v < 0) {
+			
 			resetLocalTime();
 			
 			if (v < 0) {
@@ -90,14 +97,14 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 
 		super.paintComponent(g);
 		g.setColor(Color.black);
-		g.fillRect(0, 0, 900, 600);
+		g.fillRect(0, 0, PhysicsWindow.getTopSlidePosition() , 600);
 		g.setColor(Color.darkGray);
-		g.fillRect(0, 500, 900, 100);
+		g.fillRect(0, 500, PhysicsWindow.getTopSlidePosition() , -(500 - PhysicsWindow.getBottomSlidePosition()) );
 		g.setColor(Color.white);
-		g.fillOval((int) positionBeanX.getValue(), (int) positionBeanY.getValue(), 20, 20);
+		g.fillOval((int) xPosition, (int) yPosition, 20, 20);
 		g.setColor(Color.red);
 		g.fillRect(0, 450, 50, 50);
-		g.drawString("" + (y - (int) (y + high)), 200, 10);
+		g.drawString("" + (yMax - (int) (yMax + high)), 200, 10);
 		g.drawString("" + timeBeanLocal.getTime(), 200, 40);
 
 	}

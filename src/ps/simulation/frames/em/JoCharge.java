@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.em;
 
 import java.awt.Graphics;
 
@@ -23,6 +23,7 @@ public class JoCharge {
 	}
 
 	public void paint(Graphics g) {
+		
 		frame++;
 
 		if (cap == false) {

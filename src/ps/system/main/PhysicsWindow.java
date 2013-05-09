@@ -27,10 +27,13 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 	public static JFXPanes JFXPanes; 
 	public SimulatorInstanceJFX simulationDisplay;
 	
+	//Split Panes
+	private static JSplitPane topPanes;
+	private static JSplitPane windowPanes;
+	
 	//CardLayout
 	private static CardLayout windowCards;
 	private static JPanel mainPanel;
-
 	
 	public PhysicsWindow() {
 
@@ -46,13 +49,13 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		JFXPanes = new JFXPanes();
 		
 		// Create top simulation pane and chart pant
-		JSplitPane topPanes = JFXPanes.getSeperatedPanes();
+		topPanes = JFXPanes.getSeperatedPanes();
 		// Create bottom info pane(contains buttons and configuration)
 		JPanel bottomPane = JFXPanes.getBottomPane();
 
 		// Create nested split container containing horizontally laid out jfxpanes setup
 		// vertically with bottom pane
-		JSplitPane windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanes, bottomPane);
+		windowPanes = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanes, bottomPane);
 		windowPanes.setResizeWeight(MainSplitPanes_RESIZEWEIGHT);
 		windowPanes.setContinuousLayout(MainSplitPanes_CONTINUOUSLAYOUT);
 
@@ -71,6 +74,14 @@ public class PhysicsWindow extends JFrame implements SystemConstants {
 		getContentPane().add(mainPanel);
 	}
 
+	public static int getTopSlidePosition() {
+		return topPanes.getDividerLocation();
+	}
+	
+	public static int getBottomSlidePosition() {
+		return windowPanes.getDividerLocation();
+	}
+	
 	public static void changeWindow(String windowID) {
 		windowCards.show(mainPanel, windowID);
 	}

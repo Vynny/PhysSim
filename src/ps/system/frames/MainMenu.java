@@ -1,7 +1,6 @@
 package ps.system.frames;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,7 +17,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ps.simulation.frames.Banner;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SimulationList;
 import ps.system.main.SystemConstants;
@@ -39,9 +37,6 @@ public class MainMenu implements SystemConstants {
 	public MainMenu() {
 		BorderPane root = new BorderPane();
 
-		Banner banner = new Banner(SystemLanguage.getLanguageBundle().getString("Menu_title"));
-
-		root.setTop(banner.showBanner());
 		root.setCenter(AccordionMenu());
 		root.setLeft(LanguageMenu());
 		

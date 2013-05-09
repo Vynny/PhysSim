@@ -142,11 +142,10 @@ public class ChartMaker implements SystemConstants {
 	 */
 	
 	protected LineChart<Number, Number> initSwingChart(String xLabel, String xUnit, String yLabel, String yUnit) {
-	    final NumberAxis yAxis = new NumberAxis(-500, 500, 100);
+	    final NumberAxis yAxis = new NumberAxis(-100, 100, 25);
 	    chart = new LineChart<Number, Number>(xAxis, yAxis);
-	
-		//Chart Var Setup
 	    
+		//Chart Var Setup
 	    //->BUG: Auto-ranging causes concurrency issues for both axes.
 	    chart.setTitle(title);
 		chart.setCreateSymbols(false);
@@ -159,7 +158,7 @@ public class ChartMaker implements SystemConstants {
 		xAxis.setForceZeroInRange(false);
 		//->BUG: Auto-ranging causes concurrency issues for both axes.
 		xAxis.setAutoRanging(false);
-	    //yAxis.setAutoRanging(true);
+	    yAxis.setAutoRanging(false);
 		//yAxis.setLabel(yLabel);
 		yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, yUnit, null));
 
@@ -172,7 +171,7 @@ public class ChartMaker implements SystemConstants {
 	
 	private void plotSwingData() {
 		
-		xAxis.setUpperBound(SwingTime.getValue().doubleValue() + 10);
+		xAxis.setUpperBound(SwingTime.getValue().doubleValue() + 5);
 		xAxis.setLowerBound(SwingTime.getValue().doubleValue());
 		xAxis.setTickUnit(1);
 		
@@ -188,13 +187,15 @@ public class ChartMaker implements SystemConstants {
 				
 					for (int i = 0; i < keys.length; i++) {
 						if (cbs[i].selectedProperty().getValue().equals(true) && (DATAWRITE_Swing_dependant.get(keys[i]) != null)) {
-							Data.get(i).getData().add(new XYChart.Data<Number, Number>(SwingTime.getValue().doubleValue(), DATAWRITE_Swing_dependant.get(keys[i]).getValue()));
+							Number curValue = DATAWRITE_Swing_dependant.get(keys[i]).getValue();
+							
+							Data.get(i).getData().add(new XYChart.Data<Number, Number>(SwingTime.getValue().doubleValue(), curValue));
 							
 							NumberAxis yAxis = (NumberAxis) chart.getYAxis();
-							if (DATAWRITE_Swing_dependant.get(keys[i]).getValue() > yAxis.getUpperBound()) {
-								yAxis.setUpperBound(yAxis.getUpperBound() + 5);
-							} else if (DATAWRITE_Swing_dependant.get(keys[i]).getValue() < yAxis.getLowerBound()) {
-								yAxis.setLowerBound(yAxis.getLowerBound() + 5);
+							if (curValue.doubleValue() >= yAxis.getUpperBound()) {
+								yAxis.setUpperBound(yAxis.getUpperBound() + (curValue.doubleValue() - yAxis.getUpperBound()) + 10);
+							} else if (curValue.doubleValue() <= yAxis.getLowerBound()) {
+								yAxis.setLowerBound(yAxis.getLowerBound() - (yAxis.getLowerBound() - curValue.doubleValue()) - 10);
 							} 
 					}
 				}

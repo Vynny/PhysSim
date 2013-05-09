@@ -113,7 +113,6 @@ public class Menu implements MenuInterface, SystemConstants {
 						
 						root.getChildren().removeAll();
 						animation.stop();
-						@SuppressWarnings("unused")
 						Sub submenu = new Sub(0, 0, getScene(), names[1][x]);
 						getScene().setRoot(submenu.getRoot());
 					}

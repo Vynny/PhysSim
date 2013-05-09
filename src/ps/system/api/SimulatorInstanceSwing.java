@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import ps.logic.beans.TimeBean;
 import ps.system.main.PhysicsWindow;
+import ps.system.main.SystemConstants;
 
 public class SimulatorInstanceSwing extends JPanel implements Runnable {
 
@@ -50,7 +51,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	public Object[][] data_shared_write_dependant;
 	
 	//DEBUG BOOLEANS
-	boolean TIMEDEBUG = false;
+	boolean timePrint = false;
 	
 
 	/*---------------------------------------------------------------------
@@ -66,7 +67,6 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	 *-------------------------------------------------------------------*/
 
 	public void init() {
-		// Initialize start time of animation
 		
 	}
 
@@ -145,7 +145,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 				timeBean.setTime(secondsCurrent / 1000); 
 			}
 			
-			if (TIMEDEBUG) {
+			if (timePrint) {
 				System.out.println("TimeCur: " + timeBean.getTime());
 				System.out.println("TimeCurLoc: " + timeBeanLocal.getTime());
 			}
@@ -156,7 +156,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 			try {
 				Thread.sleep(17);
 			} catch (InterruptedException e) {
-
+				e.printStackTrace();
 			}
 
 		}
@@ -181,10 +181,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 		
 	}
 	
-	public void resetState() {
-		
-	}
-
+	
 	/*---------------------------------------------------------------------
 	|  Method - animationLogic
 	|
@@ -248,7 +245,6 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	}
 
 	public void UnLoadData() {
-		
 		//Terminate animation thread
 		stop();
 		

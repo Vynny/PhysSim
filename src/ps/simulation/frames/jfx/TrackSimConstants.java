@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.jfx;
 
 import javafx.animation.Interpolator;
 import javafx.scene.paint.Color;

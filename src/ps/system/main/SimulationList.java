@@ -2,10 +2,9 @@ package ps.system.main;
 
 import java.util.LinkedHashMap;
 
-import ps.simulation.frames.JoBounceBall;
-import ps.simulation.frames.JoSHM;
-import ps.simulation.frames.TrackWindow;
-import ps.simulation.frames.TrackWindow2;
+import ps.simulation.frames.jfx.TrackWindow;
+import ps.simulation.frames.mechanics.JoBounceBall;
+import ps.simulation.frames.waves.JoSHM;
 
 public class SimulationList implements SystemConstants {
 	
@@ -48,7 +47,6 @@ public class SimulationList implements SystemConstants {
 		
 		//Waves
 		JoSHM Mechanics_SimpleHarmonicMotion = null;
-		TrackWindow2 Waves_DoubleSlit = null;
 
 		//Electricity and Magnetism
 		
@@ -65,7 +63,6 @@ public class SimulationList implements SystemConstants {
 
 		//Waves
 		simulationList.put("Waves_" +  SystemLanguage.getLanguageBundle().getString("SimulationList_shm") + "_JoSHM", Mechanics_SimpleHarmonicMotion);
-		simulationList.put("Waves_JFXTEST2_TrackWindow2", Waves_DoubleSlit);
 		
 		//Electricity and Magnetism
 		

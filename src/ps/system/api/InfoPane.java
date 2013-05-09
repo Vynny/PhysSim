@@ -1,5 +1,8 @@
 package ps.system.api;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -20,8 +23,6 @@ import javafx.scene.text.FontWeight;
 import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
-
-import com.sun.javafx.css.converters.StringConverter;
 
 
 public class InfoPane implements SystemConstants {
@@ -213,8 +214,9 @@ public class InfoPane implements SystemConstants {
 			
 			varField.setText(valueText);
 			varField.setAlignment(Pos.CENTER);
+			varField.setEditable(false);
 			
-			varField.setOnAction(new EventHandler<ActionEvent>() {
+			/*varField.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent e) {
@@ -244,7 +246,7 @@ public class InfoPane implements SystemConstants {
 
 					}
 				}
-			});
+			});*/
 
 			gridPane.add(varField, gridCol, gridRow + 1);
 
@@ -279,14 +281,14 @@ public class InfoPane implements SystemConstants {
 					String textLabel;
 					if (currentKey.split("_").length > 1) {
 						if (Double.parseDouble(currentKey.split("_")[1].split(":")[1]) < 0) {
-							DATAREAD.get(currentKey).setValue(-1 * new_val.intValue());
+							DATAREAD.get(currentKey).setValue(-1 * Math.floor(new_val.doubleValue() * 100) / 100);
 							textLabel = Double.toString(Math.abs((Double)DATAREAD.get(currentKey).getValue()));
 						} else {
-							DATAREAD.get(currentKey).setValue(new_val.intValue());
+							DATAREAD.get(currentKey).setValue(Math.floor(new_val.doubleValue() * 100) / 100);
 							textLabel = DATAREAD.get(currentKey).getValue().toString();
 						}
 					} else {
-						DATAREAD.get(currentKey).setValue(new_val.intValue());
+						DATAREAD.get(currentKey).setValue(Math.floor(new_val.doubleValue() * 100) / 100);
 						textLabel = DATAREAD.get(currentKey).getValue().toString();
 					}
 					

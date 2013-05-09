@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.waves;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,6 +20,8 @@ public class JoPendulum extends SimulatorInstanceSwing {
 	int originx = 0;
 	int originy = 0;
 	int framesstopped;
+	int offsetX = 310;
+	int offsetY = 100;
 	
 	//READ VALUES
 	private SimVariableBean xposBean = new SimVariableBean();
@@ -33,19 +35,7 @@ public class JoPendulum extends SimulatorInstanceSwing {
 		xposBean.setValue(x);
 		yposBean.setValue(y);
 		lengthBean.setValue(length);
-	}
-
-	public void paintComponent(Graphics g) {
-
-		super.paintComponent(g);
-
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 900, 600);
-		g.setColor(Color.darkGray);
-		g.fillRect(0, 500, 900, 100);
-		g.setColor(Color.white);
-		g.fillOval((int) xposBean.getValue() + 200, (int) yposBean.getValue() + 100, 20, 20);
-		g.drawLine(originx + 210, originy + 100, (int) xposBean.getValue() + 210, (int) yposBean.getValue() + 110);
+		anglemaxBean.setValue(angleMax);
 	}
 
 	public void animationLogic() {
@@ -53,11 +43,11 @@ public class JoPendulum extends SimulatorInstanceSwing {
 		if (anglemaxBean.getValue() == 0) {
 			framesstopped++;
 		}
-		if (framesstopped > 500) {
+		if (framesstopped >= 30) {
 			stop();
 		}
 
-		anglemaxBean.setValue(FPendulum.damping(angleMax, timeBeanLocal.getTime()));
+		anglemaxBean.setValue(FPendulum.damping(anglemaxBean.getValue(), timeBeanLocal.getTime()));
 
 		angle = FPendulum.AngleP(anglemaxBean.getValue(), g, length, timeBeanLocal.getTime());
 		xposBean.setValue(FPendulum.PendulumX(lengthBean.getValue(), angle));
@@ -67,7 +57,28 @@ public class JoPendulum extends SimulatorInstanceSwing {
 		originy = FPendulum.PendulumY(lengthBean.getValue(), 0) - (int) lengthBean.getValue();
 
 		repaint();
+		
+	}
+	
+	public void calculateStringLength() {
+		angle = FPendulum.AngleP(anglemaxBean.getValue(), g, length, timeBeanLocal.getTime());
+		xposBean.setValue(FPendulum.PendulumX(lengthBean.getValue(), angle));
+		yposBean.setValue(FPendulum.PendulumY(lengthBean.getValue(), angle));
+	}
 
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+		if (iterationCount == 0) {
+			calculateStringLength();
+		}
+		g.setColor(Color.black);
+		g.fillRect(0, 0, PhysicsWindow.getTopSlidePosition() , 600);
+		g.setColor(Color.darkGray);
+		g.fillRect(0, 500, PhysicsWindow.getTopSlidePosition() , -(500 - PhysicsWindow.getBottomSlidePosition()) );
+		g.setColor(Color.white);
+		g.fillOval((int) xposBean.getValue() + (offsetX - 10), (int) yposBean.getValue() + offsetY, 20, 20);
+		g.drawLine(originx + offsetX, originy + offsetY, (int) xposBean.getValue() + offsetX, (int) yposBean.getValue() + offsetY);
 	}
 
 	public void LoadData() {
@@ -77,8 +88,8 @@ public class JoPendulum extends SimulatorInstanceSwing {
 		data_shared_write_dependant = new Object[][] { {"X Position", xposBean.getSimVariableBeanProperty() },
 													   {"Y Position", yposBean.getSimVariableBeanProperty() } };
 
-		data_shared_read = new Object[][] { { "String Length", lengthBean.getSimVariableBeanProperty() },
-											{ "Starting Angle", anglemaxBean.getSimVariableBeanProperty() } };
+		data_shared_read = new Object[][] { { "String Length_0:550", lengthBean.getSimVariableBeanProperty() },
+											{ "Starting Angle_0:90", anglemaxBean.getSimVariableBeanProperty() } };
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

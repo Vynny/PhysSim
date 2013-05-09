@@ -1,4 +1,4 @@
-package ps.simulation.frames;
+package ps.simulation.frames.jfx;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
