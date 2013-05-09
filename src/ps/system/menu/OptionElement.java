@@ -21,6 +21,7 @@ public class OptionElement implements MenuInterface {
 				unselected);
 		border.arcHeightProperty().setValue(o_borderArc);
 		border.arcWidthProperty().setValue(o_borderArc);
+		border.setOpacity(unsOpac);
 
 		// The Gradient of the button
 		RadialGradient grad = new RadialGradient(0, 0, 0.5, 0.5, 1, true,
@@ -28,10 +29,11 @@ public class OptionElement implements MenuInterface {
 						new Stop(0, accentColor) });
 
 		// The background of the button:
-		Rectangle main = new Rectangle(o_borderWidth - (o_borToMain * 2),
+		final Rectangle main = new Rectangle(o_borderWidth - (o_borToMain * 2),
 				o_borderHeight - (o_borToMain * 2), grad);
 		main.arcHeightProperty().setValue(o_borderArc - o_borToMain);
 		main.arcWidthProperty().setValue(o_borderArc - o_borToMain);
+		main.setOpacity(unsOpac);
 
 		// The name of the label is here:
 		final Text label = new Text(name);
@@ -45,14 +47,18 @@ public class OptionElement implements MenuInterface {
 		stack.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				border.setFill(selected);
+				border.setOpacity(selOpac);
 				label.setFill(selected);
+				main.setOpacity(selOpac);
 
 			}
 		});
 		stack.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				border.setFill(unselected);
+				border.setOpacity(unsOpac);
 				label.setFill(unselected);
+				main.setOpacity(unsOpac);
 			}
 		});
 

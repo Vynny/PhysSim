@@ -35,7 +35,7 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 	int b2y = 170;
 	int width = 100;
 	int height = 200;
-	int sMult = (10);
+	int sMult = 10;
 	
 	//WRITTEN
 	SimVariableBean velocityBean = new SimVariableBean();
@@ -51,17 +51,18 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 	public void animationLogic() {
 
 		if (part1) {
-			System.out.println("part 1");
-		
+			System.out.println("part1");
+			//System.out.println("RESET1: " + reset1 + " " + x + " b2x: " + b2x);
 			if (reset1) {
 				resetLocalTime();
 				radius = r2cy - y;
 			}
-			
-			x = (int) (radius * Math.cos((timeBeanLocal.getTime() * multBean.getValue()) + 3 * (Math.PI) / 2) + r2cx);
-			y = (int) (radius * Math.sin((timeBeanLocal.getTime() * multBean.getValue()) + 3 * (Math.PI) / 2) + r2cy);
-			System.out.println("X: " +  x);
+
+			x = (int) (radius * Math.cos(sMult *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cx);
+			y = (int) (radius * Math.sin(sMult *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cy);
 			if (x < b2x) {
+				System.out.println("poop");
+				System.out.println("x="+x);
 				part1 = false;
 				part2 = true;
 			}
@@ -71,56 +72,57 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 		}
 		
 		if (part2) {
-			System.out.println("part 2");
-			
+			System.out.println("part2");
 			if (reset2) {
-				resetLocalTime();;
+				resetLocalTime();
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = b2x - v * (timeBeanLocal.getTime() * multBean.getValue());
+			x = b2x - (v * (sMult * timeBeanLocal.getTime()));
 			if (x < (b1x + width) && y < (b1y + height) && y > (b1y + (height / 2))) {
 				part2 = false;
 				part3 = true;
 			}
-			if (x <= 0) {
-				//stop();
-			}
+			//if (x <= 0) {
+			//	System.out.println("full stop kykes");
+			//	stop();
+			//}
 			reset2 = false;
 			reset3 = true;
 			repaint();
 		}
 		
 		if (part3) {
-			System.out.println("part 3");
-			
+			System.out.println("part3");
 			if (reset3) {
 				resetLocalTime();
 				radius = y - r1cy;
 			}
-			x = (int) (radius * Math.cos((timeBeanLocal.getTime() * multBean.getValue()) + (Math.PI) / 2) + r1cx);
-			y = (int) (radius * Math.sin((timeBeanLocal.getTime() * multBean.getValue()) + (Math.PI) / 2) + r1cy);
+			x = (int) (radius * Math.cos(sMult *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cx);
+			y = (int) (radius * Math.sin(sMult *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cy);
 			if (x > (b1x + width)) {
 				part3 = false;
 				part4 = true;
 			}
 			reset3 = false;
 			reset4 = true;
+			System.out.println("part1= "+part1+"part2= "+part2+"part 3 = "+part3+"part4= "+part4);
 			repaint();
 		}
 		
 		if (part4) {
 			System.out.println("part 4");
-			
+			System.out.println("x4 "+x);
 			if (reset4) {
 				resetLocalTime();
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = (b1x + width) + v * (timeBeanLocal.getTime() * multBean.getValue());
+			x = (b1x + width) + v * (sMult * timeBeanLocal.getTime());
 			if (x > b2x && y > b2y && y < (b2y + (height / 2))) {
 				part4 = false;
 				part1 = true;
 			}
-			if (x >= 2000) {
+			if (x > 2000) {
+				System.out.println("full stop niggers");
 				stop();
 			}
 			reset4 = false;

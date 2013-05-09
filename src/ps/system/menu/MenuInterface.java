@@ -27,6 +27,8 @@ public interface MenuInterface {
 	Color accentColor = Color.web("#FFE400");
 	Color backgroundcolor = Color.web("#7A7A7A");
 	*/
+	double unsOpac = 0.6;
+	double selOpac = 1;
 	
 	Color unselected = Color.web("#000000");
 	Color selected = Color.web("#FFFFFF");

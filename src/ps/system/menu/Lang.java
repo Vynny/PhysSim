@@ -28,11 +28,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import ps.system.internationalization.Language;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;;
 
 
-public class Sub implements MenuInterface, SystemConstants {
+public class Lang implements MenuInterface, SystemConstants {
 
 	private static BorderPane root;
 	
@@ -40,50 +41,26 @@ public class Sub implements MenuInterface, SystemConstants {
 		return root;
 	}
 	
-	String[][] specific;
-	int animationCount = 0;
+	String[] specific;
+	
 	static Timeline animation;
 
-	public Sub() {
+	public Lang() {
 
 	}
 
-	public Sub(double checkWidth, double checkHeight, Scene primaryScene, String identifier) {
+	public Lang(double checkWidth, double checkHeight, Scene primaryScene) {
 		root = new BorderPane();
 
-		NodeList nList = Menu.doc.getElementsByTagName("course");
-		int mainMenuSize = nList.getLength();
-
-		for (int temp = 0; temp < mainMenuSize; temp++) {
-			Node nNode = nList.item(temp);
-			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element eElement = (Element) nNode;
-				String idtype = (String) eElement.getAttribute("id");
-				if (idtype.equals(identifier)) {
-					NodeList checkChildren = ((Element) nNode).getElementsByTagName("animation");
-					animationCount = checkChildren.getLength();
-					
-					specific = new String[2][animationCount];
-					
-					for(int sub = 0; sub < animationCount; sub++){
-						Node subNode = checkChildren.item(sub);
-						if(subNode.getNodeType() == Node.ELEMENT_NODE){
-							Element subElement = (Element) subNode;
-					
-							if (subElement.getElementsByTagName("name").item(0).getTextContent().split("LANGUAGE:").length > 1) {
-								specific[0][sub] = SystemLanguage.getLanguageBundle().getString(subElement.getElementsByTagName("name").item(0).getTextContent().split("LANGUAGE:")[1]);	
-							} else {
-								specific[0][sub] = subElement.getElementsByTagName("name").item(0).getTextContent();
-							}
-						
-							specific[1][sub] = subElement.getElementsByTagName("file").item(0).getTextContent();
-						}
-					}
-
-				}
-			}
-
-		}
+		//Languages
+		
+		specific = new String[5];
+		specific[0] = "English";
+		specific[1] = "French";
+		specific[2] = "";
+		specific[3] = "Polish";
+		specific[4] = "Romanian";
+		int langCount = specific.length;
 
 		//------------------------------------------ANIMATIONS
 		
@@ -105,29 +82,27 @@ public class Sub implements MenuInterface, SystemConstants {
             );
         }
         animation.setAutoReverse(false);
-        //animation.setCycleCount(Animation.INDEFINITE);
 
         animation.play();
 
 		// -----------------------------------------Creating the Menu Elements
     	MenuElement creator = new MenuElement();
-		StackPane[] elements = new StackPane[animationCount];
+		StackPane[] elements = new StackPane[langCount];
 		VBox vbox = new VBox(spacer);
-		for (int i = 0; i < animationCount; i++) {
+		for (int i = 0; i < langCount; i++) {
 			final int x = i;
-			elements[i] = creator.menuElement(specific[0][i]);
+			elements[i] = creator.menuElement(specific[i]);
 			vbox.getChildren().add(elements[i]);
 			elements[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 			
 					animation.stop();
-					PhysicsWindow.JFXPanes.simulationID.setSimulationID(specific[1][x] + "_" + specific[0][x]);
 
 				}
 			});
 		}
 		ScrollPane scroll = new ScrollPane();
-		scroll.setMinHeight(480);
+		scroll.setMinHeight(380);
 		scroll.setMinWidth(375);
 		scroll.setStyle("-fx-background-color:transparent;");
 		scroll.setContent(vbox);
@@ -136,19 +111,21 @@ public class Sub implements MenuInterface, SystemConstants {
 		OptionElement o_creator = new OptionElement();
 		int o_size = 2;
 		StackPane[] options = new StackPane[o_size];
-		String[] o_names = { "Back", "Exit" };
+		String[] o_names = {"Main Menu", "Exit" };
 		VBox o_vbox = new VBox(spacer);
 		for (int i = 0; i < 2; i++) {
 			options[i] = o_creator.optionElement(o_names[i]);
 			o_vbox.getChildren().add(options[i]);
 		}
-
 		// BACK BUTTON EVENT
 		options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				root.getChildren().removeAll();
 				animation.stop();
+
 				Menu.resetRoot();
+
+				//MainMenu.init(primaryStage);
 
 			}
 		});
@@ -170,9 +147,9 @@ public class Sub implements MenuInterface, SystemConstants {
 		// -----------------------------------------Positioning
 
 		AnchorPane leftSide = new AnchorPane();
-		leftSide.getChildren().add(vbox);
-		AnchorPane.setTopAnchor(vbox, (double) upBorderDistance);
-		AnchorPane.setLeftAnchor(vbox, (double) borderDistance);
+		leftSide.getChildren().add(scroll);
+		AnchorPane.setTopAnchor(scroll, (double) upBorderDistance);
+		AnchorPane.setLeftAnchor(scroll, (double) borderDistance);
 
 		AnchorPane rightSide = new AnchorPane();
 		rightSide.getChildren().add(o_vbox);

@@ -19,7 +19,7 @@ public class MenuElement implements MenuInterface {
 				unselected);
 		border.arcHeightProperty().setValue(borderArc);
 		border.arcWidthProperty().setValue(borderArc);
-		border.setOpacity(.6);
+		border.setOpacity(unsOpac);
 
 		// The Gradient of the button
 		RadialGradient grad = new RadialGradient(0, 0, 0.5, 0.5, 1, true,
@@ -31,7 +31,7 @@ public class MenuElement implements MenuInterface {
 				borderHeight - (borToMain * 2), grad);
 		main.arcHeightProperty().setValue(borderArc - borToMain);
 		main.arcWidthProperty().setValue(borderArc - borToMain);
-		main.setOpacity(.6);
+		main.setOpacity(unsOpac);
 
 		// The name of the label is here:
 		final Text label = new Text(name);
@@ -43,18 +43,18 @@ public class MenuElement implements MenuInterface {
 		stack.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				border.setFill(selected);
-				border.setOpacity(1);
+				border.setOpacity(selOpac);
 				label.setFill(selected);
-				main.setOpacity(1);
+				main.setOpacity(selOpac);
 
 			}
 		});
 		stack.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				border.setFill(unselected);
-				border.setOpacity(.6);
+				border.setOpacity(unsOpac);
 				label.setFill(unselected);
-				main.setOpacity(.6);
+				main.setOpacity(unsOpac);
 			}
 		});
 

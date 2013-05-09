@@ -19,6 +19,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Menu implements MenuInterface, SystemConstants {
@@ -113,14 +115,17 @@ public class Menu implements MenuInterface, SystemConstants {
 						
 						root.getChildren().removeAll();
 						animation.stop();
+						@SuppressWarnings("unused")
 						Sub submenu = new Sub(0, 0, getScene(), names[1][x]);
 						getScene().setRoot(submenu.getRoot());
+						
+
 					}
 				});
 			}
 			
 			ScrollPane scroll = new ScrollPane();
-			scroll.setMinHeight(380);
+			scroll.setMinHeight(480);
 			scroll.setMinWidth(375);
 			scroll.setStyle("-fx-background-color:transparent;");
 			scroll.setContent(vbox);
@@ -138,20 +143,20 @@ public class Menu implements MenuInterface, SystemConstants {
 	                    new KeyValue(circle.translateXProperty(),random()*Background.creatorWidth),
 	                    new KeyValue(circle.translateYProperty(),random()*Background.creatorHeight)
 	                ),
-	                new KeyFrame(new Duration(20000), // set end position at 40s
+	                new KeyFrame(new Duration(2), // set end position at 40s
 	                    new KeyValue(circle.translateXProperty(),random()*Background.creatorWidth),
 	                    new KeyValue(circle.translateYProperty(),random()*Background.creatorHeight)
 	                )
 	            );
 	        }
 	        animation.setAutoReverse(true);
-	        animation.setCycleCount(Animation.INDEFINITE);
+	        //animation.setCycleCount(Animation.INDEFINITE);
 	        
-	        //animation.play();
+	        animation.play();
 
 			// -----------------------------------------Creating the Options
 			OptionElement o_creator = new OptionElement();
-			String[] o_names = { "Language", "About", "Help", "Exit" };
+			String[] o_names = {"Help", "Language", "Exit" };
 			int o_size = o_names.length;
 			StackPane[] options = new StackPane[o_size];
 			VBox o_vbox = new VBox(spacer);
@@ -159,30 +164,33 @@ public class Menu implements MenuInterface, SystemConstants {
 				options[i] = o_creator.optionElement(o_names[i]);
 				o_vbox.getChildren().add(options[i]);
 			}
-			// LANGUAGE BUTTON EVENT
+			// HELP BUTTON EVENT
 			options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
-					System.exit(0);
+					root.getChildren().removeAll();
+					animation.stop();
+					@SuppressWarnings("unused")
+					Help help = new Help(0, 0, getScene());
+					getScene().setRoot(help.getRoot());
 				}
 			});
-			// ABOUT BUTTON EVENT
+			//LANGUAGE PAGE
 			options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
-					System.exit(0);
+					root.getChildren().removeAll();
+					animation.stop();
+					@SuppressWarnings("unused")
+					Lang lang = new Lang(0, 0, getScene());
+					getScene().setRoot(lang.getRoot());
 				}
 			});
-			// HELP BUTTON EVENT
+			// EXIT BUTTON EVENT
 			options[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 					System.exit(0);
 				}
 			});
-			// EXIT BUTTON EVENT
-			options[3].setOnMouseClicked(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent me) {
-					System.exit(0);
-				}
-			});
+			
 
 			// -----------------------------------------Title
 

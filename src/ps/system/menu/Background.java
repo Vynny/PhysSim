@@ -30,8 +30,8 @@ public class Background {
     	creatorHeight = screenSize.getHeight();
     	
     	Group layer1 = new Group();
-        for(int i=0; i<20;i++) {
-            Circle circle = new Circle(200,Color.web("white",0.05f));
+        for(int i=0; i<10;i++) {
+            Circle circle = new Circle(300,Color.web("white",0.05f));
             circle.setStrokeType(StrokeType.OUTSIDE);
             circle.setStroke(Color.web("white",0.2f));
             circle.setStrokeWidth(4f);
@@ -39,8 +39,8 @@ public class Background {
         }
         // create second list of circles
         Group layer2 = new Group();
-        for(int i=0; i<10;i++) {
-            Circle circle = new Circle(70,Color.web("white",0.05f));
+        for(int i=0; i<7;i++) {
+            Circle circle = new Circle(100,Color.web("white",0.05f));
             circle.setStrokeType(StrokeType.OUTSIDE);
             circle.setStroke(Color.web("white",0.1f));
             circle.setStrokeWidth(2f);
@@ -48,11 +48,11 @@ public class Background {
         }
         // create third list of circles
         Group layer3 = new Group();
-        for(int i=0; i<10;i++) {
-            Circle circle = new Circle(150,Color.web("white",0.05f));
+        for(int i=0; i<5;i++) {
+            Circle circle = new Circle(200,Color.web("white",0.05f));
             circle.setStrokeType(StrokeType.OUTSIDE);
-            circle.setStroke(Color.web("white",0.16f));
-            circle.setStrokeWidth(4f);
+            circle.setStroke(Color.web("white",0.05f));
+            circle.setStrokeWidth(2f);
             layer3.getChildren().add(circle);
         }
         // Set a blur effect on each layer
