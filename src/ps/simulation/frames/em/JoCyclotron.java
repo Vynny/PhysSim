@@ -50,17 +50,17 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 
 	public void animationLogic() {
 
-		while (part1) {
-			timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
+		if (part1) {
+			System.out.println("part 1");
 		
 			if (reset1) {
 				resetLocalTime();
-				timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
 				radius = r2cy - y;
 			}
 			
-			x = (int) (radius * Math.cos(timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cx);
-			y = (int) (radius * Math.sin(timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cy);
+			x = (int) (radius * Math.cos((timeBeanLocal.getTime() * multBean.getValue()) + 3 * (Math.PI) / 2) + r2cx);
+			y = (int) (radius * Math.sin((timeBeanLocal.getTime() * multBean.getValue()) + 3 * (Math.PI) / 2) + r2cy);
+			System.out.println("X: " +  x);
 			if (x < b2x) {
 				part1 = false;
 				part2 = true;
@@ -70,37 +70,35 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 			repaint();
 		}
 		
-		while (part2) {
-			timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
+		if (part2) {
+			System.out.println("part 2");
 			
 			if (reset2) {
-				resetLocalTime();
-				timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
+				resetLocalTime();;
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = b2x - v * (timeBeanLocal.getTime());
+			x = b2x - v * (timeBeanLocal.getTime() * multBean.getValue());
 			if (x < (b1x + width) && y < (b1y + height) && y > (b1y + (height / 2))) {
 				part2 = false;
 				part3 = true;
 			}
-			if (x < 0) {
-				stop();
+			if (x <= 0) {
+				//stop();
 			}
 			reset2 = false;
 			reset3 = true;
 			repaint();
 		}
 		
-		while (part3) {
-			timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
+		if (part3) {
+			System.out.println("part 3");
 			
 			if (reset3) {
 				resetLocalTime();
-				timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
 				radius = y - r1cy;
 			}
-			x = (int) (radius * Math.cos(timeBeanLocal.getTime() + (Math.PI) / 2) + r1cx);
-			y = (int) (radius * Math.sin(timeBeanLocal.getTime() + (Math.PI) / 2) + r1cy);
+			x = (int) (radius * Math.cos((timeBeanLocal.getTime() * multBean.getValue()) + (Math.PI) / 2) + r1cx);
+			y = (int) (radius * Math.sin((timeBeanLocal.getTime() * multBean.getValue()) + (Math.PI) / 2) + r1cy);
 			if (x > (b1x + width)) {
 				part3 = false;
 				part4 = true;
@@ -110,20 +108,19 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 			repaint();
 		}
 		
-		while (part4) {
-			timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
+		if (part4) {
+			System.out.println("part 4");
 			
 			if (reset4) {
 				resetLocalTime();
-				timeBeanLocal.setTime(timeBeanLocal.getTime() * sMult);
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = (b1x + width) + v * (timeBeanLocal.getTime());
+			x = (b1x + width) + v * (timeBeanLocal.getTime() * multBean.getValue());
 			if (x > b2x && y > b2y && y < (b2y + (height / 2))) {
 				part4 = false;
 				part1 = true;
 			}
-			if (x > 2000) {
+			if (x >= 2000) {
 				stop();
 			}
 			reset4 = false;

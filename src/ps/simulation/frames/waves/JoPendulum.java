@@ -17,6 +17,7 @@ public class JoPendulum extends SimulatorInstanceSwing {
 	double length = 200;
 	double angle = 0;
 	double angleMax = 45;
+	double damping = 0.01;
 	int originx = 0;
 	int originy = 0;
 	int framesstopped;
@@ -24,18 +25,20 @@ public class JoPendulum extends SimulatorInstanceSwing {
 	int offsetY = 100;
 	
 	//READ VALUES
-	private SimVariableBean xposBean = new SimVariableBean();
-	private SimVariableBean yposBean = new SimVariableBean();
+	SimVariableBean xposBean = new SimVariableBean();
+	SimVariableBean yposBean = new SimVariableBean();
+	SimVariableBean dampingBean = new SimVariableBean();
 	
 	//WRITTEN VALUES
-	private SimVariableBean lengthBean = new SimVariableBean();
-	private SimVariableBean anglemaxBean = new SimVariableBean();
+	SimVariableBean lengthBean = new SimVariableBean();
+	SimVariableBean anglemaxBean = new SimVariableBean();
 	
 	public JoPendulum() {
 		xposBean.setValue(x);
 		yposBean.setValue(y);
 		lengthBean.setValue(length);
 		anglemaxBean.setValue(angleMax);
+		dampingBean.setValue(damping);
 	}
 
 	public void animationLogic() {
@@ -47,7 +50,7 @@ public class JoPendulum extends SimulatorInstanceSwing {
 			stop();
 		}
 
-		anglemaxBean.setValue(FPendulum.damping(anglemaxBean.getValue(), timeBeanLocal.getTime()));
+		anglemaxBean.setValue(FPendulum.damping(anglemaxBean.getValue(), timeBeanLocal.getTime(), dampingBean.getValue()));
 
 		angle = FPendulum.AngleP(anglemaxBean.getValue(), g, length, timeBeanLocal.getTime());
 		xposBean.setValue(FPendulum.PendulumX(lengthBean.getValue(), angle));
@@ -89,7 +92,8 @@ public class JoPendulum extends SimulatorInstanceSwing {
 													   {"Y Position", yposBean.getSimVariableBeanProperty() } };
 
 		data_shared_read = new Object[][] { { "String Length_0:550", lengthBean.getSimVariableBeanProperty() },
-											{ "Starting Angle_0:90", anglemaxBean.getSimVariableBeanProperty() } };
+											{ "Starting Angle_0:90", anglemaxBean.getSimVariableBeanProperty() },
+											{ "Damping_0:1", dampingBean.getSimVariableBeanProperty() }};
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

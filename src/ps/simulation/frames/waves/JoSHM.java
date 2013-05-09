@@ -31,10 +31,7 @@ public class JoSHM extends SimulatorInstanceSwing {
 	int framesstopped;
 	double omega = 2 * Math.PI;
 	double amplitude = 100;
-
-	// TESTING
-	public static int SIM_basetime = 5;
-	public static double SIM_distance = 500;
+	
 	
 	SimVariableBean positionBean = new SimVariableBean();
 	SimVariableBean amplitudeBean = new SimVariableBean();

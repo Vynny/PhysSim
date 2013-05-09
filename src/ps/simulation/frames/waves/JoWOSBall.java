@@ -18,7 +18,7 @@ public class JoWOSBall {
 
 	public void paint(Graphics g, double time, double amplitude, double omega, double radius, int i) {
 		
-		dy = FSHM.SHMY(amplitude, omega, time / 1.5, -0.05 * i);
+		this.dy = FSHM.SHMY(amplitude, omega, time / 1.5, -0.05 * i);
 		// dy = FSHM.SHMY(amplitude, omega, time,0);
 		
 		if (i % 8 == 0) {
@@ -28,6 +28,11 @@ public class JoWOSBall {
 		}
 		
 		g.fillOval((int) x, (int) dy + 300, (int) radius, (int) radius);
+	}
+	
+	public double fix(double time, double amplitude, double omega, double radius, int i) {
+		double fix = FSHM.SHMY(amplitude, omega, time / 1.5, -0.05 * i);
+		return fix;
 	}
 	
 	public double getX() {

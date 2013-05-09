@@ -51,7 +51,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	public Object[][] data_shared_write_dependant;
 	
 	//DEBUG BOOLEANS
-	boolean timePrint = false;
+	boolean timePrint = true;
 	
 
 	/*---------------------------------------------------------------------
@@ -126,6 +126,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	
 		while (RUNNING) {
 			
+			System.out.println("RUNNING");
 			if (iterationCount == 0) {
 				runOnce();
 				iterationCount++;

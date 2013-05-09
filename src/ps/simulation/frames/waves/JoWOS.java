@@ -16,7 +16,7 @@ public class JoWOS extends SimulatorInstanceSwing {
 	double amplitude = 100;
 	int high = 0;
 	int radius = 20;
-	int nbBalls = 80;
+	int nbBalls = 63;
 	ArrayList<JoWOSBall> balls = new ArrayList<JoWOSBall>();
 	
 	//WRITTEN
@@ -55,7 +55,7 @@ public class JoWOS extends SimulatorInstanceSwing {
 			balls.add(new JoWOSBall(i * radius, y));
 			balls.get(i).paint(g, timeBeanLocal.getTime(), amplitudeBean.getValue(), omegaBean.getValue(), radius, i);
 			for (int j = 0; j < ballBeans.size(); j++) {
-				ballBeans.get(j).setValue(balls.get(i).getDy());
+				ballBeans.get(j).setValue(balls.get(i).fix(timeBeanLocal.getTime(), amplitudeBean.getValue(), omegaBean.getValue(), radius, i));
 			}
 		}
 		g.drawString("" + (y - (int) y ), 200, 10);

@@ -20,9 +20,9 @@ public class FPendulum {
 		return angle;
 	}
 
-	public static double damping(double angleMax, double time) {
+	public static double damping(double angleMax, double time, double damping) {
 		if (angleMax > 0) {
-			angleMax -= time * 0.01;
+			angleMax -= time * damping;
 		}
 		if (angleMax < 0) {
 			angleMax = 0;

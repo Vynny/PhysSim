@@ -138,9 +138,9 @@ public class JoCircuit extends SimulatorInstanceSwing  {
 			Zappa.get(i - 1).paint(g);
 		}
 		g.setColor(Color.darkGray);
-		g.fillRect(460, 210, 30, 70);
+		g.fillRect(490, 210, 30, 70);
 		g.setColor(Color.red);
-		g.fillRect(464, 275 - (int) Charge, 22, (int) Charge);
+		g.fillRect(494, 275 - (int) Charge, 22, (int) Charge);
 
 	}
 

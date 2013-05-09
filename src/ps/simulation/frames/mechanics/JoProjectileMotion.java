@@ -15,23 +15,23 @@ public class JoProjectileMotion extends SimulatorInstanceSwing {
 	 * 
 	 */
 
-	private double angle = 30;
-	private double yMax = 500;
-	private double yPosition = yMax;
-	private double xPosition = 40;
-	private double v = -1100;
-	private double vinit = -1000;
-	private double high = 0;
-	private double g = 9.8 * 200;
-	private double damping = 90;
-	private double xspeed = 6;
-	private int framesOnGround;
+	double angle = 30;
+	double yMax = 500;
+	double yPosition = yMax;
+	double xPosition = 40;
+	double v = -1100;
+	double vinit = -1000;
+	double high = 0;
+	double g = 9.8 * 200;
+	double damping = 90;
+	double xspeed = 6;
+	int framesOnGround;
 	
-	private SimVariableBean positionBeanX = new SimVariableBean();
-	private SimVariableBean positionBeanY = new SimVariableBean();
-	private SimVariableBean angleBean = new SimVariableBean();
+	SimVariableBean positionBeanX = new SimVariableBean();
+	SimVariableBean positionBeanY = new SimVariableBean();
+	SimVariableBean angleBean = new SimVariableBean();
 	
-	private SimVariableBean vinitBean = new SimVariableBean();
+	SimVariableBean vinitBean = new SimVariableBean();
 
 	
 	

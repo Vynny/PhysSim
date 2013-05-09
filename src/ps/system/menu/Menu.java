@@ -147,7 +147,7 @@ public class Menu implements MenuInterface, SystemConstants {
 	        animation.setAutoReverse(true);
 	        animation.setCycleCount(Animation.INDEFINITE);
 	        
-	        animation.play();
+	        //animation.play();
 
 			// -----------------------------------------Creating the Options
 			OptionElement o_creator = new OptionElement();
