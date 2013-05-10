@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

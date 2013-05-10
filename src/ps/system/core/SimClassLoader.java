@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import java.io.File;
 import java.net.URL;

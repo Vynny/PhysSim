@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import ps.logic.beans.SimVariableBean;
-import ps.system.api.SimulatorInstanceSwing;
+import ps.system.core.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
 public class JoCyclotron extends SimulatorInstanceSwing {
@@ -51,18 +51,14 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 	public void animationLogic() {
 
 		if (part1) {
-			System.out.println("part1");
-			//System.out.println("RESET1: " + reset1 + " " + x + " b2x: " + b2x);
 			if (reset1) {
 				resetLocalTime();
 				radius = r2cy - y;
 			}
 
-			x = (int) (radius * Math.cos(sMult *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cx);
-			y = (int) (radius * Math.sin(sMult *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cy);
+			x = (int) (radius * Math.cos(multBean.getValue() *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cx);
+			y = (int) (radius * Math.sin(multBean.getValue() *  timeBeanLocal.getTime() + 3 * (Math.PI) / 2) + r2cy);
 			if (x < b2x) {
-				System.out.println("poop");
-				System.out.println("x="+x);
 				part1 = false;
 				part2 = true;
 			}
@@ -72,12 +68,12 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 		}
 		
 		if (part2) {
-			System.out.println("part2");
 			if (reset2) {
 				resetLocalTime();
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = b2x - (v * (sMult * timeBeanLocal.getTime()));
+			velocityBean.setValue(v);
+			x = b2x - (v * (multBean.getValue() * timeBeanLocal.getTime()));
 			if (x < (b1x + width) && y < (b1y + height) && y > (b1y + (height / 2))) {
 				part2 = false;
 				part3 = true;
@@ -92,37 +88,33 @@ public class JoCyclotron extends SimulatorInstanceSwing {
 		}
 		
 		if (part3) {
-			System.out.println("part3");
 			if (reset3) {
 				resetLocalTime();
 				radius = y - r1cy;
 			}
-			x = (int) (radius * Math.cos(sMult *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cx);
-			y = (int) (radius * Math.sin(sMult *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cy);
+			x = (int) (radius * Math.cos(multBean.getValue() *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cx);
+			y = (int) (radius * Math.sin(multBean.getValue() *  timeBeanLocal.getTime() + (Math.PI) / 2) + r1cy);
 			if (x > (b1x + width)) {
 				part3 = false;
 				part4 = true;
 			}
 			reset3 = false;
 			reset4 = true;
-			System.out.println("part1= "+part1+"part2= "+part2+"part 3 = "+part3+"part4= "+part4);
 			repaint();
 		}
 		
 		if (part4) {
-			System.out.println("part 4");
-			System.out.println("x4 "+x);
 			if (reset4) {
 				resetLocalTime();
 			}
 			v = (int) ((2 * Math.PI * radius) / 6);
-			x = (b1x + width) + v * (sMult * timeBeanLocal.getTime());
+			velocityBean.setValue(v);
+			x = (b1x + width) + v * (multBean.getValue() * timeBeanLocal.getTime());
 			if (x > b2x && y > b2y && y < (b2y + (height / 2))) {
 				part4 = false;
 				part1 = true;
 			}
 			if (x > 2000) {
-				System.out.println("full stop niggers");
 				stop();
 			}
 			reset4 = false;

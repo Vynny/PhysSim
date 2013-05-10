@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ps.logic.beans.SimVariableBean;
-import ps.system.api.SimulatorInstanceSwing;
+import ps.system.core.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
 public class JoWOS extends SimulatorInstanceSwing {

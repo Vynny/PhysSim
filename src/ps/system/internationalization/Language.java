@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 public class Language {
 
 	public static Locale POLISH = new Locale.Builder().setLanguage("pl").setRegion("PL").build();
-	public static Locale SPANISH = new Locale.Builder().setLanguage("es").setRegion("ES").build();
+	public static Locale SPANISH = new Locale.Builder().setLanguage("es").build();
 	public static Locale ROMANIAN = new Locale.Builder().setLanguage("ro").setRegion("RO").build();
 	
 	private Locale[] languagesSupported = { Locale.ENGLISH, Locale.FRENCH, POLISH, SPANISH, ROMANIAN };

@@ -12,11 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import ps.logic.beans.SimulationIDBean;
-import ps.system.api.ChartMaker;
-import ps.system.api.InfoPane;
-import ps.system.api.SimClassLoader;
-import ps.system.api.SimulatorInstanceJFX;
-import ps.system.api.SimulatorInstanceSwing;
+import ps.system.core.ChartMaker;
+import ps.system.core.InfoPane;
+import ps.system.core.SimClassLoader;
+import ps.system.core.SimulatorInstanceJFX;
+import ps.system.core.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
 import ps.system.menu.Lang;

@@ -52,9 +52,9 @@ public class Lang implements MenuInterface, SystemConstants {
 		specific = new String[5];
 		specific[0] = "English";
 		specific[1] = "Français";
-		specific[2] = "Español";
-		specific[3] = "Polski";
-		specific[4] = "Român";
+		specific[2] = "Polski";
+		specific[3] = "Español";
+		specific[4] = "Româná";
 		int langCount = specific.length;
 
 		//------------------------------------------ANIMATIONS
@@ -101,11 +101,11 @@ public class Lang implements MenuInterface, SystemConstants {
 						initMenu();
 						break;
 					case 2:
-						SystemLanguage.loadLocale(Language.SPANISH);
+						SystemLanguage.loadLocale(Language.POLISH);
 						initMenu();
 						break;
 					case 3:
-						SystemLanguage.loadLocale(Language.POLISH);
+						SystemLanguage.loadLocale(Language.SPANISH);
 						initMenu();
 						break;
 					case 4:

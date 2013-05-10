@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -51,7 +51,7 @@ public class SimulatorInstanceSwing extends JPanel implements Runnable {
 	public Object[][] data_shared_write_dependant;
 	
 	//DEBUG BOOLEANS
-	boolean timePrint = true;
+	boolean timePrint = false;
 	
 
 	/*---------------------------------------------------------------------

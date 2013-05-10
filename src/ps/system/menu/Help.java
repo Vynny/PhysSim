@@ -124,6 +124,10 @@ public class Help implements MenuInterface, SystemConstants {
 
 		Accordion accordionMenu = new Accordion();
 		accordionMenu.setMaxSize(900, 450);
+		accordionMenu.setStyle("-fx-background-color:transparent; " + 
+				   "-fx-text-fill: #000000; " + 
+			       "-fx-font-size: 24px; " +
+			       "-fx-hbar-policy : never;" + "-fx-vbar-policy : never;");
 		for (int i = 0; i < tPanes.size(); i++) {
 			accordionMenu.getPanes().addAll(tPanes.get(i));
 		}

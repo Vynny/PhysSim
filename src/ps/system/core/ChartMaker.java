@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
@@ -6,6 +6,8 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -33,10 +36,12 @@ public class ChartMaker implements SystemConstants {
 	//Chart Legend Objects
 	private Object[] keys;
     private static CheckBox[] cbs;
+    private static Button backButton;
+    private static Button forwardButton;
     
 	//Chart Objects
 	private final NumberAxis xAxis;
-	private LineChart<Number, Number> chart;
+	private static LineChart<Number, Number> chart;
 	private String title;
 	
 	//Dataset Ientifiers
@@ -229,10 +234,35 @@ public class ChartMaker implements SystemConstants {
 		pane.setPadding(new Insets(10,10,10,10));
 		pane.setSpacing(5);
 		pane.setAlignment(Pos.CENTER);
-
+		
+		backButton = new Button("<");
+		forwardButton = new Button(">");
+		
+		backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	final NumberAxis xAxis = (NumberAxis) chart.getXAxis();
+		    	
+		    	xAxis.setUpperBound(xAxis.getUpperBound() - 1);
+		        xAxis.setLowerBound(xAxis.getLowerBound() - 1);
+		    }
+		});
+		
+		
+		forwardButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	final NumberAxis xAxis = (NumberAxis) chart.getXAxis();
+		    	
+		        xAxis.setUpperBound(xAxis.getUpperBound() + 1);
+		        xAxis.setLowerBound(xAxis.getLowerBound() + 1);
+		    }
+		});
+		
+		
+		pane.getChildren().add(backButton);
 		for (int i = 0; i < cbs.length; i++) {
 			pane.getChildren().addAll(cbs[i]);
 		}
+		pane.getChildren().add(forwardButton);
 		
 		return pane;
 	}

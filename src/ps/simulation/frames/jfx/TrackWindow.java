@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import ps.logic.beans.SimVariableBean;
 import ps.logic.beans.TimeBean;
-import ps.system.api.SimulatorInstanceJFX;
+import ps.system.core.SimulatorInstanceJFX;
 import ps.system.frames.JFXPanes;
 import ps.system.main.PhysicsWindow;
 

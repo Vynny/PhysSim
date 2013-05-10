@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 import ps.logic.beans.SimVariableBean;
-import ps.system.api.SimulatorInstanceSwing;
+import ps.system.core.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
 public class JoCircuit extends SimulatorInstanceSwing  {

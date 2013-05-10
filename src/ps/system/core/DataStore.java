@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import java.util.LinkedHashMap;
 

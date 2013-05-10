@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import ps.logic.beans.SimVariableBean;
 import ps.simulation.formulae.FConvert;
-import ps.system.api.SimulatorInstanceSwing;
+import ps.system.core.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 
 public class JoBOS extends SimulatorInstanceSwing {

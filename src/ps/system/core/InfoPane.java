@@ -1,4 +1,4 @@
-package ps.system.api;
+package ps.system.core;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleBinding;

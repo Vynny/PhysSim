@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import ps.system.api.DataStore;
-import ps.system.api.SimulatorInstanceJFX;
+import ps.system.core.DataStore;
+import ps.system.core.SimulatorInstanceJFX;
 import ps.system.frames.JFXPanes;
 import ps.system.internationalization.Language;
 
