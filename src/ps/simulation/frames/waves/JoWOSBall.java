@@ -7,19 +7,20 @@ import ps.simulation.formulae.FSHM;
 
 public class JoWOSBall {
 	
-	double x = 0;
-	double y = 0;
-	double dy = 0;
+	private double x = 0;
+	private double y = 0;
+	private double dy = 0;
+	private int modulo = 0;
 
-	public JoWOSBall(double xpos, double ypos) {
-		x = xpos;
-		y = ypos;
+	public JoWOSBall(double xpos, double ypos, int modulo) {
+		this.x = xpos;
+		this.y = ypos;
+		this.modulo = modulo;
 	}
 
 	public void paint(Graphics g, double time, double amplitude, double omega, double radius, int i) {
 		
-		this.dy = FSHM.SHMY(amplitude, omega, time / 1.5, -0.05 * i);
-		// dy = FSHM.SHMY(amplitude, omega, time,0);
+		this.dy = FSHM.SHMY(amplitude, omega, time , -0.05 * i);
 		
 		if (i % 8 == 0) {
 			g.setColor(Color.RED);
@@ -30,32 +31,19 @@ public class JoWOSBall {
 		g.fillOval((int) x, (int) dy + 300, (int) radius, (int) radius);
 	}
 	
-	public double fix(double time, double amplitude, double omega, double radius, int i) {
-		double fix = FSHM.SHMY(amplitude, omega, time / 1.5, -0.05 * i);
-		return fix;
-	}
-	
 	public double getX() {
 		return x;
 	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
+	
 	public double getY() {
 		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
 	}
 	
 	public double getDy() {
 		return dy;
 	}
 
-	public void setDy(double dy) {
-		this.dy = dy;
+	public int getModulo() {
+		return modulo;
 	}
 }

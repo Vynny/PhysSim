@@ -42,14 +42,6 @@ public interface SystemConstants {
 	//Engine constants
 	String SIMFRAMEPATH = "ps.simulation.frames.";
 	
-	/*
-	 * Swing handler constants
-	 */
-	
-	//Pixels per standard unit measurement (Unit: meter)
-	//100pixels = 1m
-	int PIXELRATIO = 100;	
-	
 
 	/*
 	 * ----------------------LinkedHashMaps----------------------

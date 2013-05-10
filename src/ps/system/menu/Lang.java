@@ -2,14 +2,9 @@ package ps.system.menu;
 
 import static java.lang.Math.random;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -24,14 +19,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import ps.system.internationalization.Language;
-import ps.system.main.PhysicsWindow;
-import ps.system.main.SystemConstants;;
-
+import ps.system.main.SystemConstants;
 
 public class Lang implements MenuInterface, SystemConstants {
 
@@ -41,25 +31,30 @@ public class Lang implements MenuInterface, SystemConstants {
 		return root;
 	}
 	
-	String[] specific;
+	private static Scene langMenu;
+
+	public static Scene getScene() {
+		return langMenu;
+	}
 	
+	public static void setScene(Scene scene) {
+		langMenu = scene;
+	}
+	
+	private String[] specific;
 	static Timeline animation;
 
 	public Lang() {
-
-	}
-
-	public Lang(double checkWidth, double checkHeight, Scene primaryScene) {
 		root = new BorderPane();
+		langMenu = new Scene(root, W_WIDTH, W_HEIGHT, backgroundcolor);
 
 		//Languages
-		
 		specific = new String[5];
 		specific[0] = "English";
-		specific[1] = "French";
-		specific[2] = "";
-		specific[3] = "Polish";
-		specific[4] = "Romanian";
+		specific[1] = "Français";
+		specific[2] = "Español";
+		specific[3] = "Polski";
+		specific[4] = "Român";
 		int langCount = specific.length;
 
 		//------------------------------------------ANIMATIONS
@@ -96,13 +91,36 @@ public class Lang implements MenuInterface, SystemConstants {
 			elements[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 			
+					switch(x) {
+					case 0:
+						SystemLanguage.loadLocale(Locale.ENGLISH);
+						initMenu();
+						break;
+					case 1:
+						SystemLanguage.loadLocale(Locale.FRENCH);
+						initMenu();
+						break;
+					case 2:
+						SystemLanguage.loadLocale(Language.SPANISH);
+						initMenu();
+						break;
+					case 3:
+						SystemLanguage.loadLocale(Language.POLISH);
+						initMenu();
+						break;
+					case 4:
+						SystemLanguage.loadLocale(Language.ROMANIAN);
+						initMenu();
+						break;
+					}
+					
 					animation.stop();
 
 				}
 			});
 		}
 		ScrollPane scroll = new ScrollPane();
-		scroll.setMinHeight(380);
+		scroll.setMinHeight(700);
 		scroll.setMinWidth(375);
 		scroll.setStyle("-fx-background-color:transparent;");
 		scroll.setContent(vbox);
@@ -111,27 +129,15 @@ public class Lang implements MenuInterface, SystemConstants {
 		OptionElement o_creator = new OptionElement();
 		int o_size = 2;
 		StackPane[] options = new StackPane[o_size];
-		String[] o_names = {"Main Menu", "Exit" };
+		String[] o_names = {"Exit" };
 		VBox o_vbox = new VBox(spacer);
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < o_names.length; i++) {
 			options[i] = o_creator.optionElement(o_names[i]);
 			o_vbox.getChildren().add(options[i]);
 		}
-		// BACK BUTTON EVENT
-		options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent me) {
-				root.getChildren().removeAll();
-				animation.stop();
-
-				Menu.resetRoot();
-
-				//MainMenu.init(primaryStage);
-
-			}
-		});
 
 		// EXIT BUTTON EVENT
-		options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
+		options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				System.exit(0);
 			}
@@ -159,6 +165,14 @@ public class Lang implements MenuInterface, SystemConstants {
 		root.setLeft(leftSide);
 		root.setRight(rightSide);
 
+	}
+	
+	public void initMenu() {
+		root.getChildren().removeAll();
+		animation.stop();
+		@SuppressWarnings("unused")
+		Menu menu = new Menu();
+		getScene().setRoot(Menu.getRoot());
 	}
 
 }

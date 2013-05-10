@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<display>
+
+	<course id="mech">
+		<coursetitle>LANGUAGE:Categories_mechanics</coursetitle>
+		
+		<animation id="projectilemotion">
+			<name>LANGUAGE:Simulation_projectilemotion</name>
+			<file>JoProjectileMotion</file>
+			<description>A ball is shot with an initial speed and angle. It is affected by gravity and brought toward the ground; 
+it will bounce similar to the bouncing ball and also reduces its speed until it stops where it no longer 
+has any energy. Just like the bouncing ball, the formula is used to calculate the highest point of the ball. 
+MaxHeight = Velocity*time*1/2*gravity*time2
+			</description>
+		</animation>
+		<animation id="bouncingball">
+			<name>LANGUAGE:Simulation_bounceball</name>
+			<file>JoBounceBall</file>
+			<description>The bouncing ball animation simulates a ball being thrown from a set ground level, when it reaches its 
+highest position; it begins to fall back towards the ground. When it hits, it will bounce back up and 
+keep on doing this until it no longer has the energy to bounce up again. The formula for this animation 
+is used to calculate the new maximum height of the ball. 
+MaxHeight = Velocity*time*1/2*gravity*time2
+			</description>
+		</animation>
+			<animation id="blockonslope">
+			<name>LANGUAGE:Simulation_bos</name>
+			<file>JoBOS</file>
+			<description>A block is placed on a slope, where you can modify the angle of the slope as well as the length of the slope. 
+When the start button is pressed, the block accelerated gradually along the length of the slope and 
+stops and the end of the line.
+			</description>
+		</animation>
+	</course>
+
+	<course id="womp">
+		<coursetitle>LANGUAGE:Categories_waves</coursetitle>
+		
+		<animation id="shm">
+			<name>LANGUAGE:Simulation_shm</name>
+			<file>JoSHM</file>
+			<description>A ball oscillates with modifiable amplitude up and down along the y axis. The ball moves with no loss of 
+energy and keeps the same motion if the amplitude stays the same. The formula is used to calculate 
+the y position at a certain time. 
+y = A * cos(Ω * (time + φ))
+			</description>
+		</animation>
+		<animation id="pendulum">
+			<name>LANGUAGE:Simulation_pendulum</name>
+			<file>JoPendulum</file>
+			<description>The pendulum animation displays a ball on a string moving in a semicircular motion. A max angle is given 
+and the pendulum slowly reduces its speed and will eventually stop and stay at a standstill. The 
+formula in this animation calculates the x and y coordinates the angle and the damping of the pendulum. 
+x= (length *cos( (90-angle)))
+y =(length*sin( (90-angle))) 
+angle = angleMax * sin(sqrt (g / length) * time)
+			</description>
+		</animation>
+		<animation id="waveonstring">
+			<name>LANGUAGE:Simulation_wos</name>
+			<file>JoWOS</file>
+			<description>Essentially, multiple balls that follow simple harmonic motion each with a delay on them to offset the 
+phase so that they don’t oscillate at the same rate; this creates the illusion that a wave is 
+moving on a string. The formula used is the same for simple harmonic motion.               
+y = A * cos(Ω * (time + φ))
+			</description>
+		</animation>
+	</course>
+
+	<course id="em">
+		<coursetitle>LANGUAGE:Categories_em</coursetitle>
+		
+		<animation id="rccircuit">
+			<name>LANGUAGE:Simulation_rccircuit</name>
+			<file>JoCircuit</file>
+			<description>A resistor capacitor circuit is displayed; the battery emits less and less particles as the switch is closed 
+and the capacitor charges up with particles, and when the switched is changed to its second 
+position, the capacitor emits charges until it no longer has any to emit.
+			</description>
+		</animation>
+		<animation id="cyclotron">
+			<name>LANGUAGE:Simulation_cyclotron</name>
+			<file>JoCyclotron</file>
+			<description>A charge is sent into a magnetic field which accelerates the particle and moving it in a circular motion. 
+It then leaves the magnetic field and travels toward another field which does the same thing. 
+Eventually the charge will be moving very fast and will miss the magnetic field and keep moving
+			</description>
+		</animation>
+		<animation id="electricfield">
+			<name>LANGUAGE:Simulation_electricfield</name>
+			<file>JoElectricField</file>
+			<description>The electric field animation shows a charged particle being deflected in its trajectory by an electric field. 
+The ball’s starting position can be changed as well as the entrance velocity, the 
+field strength, the mass and charge of the charge. The formula for this animation 
+is used to calculate the x position of the particle.
+x=(velocity*time)+(1/2 *gravity*time2);
+			</description>
+		</animation>
+	</course>
+
+</display>

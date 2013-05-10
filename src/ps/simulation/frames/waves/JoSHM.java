@@ -32,17 +32,21 @@ public class JoSHM extends SimulatorInstanceSwing {
 	double omega = 2 * Math.PI;
 	double amplitude = 100;
 	
-	
+	//WRITE
 	SimVariableBean positionBean = new SimVariableBean();
+	
+	//READ
 	SimVariableBean amplitudeBean = new SimVariableBean();
+	SimVariableBean omegaBean = new SimVariableBean();
 	
 	public JoSHM() {	
 		amplitudeBean.setValue(amplitude);
+		omegaBean.setValue(omega);
 	}
 
 	public void animationLogic() {
 	    
-		y = amplitudeBean.getValue() * Math.cos(omega * timeBeanLocal.getTime());
+		y = amplitudeBean.getValue() * Math.cos(omegaBean.getValue() * timeBeanLocal.getTime());
 		positionBean.setValue(FConvert.coord(500, y));
 
 		repaint();
@@ -69,7 +73,8 @@ public class JoSHM extends SimulatorInstanceSwing {
 		
 		data_shared_write_dependant = new Object[][] { {"Y Position", positionBean.getSimVariableBeanProperty()}};
 	
-		data_shared_read = new Object[][] {{"Amplitude_0:300", amplitudeBean.getSimVariableBeanProperty()}} ; 
+		data_shared_read = new Object[][] {{"Amplitude_0:300", amplitudeBean.getSimVariableBeanProperty()},
+									       { "Omega_0:" + 2 * Math.PI, omegaBean.getSimVariableBeanProperty()}} ; 
 
 		// Data Read by sim
 		PhysicsWindow.sharedData.addReadData(data_shared_read);

@@ -19,8 +19,9 @@ import ps.system.api.SimulatorInstanceJFX;
 import ps.system.api.SimulatorInstanceSwing;
 import ps.system.main.PhysicsWindow;
 import ps.system.main.SystemConstants;
-import ps.system.menu.Menu;
+import ps.system.menu.Lang;
 
+@SuppressWarnings("serial")
 public class JFXPanes extends JPanel implements SystemConstants {
 
 	// Pane separators
@@ -36,7 +37,7 @@ public class JFXPanes extends JPanel implements SystemConstants {
 	
 	// JavaFX simulation object components
 	public static SimulatorInstanceJFX JFXSimulation;
-	private Menu JFXMenu;
+	public static Lang JFXLang;
 	
 	//Simulation analysis components
 	private static ChartMaker Graph;
@@ -102,8 +103,8 @@ public class JFXPanes extends JPanel implements SystemConstants {
 		//SimulationList simList = new SimulationList();
 
 		if (simulationID.getSimulationID() == null) {
-			JFXMenu = new Menu();
-			initJFX_Module(JFXPanel_Menu, JFXMenu.getScene());
+			JFXLang = new Lang();
+			initJFX_Module(JFXPanel_Menu, Lang.getScene());
 		}
 
 		simulationID.SimulationIDProperty().addListener(new InvalidationListener() {

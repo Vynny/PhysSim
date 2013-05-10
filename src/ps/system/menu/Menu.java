@@ -5,67 +5,45 @@ import static java.lang.Math.random;
 import java.io.File;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-
-import ps.system.main.SystemConstants;
-
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Menu implements MenuInterface, SystemConstants {
-	
-	private static Scene mainMenu;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-	public static Scene getScene() {
-		return mainMenu;
-	}
-	
-	public static void setScene(Scene scene) {
-		mainMenu = scene;
-	}
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import ps.system.main.SystemConstants;
+
+public class Menu implements MenuInterface, SystemConstants {
 	
 	private static BorderPane root;
 
 	public static BorderPane getRoot() {
 		return root;
 	}
+
+	public static Document doc;
+	private static Timeline animation;
 	
-	static int width = W_WIDTH;
-	static int height = W_HEIGHT;
-	static Document doc;
-	static Timeline animation;
-
-	public static void changedSize(double checkWidth, double checkHeight) {
-		width = (int) checkWidth;
-		height = (int) checkHeight;
-	}
-
 	public Menu() {
 
 	    root = new BorderPane();
-		mainMenu = new Scene(root, width, height, backgroundcolor);
 
 		try {
 			File fXMLfile = new File("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/manifest.xml");
@@ -84,8 +62,6 @@ public class Menu implements MenuInterface, SystemConstants {
 					Element eElement = (Element) nNode;
 					names[1][temp] = (String) eElement.getAttribute("id");
 					names[0][temp] = (String) eElement.getElementsByTagName("coursetitle").item(0).getTextContent();
-					
-					System.out.println("TITLE " + temp + ": " + names[0][temp] );
 					
 					if (eElement.getElementsByTagName("coursetitle").item(0).getTextContent().split("LANGUAGE:").length > 1) {
 
@@ -111,15 +87,13 @@ public class Menu implements MenuInterface, SystemConstants {
 				elements[i] = creator.menuElement(names[0][i]);
 				vbox.getChildren().add(elements[i]);
 				elements[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent me) {
-						
+					public void handle(MouseEvent me) {	
 						root.getChildren().removeAll();
 						animation.stop();
 						@SuppressWarnings("unused")
-						Sub submenu = new Sub(0, 0, getScene(), names[1][x]);
-						getScene().setRoot(submenu.getRoot());
+						Sub submenu = new Sub(names[1][x]);
+						Lang.getScene().setRoot(Sub.getRoot());
 						
-
 					}
 				});
 			}
@@ -150,13 +124,12 @@ public class Menu implements MenuInterface, SystemConstants {
 	            );
 	        }
 	        animation.setAutoReverse(true);
-	        //animation.setCycleCount(Animation.INDEFINITE);
 	        
 	        animation.play();
 
 			// -----------------------------------------Creating the Options
 			OptionElement o_creator = new OptionElement();
-			String[] o_names = {"Help", "Language", "Exit" };
+			String[] o_names = {SystemLanguage.getLanguageBundle().getString("Menu_exit") };
 			int o_size = o_names.length;
 			StackPane[] options = new StackPane[o_size];
 			VBox o_vbox = new VBox(spacer);
@@ -164,34 +137,14 @@ public class Menu implements MenuInterface, SystemConstants {
 				options[i] = o_creator.optionElement(o_names[i]);
 				o_vbox.getChildren().add(options[i]);
 			}
-			// HELP BUTTON EVENT
+	
+			//EXIT BUTTON EVENT
 			options[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent me) {
-					root.getChildren().removeAll();
-					animation.stop();
-					@SuppressWarnings("unused")
-					Help help = new Help(0, 0, getScene());
-					getScene().setRoot(help.getRoot());
-				}
-			});
-			//LANGUAGE PAGE
-			options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent me) {
-					root.getChildren().removeAll();
-					animation.stop();
-					@SuppressWarnings("unused")
-					Lang lang = new Lang(0, 0, getScene());
-					getScene().setRoot(lang.getRoot());
-				}
-			});
-			// EXIT BUTTON EVENT
-			options[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent me) {
 					System.exit(0);
 				}
 			});
 			
-
 			// -----------------------------------------Title
 
 			Group programName = Title.title();
@@ -216,13 +169,10 @@ public class Menu implements MenuInterface, SystemConstants {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-
 	}
 	
 	public static void resetRoot() {
-		getScene().setRoot(root);
+		Lang.getScene().setRoot(root);
 	}
 
 }

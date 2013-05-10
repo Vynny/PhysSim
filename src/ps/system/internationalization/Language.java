@@ -6,7 +6,11 @@ import java.util.ResourceBundle;
 
 public class Language {
 
-	private Locale[] languagesSupported = { Locale.ENGLISH, Locale.FRENCH };
+	public static Locale POLISH = new Locale.Builder().setLanguage("pl").setRegion("PL").build();
+	public static Locale SPANISH = new Locale.Builder().setLanguage("es").setRegion("ES").build();
+	public static Locale ROMANIAN = new Locale.Builder().setLanguage("ro").setRegion("RO").build();
+	
+	private Locale[] languagesSupported = { Locale.ENGLISH, Locale.FRENCH, POLISH, SPANISH, ROMANIAN };
 
 	public Locale[] getLanguagesSupported() {
 		return languagesSupported;
@@ -30,7 +34,7 @@ public class Language {
 	}
 
 	public void enumerateKeys() {
-		Enumeration bundleKeys = rb.getKeys();
+		Enumeration<String> bundleKeys = rb.getKeys();
 
 		while (bundleKeys.hasMoreElements()) {
 		    String key = (String)bundleKeys.nextElement();

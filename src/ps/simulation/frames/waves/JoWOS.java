@@ -17,6 +17,7 @@ public class JoWOS extends SimulatorInstanceSwing {
 	int high = 0;
 	int radius = 20;
 	int nbBalls = 63;
+	int modulo = 8;
 	ArrayList<JoWOSBall> balls = new ArrayList<JoWOSBall>();
 	
 	//WRITTEN
@@ -38,9 +39,11 @@ public class JoWOS extends SimulatorInstanceSwing {
 	}
 
 	public void animationLogic() {
+		for (int i = 0; i < ballBeans.size(); i++) {
+			ballBeans.get(i).setValue(-(balls.get(i * modulo).getDy()));
+		}
 
 		repaint();
-
 	}
 
 	public void paintComponent(Graphics g) {
@@ -52,11 +55,8 @@ public class JoWOS extends SimulatorInstanceSwing {
 		g.fillRect(0, 500, PhysicsWindow.getTopSlidePosition(), -(500 - PhysicsWindow.getBottomSlidePosition()));
 		g.setColor(Color.white);
 		for (int i = 0; i < nbBalls; i++) {
-			balls.add(new JoWOSBall(i * radius, y));
+			balls.add(new JoWOSBall(i * radius, y, modulo));
 			balls.get(i).paint(g, timeBeanLocal.getTime(), amplitudeBean.getValue(), omegaBean.getValue(), radius, i);
-			for (int j = 0; j < ballBeans.size(); j++) {
-				ballBeans.get(j).setValue(balls.get(i).fix(timeBeanLocal.getTime(), amplitudeBean.getValue(), omegaBean.getValue(), radius, i));
-			}
 		}
 		g.drawString("" + (y - (int) y ), 200, 10);
 

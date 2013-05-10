@@ -4,7 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class Title implements MenuInterface{
+public class Title implements MenuInterface {
 	
 	public static Group title(){
 		

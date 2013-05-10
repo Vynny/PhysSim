@@ -2,14 +2,8 @@ package ps.system.menu;
 
 import static java.lang.Math.random;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -17,38 +11,47 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import ps.system.main.PhysicsWindow;
-import ps.system.main.SystemConstants;;
+import ps.system.main.SystemConstants;
 
 
 public class Sub implements MenuInterface, SystemConstants {
 
 	private static BorderPane root;
-	
 	public static BorderPane getRoot() {
 		return root;
 	}
 	
-	String[][] specific;
-	int animationCount = 0;
-	static Timeline animation;
+	private static String[][] specific;
+	public static String[][] getSpecific() {
+		return specific;
+	}
 
+	private static int animationCount = 0;
+	public static int getAnimationCount() {
+		return animationCount;
+	}
+	
+	private static Timeline animation;
+	
+	
 	public Sub() {
 
 	}
 
-	public Sub(double checkWidth, double checkHeight, Scene primaryScene, String identifier) {
+	public Sub(String identifier) {
 		root = new BorderPane();
 
 		NodeList nList = Menu.doc.getElementsByTagName("course");
@@ -63,7 +66,7 @@ public class Sub implements MenuInterface, SystemConstants {
 					NodeList checkChildren = ((Element) nNode).getElementsByTagName("animation");
 					animationCount = checkChildren.getLength();
 					
-					specific = new String[2][animationCount];
+					specific = new String[3][animationCount];
 					
 					for(int sub = 0; sub < animationCount; sub++){
 						Node subNode = checkChildren.item(sub);
@@ -77,6 +80,7 @@ public class Sub implements MenuInterface, SystemConstants {
 							}
 						
 							specific[1][sub] = subElement.getElementsByTagName("file").item(0).getTextContent();
+							specific[2][sub] = subElement.getElementsByTagName("description").item(0).getTextContent();
 						}
 					}
 
@@ -105,7 +109,6 @@ public class Sub implements MenuInterface, SystemConstants {
             );
         }
         animation.setAutoReverse(false);
-        //animation.setCycleCount(Animation.INDEFINITE);
 
         animation.play();
 
@@ -134,11 +137,13 @@ public class Sub implements MenuInterface, SystemConstants {
 
 		// -----------------------------------------Creating the Options
 		OptionElement o_creator = new OptionElement();
-		int o_size = 2;
-		StackPane[] options = new StackPane[o_size];
-		String[] o_names = { "Back", "Exit" };
+		String[] o_names = { SystemLanguage.getLanguageBundle().getString("Menu_back"),
+				             SystemLanguage.getLanguageBundle().getString("Menu_help"),
+				             SystemLanguage.getLanguageBundle().getString("Menu_exit") };
+		StackPane[] options = new StackPane[o_names.length];
 		VBox o_vbox = new VBox(spacer);
-		for (int i = 0; i < 2; i++) {
+		
+		for (int i = 0; i < o_names.length; i++) {
 			options[i] = o_creator.optionElement(o_names[i]);
 			o_vbox.getChildren().add(options[i]);
 		}
@@ -149,12 +154,22 @@ public class Sub implements MenuInterface, SystemConstants {
 				root.getChildren().removeAll();
 				animation.stop();
 				Menu.resetRoot();
-
+			}
+		});
+		
+		// HELP BUTTON EVENT
+		options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				root.getChildren().removeAll();
+				animation.stop();
+				@SuppressWarnings("unused")
+				Help help = new Help();
+				Lang.getScene().setRoot(Help.getRoot());
 			}
 		});
 
 		// EXIT BUTTON EVENT
-		options[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
+		options[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				System.exit(0);
 			}
@@ -182,6 +197,10 @@ public class Sub implements MenuInterface, SystemConstants {
 		root.setLeft(leftSide);
 		root.setRight(rightSide);
 
+	}
+	
+	public static void resetRoot() {
+		Lang.getScene().setRoot(root);
 	}
 
 }
