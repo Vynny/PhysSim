@@ -20,7 +20,7 @@ public interface SystemConstants {
 	Language SystemLanguage = PhysicsWindow.SystemLanguage;
 	
 	//Main Window Title
-	String TITLE = "Physics Sim v0.8 BETA";
+	String TITLE = "Physics Sim v1.0";
 
 	//Main Window Size
 	int mainWindow_DEFAULTW = 1500;
