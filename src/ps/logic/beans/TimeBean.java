@@ -1,7 +1,6 @@
 package ps.logic.beans;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 public class TimeBean {

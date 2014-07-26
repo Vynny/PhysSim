@@ -1,7 +1,11 @@
-package ps.simulation.frames.em;
+
 
 import java.awt.Graphics;
 
+/**
+ * 
+ * @author Joey
+ */
 public class JoCharge {
 
 	int frame = 0;

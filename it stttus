@@ -1,0 +1,227 @@
+[33mcommit 8218e813b4a39bf4f4f197aa6706f0327a911769[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Mon May 13 13:11:56 2013 -0400
+
+    updated systemconstants
+
+[33mcommit d0cff2dbf6cc7d9ef74596a583ac55c7f504e9d3[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Fri May 10 10:47:34 2013 -0400
+
+    added 2 new languages, added swing chart scrolling, final(?) revision before presentation
+
+[33mcommit 6e5e86b75055ef907fa71ab5046b3c5335651fb6[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Fri May 10 01:27:18 2013 -0400
+
+    final revision before presentation
+
+[33mcommit e285deccae4f033301c94a02aab9df5c9af678f5[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Thu May 9 18:21:51 2013 -0400
+
+    added new menu components
+
+[33mcommit 4fe2f8bb257f76512b7c988aab811f96a032c65f[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Thu May 9 16:13:53 2013 -0400
+
+    more simulator revisions
+
+[33mcommit 7fc0495c04d3859cb942a7bf12bb65f02ad27c75[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Thu May 9 00:46:07 2013 -0400
+
+    fixed majority of simulation errors, improved data input and graphing
+
+[33mcommit 8b501c1483b8229f709f837d6b45656d91fa2bdf[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Wed May 8 01:39:33 2013 -0400
+
+    Added various improvments after first 2 rounds of testing
+
+[33mcommit 408b737635e25668fae32d81d4efe40d2ad34ea1[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Mon May 6 02:29:04 2013 -0400
+
+    improved chart ranging, still in progress
+
+[33mcommit 55d9e595037d2ac349fe09e5999ae48f000b7f40[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat May 4 22:31:42 2013 -0400
+
+    simulation lifecycle and buttons now working properly, require more chart fixes and javacord -> cartesian conversion
+
+[33mcommit 56f549b6936424a09c273f56561bcf982c3e5038[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Sat May 4 17:42:17 2013 -0400
+
+    added new animations
+
+[33mcommit 977b973239b03efaa7d4716dd21ca0c15f998e28[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Thu May 2 01:13:16 2013 -0400
+
+    implemented working class loader system; menu xml file now supports language
+
+[33mcommit 300d2aad0dda55386a2073961fa1e10a3117fc86[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Tue Apr 30 09:49:06 2013 -0400
+
+    added new menu system by Edward
+
+[33mcommit 8af72e731551f7e8bf32992467b535d6007721ba[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Fri Apr 26 21:44:55 2013 -0400
+
+    improved simulation unloading, removed old and zombie code
+
+[33mcommit a52825a7b3d570af1ee84ac9caf3f14a48124422[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Thu Apr 25 22:53:25 2013 -0400
+
+    implemented rudimentary language system
+
+[33mcommit e425d01aad8cf5c1e04b4083b373b84cd13d4548[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Mon Apr 8 01:24:22 2013 -0400
+
+    infopane element alignment fix
+
+[33mcommit 7f424920ec12807fd973e32e500bf243b75187cc[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat Apr 6 16:30:47 2013 -0400
+
+    fixed input checking bug in infopane
+
+[33mcommit 1be77f1e26ebe9ab05964f1a1d592de183715b54[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat Apr 6 01:36:31 2013 -0400
+
+    started implementing infopane variable modifying system
+
+[33mcommit c78550cbe89b1b8d2123148573d97e1c8d353417[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Fri Apr 5 23:14:21 2013 -0400
+
+    added new animations, fixed loading issue in jfxpanes
+
+[33mcommit c1716be7bb7afa60ee8c075b9303ec5be17c4a2f[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Mon Apr 1 21:53:23 2013 -0400
+
+    renames and binding fixes
+
+[33mcommit 094fc91af31e9a734efc43bbb51a5d5f0e1211dd[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sun Mar 31 22:46:03 2013 -0400
+
+    jfx and swing simulation loading system 50% done, implemented new loading system with massive memory footprint reduction
+
+[33mcommit ceb7091cc03c488db810e9db6cff44ec2e07d2e4[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Sun Mar 31 17:15:49 2013 -0400
+
+    modified infopane to work simply with joframe threads
+
+[33mcommit c2fecbeabd2ac62dc3d5a8a3e17cfcb43369d213[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sun Mar 31 01:29:03 2013 -0400
+
+    improved new simulation system, fixing swing bouncing ball code
+
+[33mcommit 97ea6ef7c0cf19db11d37b1beee4077b6c596ec5[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat Mar 30 05:35:25 2013 -0400
+
+    in process of adding new simulation system
+
+[33mcommit 632acd5ef9fc051205f3e46828d377907f97fb2c[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat Mar 30 01:27:07 2013 -0400
+
+    BEFORE ATTEMPTED IMPLEMENTATION OF NEW SIMULATION SYSTEM
+
+[33mcommit 9220564684bc2a2dfe21c842a386615cbbc7dbcb[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sun Mar 10 22:44:01 2013 -0400
+
+    Removed deprecated class menuwindow
+
+[33mcommit 578a22650cfda6e57676c6228e76b53a862de7ff[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sun Mar 10 22:12:14 2013 -0400
+
+    Worked on menu loading system
+
+[33mcommit 9ddae0d334668f350d1f3d5e7504d99309c48d65[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Sun Mar 10 18:18:15 2013 -0400
+
+    Improved menu auto-generation
+
+[33mcommit fd0c9f36406856570a75efa134194770b30c28f6[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Fri Mar 8 00:06:07 2013 -0500
+
+    Working on menu system
+
+[33mcommit 100ff2af85f6f59bb9c688bebc7940822139fcbc[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Sat Mar 2 05:40:19 2013 -0500
+
+    Added simulator changing functionality
+
+[33mcommit 6fa5d09a805ce10614a383c73b4dfc3ad10e629b[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Fri Mar 1 13:41:20 2013 -0500
+
+    InfoPane now handles simulation timeline
+
+[33mcommit f426dfdceaafaef95474262cadba4115ac9251fc[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Tue Feb 19 09:34:42 2013 -0500
+
+    converted infopane to javafx
+
+[33mcommit b59ee2f84c294a8c25108c7c40e147322cfa17f3[m
+Author: Sylvain <namuknoble@gmail.com>
+Date:   Thu Feb 14 23:05:22 2013 -0500
+
+    Added multiple series functionality to chartmaker
+
+[33mcommit a05b96f524ff9be9ccfcb0e99b57b87910e50fb3[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Wed Feb 13 22:05:52 2013 -0500
+
+    added chartmaker tests
+
+[33mcommit 4540f5d22efcad5e23f3dae93b91eee965686c8e[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Wed Feb 13 22:01:36 2013 -0500
+
+    Developing data sharing between windows, improving graph system
+
+[33mcommit 5a1e2bb0b8793f7cf1e1e9bc5ab0f51a2711a612[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Tue Feb 12 02:46:14 2013 -0500
+
+    Updated sample javaFX app and chartmaker
+
+[33mcommit 969646a7957b1bafeec34ed95fb25d37b6df4831[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Tue Feb 12 01:57:57 2013 -0500
+
+    Chartmaker before observablelist dataseries UPDATED
+
+[33mcommit 4b501d66b3b8c4f61a948c2f3cee547d879bda13[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Tue Feb 12 01:57:19 2013 -0500
+
+    Chartmaker before observablelist dataseries
+
+[33mcommit 66b348ad619f155ccd528b0d61b3d44afdc34148[m
+Author: Vynny <namuknoble@gmail.com>
+Date:   Mon Feb 11 23:42:36 2013 -0500
+
+    Added base framework source code

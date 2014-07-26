@@ -1,8 +1,5 @@
 package ps.system.core;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

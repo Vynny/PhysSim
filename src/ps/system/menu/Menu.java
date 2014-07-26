@@ -46,7 +46,7 @@ public class Menu implements MenuInterface, SystemConstants {
 	    root = new BorderPane();
 
 		try {
-			File fXMLfile = new File("C:/Users/Sylvain/Desktop/progtemp/Menu 1.1/animations/manifest.xml");
+			File fXMLfile = new File("C:/Users/Sylvain/Documents/Project/PhysSim Project/progtemp/Menu 1.1/animations/manifest.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXMLfile);
